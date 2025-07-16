@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX
+    // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
     public static GameController Instance { get; private set; }
 
-    [Header("ƒQ[ƒ€İ’è")]
-    public List<GameObject> piecePrefabs; // ƒs[ƒX‚ÌPrefabƒŠƒXƒg
-    public Transform piecesContainer; // ‘Ò‹@ƒs[ƒX‚ğ’u‚­êŠ
-    public int pieceCount; // ƒs[ƒX‚Ì‘”
+    [Header("ã‚²ãƒ¼ãƒ è¨­å®š")]
+    public List<GameObject> piecePrefabs; // ãƒ”ãƒ¼ã‚¹ã®Prefabãƒªã‚¹ãƒˆ
+    public Transform piecesContainer; // é…ç½®ãƒ”ãƒ¼ã‚¹ã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    public int pieceCount; // ãƒ”ãƒ¼ã‚¹ã®å€‹æ•°
 
     private List<GameObject> spawnedPieces = new List<GameObject>();
 
     void Awake()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“
+        // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å‡¦ç†
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
@@ -26,17 +26,17 @@ public class GameController : MonoBehaviour
         SpawnPieces();
     }
 
-    // ƒs[ƒX‚ğ¶¬‚µ‚Ä‘Ò‹@êŠ‚É”z’u‚·‚é
+    // ãƒ”ãƒ¼ã‚¹ã‚’é…ç½®ã™ã‚‹
     void SpawnPieces()
     {
-        // Šù‘¶‚Ìƒs[ƒX‚ª‚ ‚ê‚Îíœ
+        // æ—¢å­˜ã®ãƒ”ãƒ¼ã‚¹ã‚’å…¨ã¦å‰Šé™¤
         foreach (var piece in spawnedPieces)
         {
             Destroy(piece);
         }
         spawnedPieces.Clear();
 
-        // V‚µ‚­¶¬
+        // æ–°è¦ç”Ÿæˆ
         float yOffset = 0f;
         foreach (var prefab in piecePrefabs)
         {
@@ -44,36 +44,26 @@ public class GameController : MonoBehaviour
             GameObject newPiece = Instantiate(prefab, spawnPos, Quaternion.identity);
             spawnedPieces.Add(newPiece);
 
-            // Ÿ‚Ìƒs[ƒX‚ÌYÀ•W‚ğ’²®i“K‹X•ÏX‚µ‚Ä‚­‚¾‚³‚¢j
+            // å„ãƒ”ãƒ¼ã‚¹ã®Yåº§æ¨™ã‚’ãšã‚‰ã™ï¼ˆå¿…è¦ã«å¿œã˜ã¦èª¿æ•´ï¼‰
             yOffset -= 3.0f;
         }
     }
 
-    // ƒQ[ƒ€‚ªƒNƒŠƒA‚³‚ê‚½‚©ƒ`ƒFƒbƒN‚·‚é
+    // ã‚²ãƒ¼ãƒ ãŒã‚¯ãƒªã‚¢ã•ã‚ŒãŸã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     public void CheckGameCompletion()
     {
-        int placedCount = 0;
-        foreach (var pieceObject in spawnedPieces)
+        if (GridManager.Instance != null && GridManager.Instance.IsGridFull())
         {
-            PieceController piece = pieceObject.GetComponent<PieceController>();
-            if (piece != null && piece.isPlaced)
-            {
-                placedCount++;
-            }
-        }
-
-        if (placedCount == pieceCount)
-        {
-            Debug.Log("ƒpƒYƒ‹ƒNƒŠƒA");
-            // ‚±‚±‚ÉƒNƒŠƒA‰æ–Ê‚ğ•\¦‚·‚éˆ—‚ğ’Ç‰Á
+            Debug.Log("ãƒ‘ã‚ºãƒ«ã‚¯ãƒªã‚¢ï¼ˆã‚°ãƒªãƒƒãƒ‰å…¨åŸ‹ã‚ï¼‰");
+            // ã“ã“ã«ã‚¯ãƒªã‚¢ç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹å‡¦ç†ã‚’è¿½åŠ 
         }
     }
 
-    // ƒQ[ƒ€‚ğƒŠƒZƒbƒg‚·‚éiƒ{ƒ^ƒ“‚©‚çŒÄ‚Ño‚·—pj
+    // ã‚²ãƒ¼ãƒ ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆãƒœã‚¿ãƒ³ãªã©ã‹ã‚‰å‘¼ã³å‡ºã™ç”¨ï¼‰
     public void ResetGame()
     {
-        // ƒOƒŠƒbƒh‚Ìó‘Ô‚ğƒŠƒZƒbƒg‚·‚é‚½‚ß‚ÉGridManager‚Ì‹@”\‚ª•K—v‚¾‚ªA
-        // ¡‰ñ‚ÍƒVƒ“ƒvƒ‹‚ÉƒV[ƒ“‚ğÄ“Ç‚İ‚İ‚·‚é‚Ì‚ªˆê”ÔŠÈ’P
+        // ã‚°ãƒªãƒƒãƒ‰ã®çŠ¶æ…‹ã‚‚ãƒªã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚GridManagerã®å‡¦ç†ãŒå¿…è¦ã ãŒã€
+        // ä»Šã¯ã‚·ãƒ¼ãƒ³ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦ãƒªã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }

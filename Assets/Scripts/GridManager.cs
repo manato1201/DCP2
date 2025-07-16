@@ -131,6 +131,9 @@ public class GridManager : MonoBehaviour
         }
 
         piece.isPlaced = true;
+
+        // グリッドが全て埋まっているかチェック（デバッグ用）
+        IsGridFull();
     }
 
     // ピースの登録を解除
@@ -140,6 +143,7 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
+                // gridに登録されているTransformの親がこのピースのTransformなら消す
                 if (grid[x, y] != null && grid[x, y].parent == piece.transform)
                 {
                     grid[x, y] = null;
@@ -166,6 +170,46 @@ public class GridManager : MonoBehaviour
         }
 
         piece.isPlaced = false;
+
+        // グリッドが全て埋まっているかチェック（デバッグ用）
+        IsGridFull();
+        // grid配列の状態を出力
+        //DebugGridState();
+    }
+
+    // グリッドが全て埋まっているか判定
+    public bool IsGridFull()
+    {
+        int filled = GetFilledCellCount();
+        Debug.Log($"埋まっているセル数: {filled}/{width * height}");
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // 埋まっているセル数を返す
+    public int GetFilledCellCount()
+    {
+        int count = 0;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     // ParameterGaugeのImage取得用ヘルパー
@@ -178,6 +222,22 @@ public class GridManager : MonoBehaviour
         return parameterGauge != null ? parameterGauge.GetChildGaugeImage() : null;
     }
 
+    // grid配列の状態をデバッグ出力
+    /*
+    private void DebugGridState()
+    {
+        string s = "[Grid状態] ";
+        for (int y = height - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                s += (grid[x, y] != null ? "■" : "□");
+            }
+            s += " ";
+        }
+        Debug.Log(s);
+    }
+    */
 
     void OnDrawGizmos()
     {
