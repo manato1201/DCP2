@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Transition_Rect
-  m_Shader: {fileID: 4800000, guid: 41becd42c3cf9014cab8a88605866d65, type: 3}
+  m_Shader: {fileID: 4800000, guid: 1d416c3030f995a42b851a7c7f8dc24a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -53,7 +53,7 @@ Material:
     - _Seed: 0
     - _Smoothing: 0
     - _SquareCount: 5.13
-    - _Value: 0
+    - _Value: 0.707
     - _Width: 0.271
     m_Colors:
     - _Color: {r: 0, g: 0.8713031, b: 1, a: 1}

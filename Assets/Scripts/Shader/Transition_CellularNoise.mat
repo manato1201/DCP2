@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Transition_CellularNoise
-  m_Shader: {fileID: 4800000, guid: 9f17dd004c0f96f40ad3a47d9b4deba8, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6fc205d5dfa03a84b88eed95d63cb2e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -41,13 +41,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Div: 16
     - _EnableExternalAlpha: 0
+    - _Inverse: 0
     - _Seed: 5
     - _Size: 12
     - _Smoothing: 0.00001
     - _Value: 0.321
+    - _Width: 0
     m_Colors:
     - _Color: {r: 0.08627451, g: 0.36862746, b: 0.5137255, a: 1}
+    - _Dir: {r: 1, g: 1, b: 0, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
