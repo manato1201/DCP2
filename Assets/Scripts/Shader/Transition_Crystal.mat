@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Transition_Crystal
-  m_Shader: {fileID: 4800000, guid: 51e7627c7b296e94c81805269ff73083, type: 3}
-  m_Parent: {fileID: 2100000, guid: 35b6ec549c03daf43b9529d9844984d4, type: 2}
+  m_Shader: {fileID: 4800000, guid: e59aace95cfe9044fab554ed335fb5fe, type: 3}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,11 +22,18 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Smoothing: 0.5
-    - _Value: 0.723
-    m_Colors: []
+    - _Seed: 0
+    - _Size: 0
+    - _Smoothing: 0.339
+    - _Value: 0.071
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
