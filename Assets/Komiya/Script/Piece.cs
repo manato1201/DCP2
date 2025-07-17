@@ -28,7 +28,7 @@ using Shape;
         private List<Vector2Int> currentCellPositions;
         private List<Vector2Int> currentTextPositions;
 
-        void Start()
+        private void Start()
         {
             // ShapeDataから現在の状態へデータをコピーして初期化
             currentCellPositions = new List<Vector2Int>(shapeData.Cells);
@@ -39,8 +39,36 @@ using Shape;
             GenerateTexts(); // テキストを生成する処理を呼び出す
         }
 
-        // ブロックのセルを生成する処理
-        void GenerateCells()
+
+
+
+
+    // 回転処理の本体
+    public void Rotate(bool clockwise)
+    {
+        // 1. 各座標リストを回転させる
+        // セルの回転
+        for (int i = 0; i < currentCellPositions.Count; i++)
+        {
+            Vector2Int pos = currentCellPositions[i];
+            currentCellPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
+        }
+
+        // テキスト位置の回転
+        for (int i = 0; i < currentTextPositions.Count; i++)
+        {
+            Vector2Int pos = currentTextPositions[i];
+            currentTextPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
+        }
+
+        // 2. 再描画する
+        RedrawPiece();
+    }
+
+
+
+    // ブロックのセルを生成する処理
+    private void GenerateCells()
         {
             if (shapeData == null) return;
 
@@ -51,7 +79,7 @@ using Shape;
             }
         }
         // 文字を生成する処理
-        void GenerateTexts()
+        private void GenerateTexts()
         {
             if (shapeData == null || textPrefab == null || shapeData.BlockChar.Count != currentTextPositions.Count)
             {
@@ -77,27 +105,6 @@ using Shape;
                 newText.fontSize = shapeData.TextSize;
         }
     }
-        // 回転処理の本体
-        public void Rotate(bool clockwise)
-        {
-            // 1. 各座標リストを回転させる
-            // セルの回転
-            for (int i = 0; i < currentCellPositions.Count; i++)
-            {
-                Vector2Int pos = currentCellPositions[i];
-                currentCellPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
-            }
-
-            // テキスト位置の回転
-            for (int i = 0; i < currentTextPositions.Count; i++)
-            {
-                Vector2Int pos = currentTextPositions[i];
-                currentTextPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
-            }
-
-            // 2. 再描画する
-            RedrawPiece();
-        }
 
         // ピースを再描画する処理
         private void RedrawPiece()

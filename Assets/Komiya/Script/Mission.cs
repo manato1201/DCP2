@@ -24,7 +24,7 @@ public class Mission : MonoBehaviour
 
     private void Awake()
     {
-        setDetaNum();
+        setDataNum();
     }
 
 
@@ -32,7 +32,6 @@ public class Mission : MonoBehaviour
     //==================================================================
     //公開処理(public)
     //==================================================================
-
 
     /// <summary>
     /// ランダムにミッションを出す
@@ -64,8 +63,15 @@ public class Mission : MonoBehaviour
         //0～MissionValueの数をランダムで取得
         dataNum = missionNum;
 
-        //dataNumに基づいてミッションを設定
-        setMission();
+        //指定数がdataNumの範囲を超えていた場合エラーを返す
+        if (missionNum > dataNum)
+        {
+            Debug.LogWarning("missionNumは0～" + dataNum + "で選んでください");
+            return;
+        }
+
+            //dataNumに基づいてミッションを設定
+            setMission();
         if (isExceed())
         {
             Debug.LogWarning("パラメータが既に目標に達しています");
@@ -89,6 +95,15 @@ public class Mission : MonoBehaviour
 
     }
 
+
+
+
+
+
+
+
+
+
     //=======================================================================
     //内部処理(private)
     //=======================================================================
@@ -96,7 +111,7 @@ public class Mission : MonoBehaviour
     /// <summary>
     /// dataNumにMissionValuesの長さを入れる
     /// </summary>
-    private void setDetaNum()
+    private void setDataNum()
     {
         dataNum = missionData.MissionValues.Length;
     }
