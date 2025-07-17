@@ -14,15 +14,15 @@ using Shape;
 
 
         [Header("ScriptableObject:ShapeData")]
-        public ShapeData shapeData;
+        [SerializeField]private ShapeData shapeData;
         [Header("ブロック１つのプレファブ(これを1つの四角形として形を形成する)")]
-        public GameObject cellPrefab; // ブロック1つ分のプレハブ
+        [SerializeField]private GameObject cellPrefab; // ブロック1つ分のプレハブ
 
         [Header("セルのサイズ")]
-        public Vector2 CellSize = new Vector2(1.0f, 1.0f);
+        [SerializeField] private Vector2 CellSize = new Vector2(1.0f, 1.0f);
 
         [Header("テキスト設定")]
-        public TextMeshPro textPrefab; // TextMeshProのプレハブをここに設定
+        [SerializeField] private TextMeshPro textPrefab; // TextMeshProのプレハブをここに設定
 
         // 現在のピースの状態を保持するリスト
         private List<Vector2Int> currentCellPositions;
