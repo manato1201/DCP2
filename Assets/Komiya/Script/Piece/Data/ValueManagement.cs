@@ -35,5 +35,8 @@ namespace Value
         [Header("何日目か")]
         public int WhatDay = 0;
 
+        [Header("ミッションに必要なパラメータ")]
+        public int ChildMission = 0;
+        public int ParentMission = 0;
     }
 }
