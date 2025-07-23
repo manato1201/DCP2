@@ -1,5 +1,6 @@
 using UnityEngine;
 using Value;
+using UnityEngine.SceneManagement;
 
 
 
@@ -97,6 +98,8 @@ namespace Mission
             Debug.Log("ミッション終了！");
             EndShader();
             EndEnemy();
+
+            SceneManager.LoadScene("Result");
         }
 
 

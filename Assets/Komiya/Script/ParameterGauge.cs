@@ -7,7 +7,7 @@ namespace Paramete
 {
     public class ParameterGauge : MonoBehaviour
     {
-
+        [SerializeField] private bool wantLoadScene = false;
 
 
 
@@ -120,7 +120,10 @@ namespace Paramete
 
             rectTransform.sizeDelta = size;
 
-            isCliear();
+            if (isCliear() && wantLoadScene)
+            {
+                missionHandler.EndMission();
+            }
         }
 
         /// <summary>
@@ -155,7 +158,6 @@ namespace Paramete
         {
             if (valueManagement.ChildParameter >= valueManagement.ChildMission && valueManagement.ParentParameter >= valueManagement.ParentMission)
             {
-                missionHandler.EndMission();
                 return true;
             }
 
