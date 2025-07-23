@@ -1,5 +1,6 @@
 ﻿
-#if UNITY_EDITOR
+#if false
+//UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using EditorExtension;

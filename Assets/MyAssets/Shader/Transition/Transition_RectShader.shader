@@ -109,7 +109,7 @@
                             float2 f = (div - 1.0) * (0.5 - sg * 0.5) + (i_st + float2(i, j)) * sg;
                             float v = val - dot(f, abs(dir)) * w;
 
-                            float ci = heart(f_st - float2(2.0 * i, 2.0 * j), 0);
+                            float ci = rectangle(f_st - float2(2.0 * i, 2.0 * j), 0);
 
                             a = min(a, step(v, ci));
                             //a = min(a, smoothstep(v - 0.1, v, ci));
