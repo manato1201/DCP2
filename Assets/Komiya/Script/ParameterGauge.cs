@@ -2,30 +2,39 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Value;
+using Mission;
 namespace Paramete
 {
     public class ParameterGauge : MonoBehaviour
     {
+        [SerializeField] private bool wantLoadScene = false;
 
 
 
-
-        [Header(" l Ǘ  f [ ^[ValueManagement]  ScriptableObject")]
+        [Header(" 値管理データ [ ^[ValueManagement]  ScriptableObject")]
         [SerializeField] private ValueManagement valueManagement;
 
-        [Header(" q  or e ̃p     [ ^ 𔽉f    UI.Image")]
+        [Header("クリア判定用 改良の可能性あり")]
+        [SerializeField] private MissionHandler missionHandler;
+
+        [Header(" 親子のゲージのUI.Image")]
         [SerializeField] private Image parentGauge;
         [SerializeField] private Image childGauge;
 
         private float maxHeight;
         private int maxParameter;
 
+        public float valueMax = 0;
+        public float currentValue = 0;
+
+
+
         private void Start()
         {
 
             InitializeParamater();
 
-
+            valueMax = valueManagement.MaxParameter;
 
 
             if (valueManagement == null)
@@ -41,7 +50,7 @@ namespace Paramete
             }
             else
             {
-                Debug.LogError("ParentGauge   ݒ肳  Ă  ܂   I");
+                Debug.LogError("ParentGaugeがnullです");
                 return;
             }
             maxParameter = valueManagement.MaxParameter;
@@ -110,6 +119,11 @@ namespace Paramete
 
 
             rectTransform.sizeDelta = size;
+
+            if (isCliear() && wantLoadScene)
+            {
+                missionHandler.EndMission();
+            }
         }
 
         /// <summary>
@@ -139,5 +153,16 @@ namespace Paramete
         {
             return childGauge;
         }
+
+        public bool isCliear()
+        {
+            if (valueManagement.ChildParameter >= valueManagement.ChildMission && valueManagement.ParentParameter >= valueManagement.ParentMission)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

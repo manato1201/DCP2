@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870fbabcf64f97b41b368f092f4b3e27, type: 3}
   m_Name: ValueManagement
   m_EditorClassIdentifier: 
-  InitialParentParamater: 0
-  InitialChildParamater: 0
+  InitialParentParamater: 3
+  InitialChildParamater: 3
   InitialWhatDay: 0
   MaxParameter: 10
   ParentParameter: 3
   ChildParameter: 3
   WhatDay: 1
-  ChildMission: 1
-  ParentMission: 1
+  ChildMission: 2
+  ParentMission: 2

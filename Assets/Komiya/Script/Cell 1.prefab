@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7947650747006197995}
   - component: {fileID: 3915559480840782388}
   - component: {fileID: 7464922921846360378}
-  - component: {fileID: -2161328263929982890}
+  - component: {fileID: -8042876189120505296}
   m_Layer: 0
-  m_Name: Cell
+  m_Name: Cell 1
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 3e5a6574a6713c84a81451a27a9641b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,7 +148,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-2161328263929982890
+--- !u!114 &-8042876189120505296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Value;
+using UnityEngine.SceneManagement;
 
 
 
@@ -89,6 +90,18 @@ namespace Mission
             CallEnemy();  //敵キャラ処理を呼び出し : 後々追加
         }
 
+        /// <summary>
+        ///ミッション終了 
+        /// </summary>
+        public void EndMission()
+        {
+            Debug.Log("ミッション終了！");
+            EndShader();
+            EndEnemy();
+
+            SceneManager.LoadScene("Result");
+        }
+
 
 
 
@@ -129,7 +142,7 @@ namespace Mission
         /// <summary>
         /// シェーダー処理呼び出し : 後々記述
         /// </summary>
-        public void CallShader()
+        private void CallShader()
         {
             Debug.LogWarning("Developing ; callShader");
         }
@@ -137,10 +150,22 @@ namespace Mission
         /// <summary>
         /// 敵キャラ処理呼び出し : 後々記述
         /// </summary>
-        public void CallEnemy()
+        private void CallEnemy()
         {
             Debug.LogWarning("Developing : callEnemy");
         }
+
+        private void EndShader()
+        {
+            Debug.Log("EndShader");
+        }
+
+        private void EndEnemy()
+        {
+            Debug.Log("EndEnemy");
+        }
+
+
 
 
         /// <summary>

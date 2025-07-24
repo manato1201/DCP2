@@ -39,6 +39,13 @@ using Shape;
             GenerateTexts(); // テキストを生成する処理を呼び出す
         }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Rotate(true);
+        }
+    }
 
 
 
