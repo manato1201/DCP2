@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 111889377}
   - component: {fileID: 111889378}
+  - component: {fileID: 111889379}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -206,6 +207,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &111889379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111889376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ad378b3ce7d8540becec47589290d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _noisePosition:
+    x:
+      amplitude: 2
+      speed: 3
+    y:
+      amplitude: 2
+      speed: 4
+    z:
+      amplitude: 0
+      speed: 0
+  _noiseRotation:
+    x:
+      amplitude: 0
+      speed: 0
+    y:
+      amplitude: 0
+      speed: 0
+    z:
+      amplitude: 0
+      speed: 0
 --- !u!1 &184006979
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +517,7 @@ MonoBehaviour:
   missionHandler: {fileID: 0}
   parentGauge: {fileID: 1568745317}
   childGauge: {fileID: 1350995090}
-  isInitParamater: 0
+
   valueMax: 0
   currentValue: 0
 --- !u!1 &316379410
