@@ -76,8 +76,8 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OffsetColor: 0.0027731936
-    - _OffsetDistortion: 480
+    - _OffsetColor: 0.0175
+    - _OffsetDistortion: 200
     - _OffsetNoiseX: 0.34403577
     - _OffsetNoiseY: -7.0300965
     - _OffsetPosY: 0
