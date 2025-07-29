@@ -23,5 +23,5 @@ MonoBehaviour:
   TextSize: 8
   MinoType: 
   ChildParameter: -2
-  ParentParameter: 1
+  ParentParameter: 3
   GridSize: 5
