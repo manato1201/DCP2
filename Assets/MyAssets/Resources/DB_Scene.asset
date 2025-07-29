@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DB_Scene
   m_EditorClassIdentifier: 
   SceneName:
+  - Name: MIssion
   - Name: puzzle
-  - Name: Mission

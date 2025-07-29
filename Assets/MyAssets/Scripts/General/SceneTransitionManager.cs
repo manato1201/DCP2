@@ -50,7 +50,7 @@ public class SceneTransitionManager : MonoBehaviour
             Debug.LogError($"シーン名 \"{sceneKey}\" がDB_Sceneに見つかりません！");
             return;
         }
-        SoundManager.Instance.PlaySE("TransitionSE", volume: 1.0f);
+        //SoundManager.Instance.PlaySE("TransitionSE", volume: 1.0f);
         StartSceneTransition(sceneObj.Name, transitionMaterialIndex);
     }
 
