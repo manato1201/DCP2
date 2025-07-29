@@ -47,10 +47,11 @@ namespace Mission
             //dataNumに基づいてミッションを設定
             SetMission();
             //親子のパラメータが既にミッションを達成していた場合 : 再抽選
-            while (IsExceed() && debugMax < 10)
+            while (IsExceed())
             {
+                //0～MissionValueの数をランダムで取得
+                dataNum = Random.Range(0, missionData.MissionValues.Length);
                 SetMission();
-                debugMax++;
             }
 
         }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9cd23040dc891d4db901e59af9d798d, type: 3}
   m_Name: MissionValueA
   m_EditorClassIdentifier: 
-  parentPurpose: 4
-  childPurpose: 4
+  parentPurpose: 2
+  childPurpose: 6
   explain: ExplainOfDataA

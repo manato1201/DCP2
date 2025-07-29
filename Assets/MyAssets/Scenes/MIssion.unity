@@ -1185,7 +1185,7 @@ GameObject:
   - component: {fileID: 562767112}
   - component: {fileID: 562767113}
   m_Layer: 5
-  m_Name: ParentLine
+  m_Name: ChildLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1223,10 +1223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 1267417220}
-  prefab: {fileID: 1738575534864183999, guid: 3992be3a99ea51748bb897aea2faa5cd, type: 3}
+  prefab: {fileID: 1738575534864183999, guid: 58e02fc9277d22f4cb75d3e4a5a3b7aa, type: 3}
   spawnParent: {fileID: 533712}
   valueManagement: {fileID: 11400000, guid: aab92cb885beac749b2dd20b3819e973, type: 2}
-  isParent: 1
+  isParent: 0
 --- !u!1 &716451283
 GameObject:
   m_ObjectHideFlags: 0

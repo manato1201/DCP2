@@ -28,7 +28,7 @@ namespace Paramete
         public float currentValue = 0;
 
 
-
+        private bool firstCall = false;
         private void Start()
         {
 
@@ -56,6 +56,7 @@ namespace Paramete
             maxParameter = valueManagement.MaxParameter;
             ChangeGauge(valueManagement.ParentParameter, parentGauge);
             ChangeGauge(valueManagement.ChildParameter, childGauge);
+            firstCall = true;
         }
 
         private void Update()
@@ -156,7 +157,7 @@ namespace Paramete
 
         public bool isCliear()
         {
-            if (valueManagement.ChildParameter >= valueManagement.ChildMission && valueManagement.ParentParameter >= valueManagement.ParentMission)
+            if (valueManagement.ChildParameter >= valueManagement.ChildMission && valueManagement.ParentParameter >= valueManagement.ParentMission && firstCall)
             {
                 return true;
             }
