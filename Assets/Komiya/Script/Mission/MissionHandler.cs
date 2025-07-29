@@ -17,6 +17,8 @@ namespace Mission
         [SerializeField] private MissionData missionData;   //MissionValueを配列にしたScriptableObject
         [SerializeField] private ValueManagement valueManagement;   //値管理データ
 
+        [SerializeField] private GameObject button;
+
         private int dataNum = 0; //missionDataの配列を指定するための変数
 
         private string MissionExplain = null; //内部書き換え用説明文
@@ -100,7 +102,7 @@ namespace Mission
             EndShader();
             EndEnemy();
 
-            SceneManager.LoadScene("Result");
+            button.SetActive(true);
         }
 
 
