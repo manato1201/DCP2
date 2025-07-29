@@ -156,6 +156,7 @@ MonoBehaviour:
   missionHandler: {fileID: 1699683442}
   parentGauge: {fileID: 182721350}
   childGauge: {fileID: 1582723615}
+  isInitParamater: 0
   valueMax: 0
   currentValue: 0
 --- !u!114 &533709
@@ -1754,6 +1755,7 @@ MonoBehaviour:
   originPosition: {x: -8.5, y: -3.5, z: 0}
   valueManagement: {fileID: 11400000, guid: aab92cb885beac749b2dd20b3819e973, type: 2}
   parameterGauge: {fileID: 533708}
+  isMissionScene: 0
 --- !u!1 &1077186377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1889,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 3829828b72e5ed04e803267d39f541f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
