@@ -14,7 +14,6 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _INVERSE_ON
-  - _USETEXTURE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -76,17 +75,17 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Seed: 10
-    - _Size: 12
+    - _Size: 43.1
     - _Smoothing: 0.00001
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseTexture: 1
-    - _Value: 0.637
+    - _UseTexture: 0
+    - _Value: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 1, b: 0.8156862, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
