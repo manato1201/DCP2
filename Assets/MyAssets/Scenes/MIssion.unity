@@ -1622,6 +1622,7 @@ MonoBehaviour:
   valueManagement: {fileID: 11400000, guid: aab92cb885beac749b2dd20b3819e973, type: 2}
   parameterGauge: {fileID: 533708}
   isMissionScene: 0
+  goButton: {fileID: 0}
 --- !u!1 &1077186377
 GameObject:
   m_ObjectHideFlags: 0

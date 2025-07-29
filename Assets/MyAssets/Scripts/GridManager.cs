@@ -20,6 +20,8 @@ public class GridManager : MonoBehaviour
     public ParameterGauge parameterGauge; // ParameterGaugeの参照をInspectorで設定
 
     [SerializeField] bool isMissionScene = false;
+    private bool isFirstCall = false;
+    [SerializeField] GameObject goButton;
 
     private Transform[,] grid;
 
@@ -136,9 +138,9 @@ public class GridManager : MonoBehaviour
         piece.isPlaced = true;
 
         // グリッドが全て埋まっているかチェック（デバッグ用）
-        if (IsGridFull())
+        if (IsGridFull() && !isFirstCall)
         {
-            SceneManager.LoadScene("Mission");
+            goButton.SetActive(true);
         }
     }
 
