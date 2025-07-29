@@ -21,6 +21,8 @@ namespace Paramete
         [SerializeField] private Image parentGauge;
         [SerializeField] private Image childGauge;
 
+        [SerializeField] bool isInitParamater = true;
+
         private float maxHeight;
         private int maxParameter;
 
@@ -31,8 +33,10 @@ namespace Paramete
         private bool firstCall = false;
         private void Start()
         {
-
-            InitializeParamater();
+            if (isInitParamater)
+            {
+                InitializeParamater();
+            }
 
             valueMax = valueManagement.MaxParameter;
 

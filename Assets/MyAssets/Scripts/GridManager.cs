@@ -1,5 +1,6 @@
 using Paramete;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Value;
 
 public class GridManager : MonoBehaviour
@@ -17,6 +18,8 @@ public class GridManager : MonoBehaviour
 
     [Header("ゲージUI管理")]
     public ParameterGauge parameterGauge; // ParameterGaugeの参照をInspectorで設定
+
+    [SerializeField] bool isMissionScene = false;
 
     private Transform[,] grid;
 
@@ -133,7 +136,10 @@ public class GridManager : MonoBehaviour
         piece.isPlaced = true;
 
         // グリッドが全て埋まっているかチェック（デバッグ用）
-        IsGridFull();
+        if (IsGridFull())
+        {
+            SceneManager.LoadScene("Mission");
+        }
     }
 
     // ピースの登録を解除

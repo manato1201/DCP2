@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class GameController : MonoBehaviour
 {
     // シングルトンインスタンス
@@ -56,6 +55,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("パズルクリア（グリッド全埋め）");
             // ここにクリア画面を表示する処理を追加
+            
         }
     }
 
