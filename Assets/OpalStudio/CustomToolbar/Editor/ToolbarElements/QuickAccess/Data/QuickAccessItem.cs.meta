@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: aa95fd5ff91c40f6b6f56b3442463d86
+timeCreated: 1756800431
+AssetOrigin:
+  serializedVersion: 1
+  productId: 327041
+  packageName: CustomToolbar
+  packageVersion: 2.8.0
+  assetPath: Assets/OpalStudio/CustomToolbar/Editor/ToolbarElements/QuickAccess/Data/QuickAccessItem.cs
+  uploadId: 797606

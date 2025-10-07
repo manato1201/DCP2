@@ -1,0 +1,204 @@
+root = true
+
+# ===== 基本 =====
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# ===== 既定は静かに =====
+[*.cs]
+dotnet_analyzer_diagnostic.severity = silent
+
+# ===== 自作コードだけ有効化（Assets配下）=====
+[Assets/**/*.cs]
+dotnet_analyzer_diagnostic.severity = default
+
+# 外部資産は再び静かに
+[Assets/ThirdParty/**/*.cs]
+dotnet_analyzer_diagnostic.severity = silent
+[Assets/Plugins/**/*.cs]
+dotnet_analyzer_diagnostic.severity = silent
+[Packages/**/*.cs]
+dotnet_analyzer_diagnostic.severity = silent
+
+# ===== C# コーディング規則（要点のみ）=====
+# var 方針（ここは好みで変更OK）
+csharp_style_var_elsewhere = true:suggestion
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+# 既定型名（int/string等）を優先
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:suggestion
+
+# this. は使わない（プレフィックス派）
+dotnet_style_qualification_for_field    = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method   = false:suggestion
+dotnet_style_qualification_for_event    = false:suggestion
+
+# using 並び
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# ブレース必須（事故防止）
+csharp_prefer_braces = true:error
+
+# 修飾子順（Unity 6/C# 12想定）
+csharp_preferred_modifier_order = public, private, protected, internal, file, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required
+
+# 近代C# スタイル（控えめに誘導）
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_coalesce_expression = true:suggestion
+csharp_style_prefer_switch_expression = true:suggestion
+csharp_style_prefer_pattern_matching = true:suggestion
+csharp_style_prefer_simple_default_expression = true:suggestion
+csharp_using_directive_placement = outside_namespace:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
+csharp_style_prefer_utf8_string_literals = false:silent   # u8 文字列はUnity案件では慎重に
+
+# ===== 書式（主要どころ）=====
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_catch = true
+csharp_new_line_before_else = true
+csharp_new_line_before_finally = true
+
+csharp_indent_block_contents = true
+csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
+csharp_indent_labels = one_less_than_current
+csharp_indent_switch_labels = true
+
+csharp_space_after_comma = true
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_between_parentheses = false
+
+# ===== 命名スタイル（プレフィックス方針）=====
+# --- スタイル ---
+dotnet_naming_style.pascal.capitalization = pascal_case
+dotnet_naming_style.camel.capitalization  = camel_case
+
+# m_ インスタンスフィールド
+dotnet_naming_style.m_prefix.required_prefix = m_
+dotnet_naming_style.m_prefix.capitalization  = camel_case
+
+# s_ staticフィールド
+dotnet_naming_style.s_prefix.required_prefix = s_
+dotnet_naming_style.s_prefix.capitalization  = camel_case
+
+# k_ 定数（Pascal合成）
+dotnet_naming_style.k_prefix.required_prefix = k_
+dotnet_naming_style.k_prefix.capitalization  = pascal_case
+
+# On* ハンドラメソッド
+dotnet_naming_style.on_prefix.required_prefix = On
+dotnet_naming_style.on_prefix.capitalization  = pascal_case
+
+# *Async 非同期メソッド
+dotnet_naming_style.async_suffix.required_suffix = Async
+dotnet_naming_style.async_suffix.capitalization  = pascal_case
+
+# --- シンボル ---
+dotnet_naming_symbols.instance_fields.applicable_kinds = field
+dotnet_naming_symbols.instance_fields.required_modifiers = 
+dotnet_naming_symbols.instance_fields.applicable_accessibilities = *
+
+dotnet_naming_symbols.static_fields.applicable_kinds = field
+dotnet_naming_symbols.static_fields.required_modifiers = static
+dotnet_naming_symbols.static_fields.applicable_accessibilities = *
+
+dotnet_naming_symbols.const_values.applicable_kinds = field, local
+dotnet_naming_symbols.const_values.required_modifiers = const
+dotnet_naming_symbols.const_values.applicable_accessibilities = *
+
+dotnet_naming_symbols.methods.applicable_kinds = method
+dotnet_naming_symbols.methods.applicable_accessibilities = *
+
+dotnet_naming_symbols.async_methods.applicable_kinds = method
+dotnet_naming_symbols.async_methods.required_modifiers = async
+dotnet_naming_symbols.async_methods.applicable_accessibilities = *
+
+dotnet_naming_symbols.events.applicable_kinds = event
+dotnet_naming_symbols.events.applicable_accessibilities = *
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_symbols.interfaces.applicable_accessibilities = *
+
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
+dotnet_naming_symbols.types.applicable_accessibilities = *
+
+dotnet_naming_symbols.enum_members.applicable_kinds = enum_member
+dotnet_naming_symbols.enum_members.applicable_accessibilities = *
+
+# --- ルール ---
+# m_ / s_ / k_
+dotnet_naming_rule.instance_fields_m.symbols  = instance_fields
+dotnet_naming_rule.instance_fields_m.style    = m_prefix
+dotnet_naming_rule.instance_fields_m.severity = error
+
+dotnet_naming_rule.static_fields_s.symbols  = static_fields
+dotnet_naming_rule.static_fields_s.style    = s_prefix
+dotnet_naming_rule.static_fields_s.severity = error
+
+dotnet_naming_rule.const_values_k.symbols  = const_values
+dotnet_naming_rule.const_values_k.style    = k_prefix
+dotnet_naming_rule.const_values_k.severity = error
+
+# 型・インターフェース・enum
+dotnet_naming_rule.types_pascal.symbols  = types
+dotnet_naming_rule.types_pascal.style    = pascal
+dotnet_naming_rule.types_pascal.severity = error
+
+dotnet_naming_rule.interfaces_I.symbols  = interfaces
+dotnet_naming_rule.interfaces_I.style    = pascal
+dotnet_naming_rule.interfaces_I.severity = suggestion
+dotnet_naming_style.Iprefix.required_prefix = I
+dotnet_naming_style.Iprefix.capitalization  = pascal_case
+# ※↑に差し替え： 
+dotnet_naming_rule.interfaces_I.style = Iprefix
+
+dotnet_naming_rule.enum_members_pascal.symbols  = enum_members
+dotnet_naming_rule.enum_members_pascal.style    = pascal
+dotnet_naming_rule.enum_members_pascal.severity = error
+
+# イベントはPascal、ハンドラーは On*
+dotnet_naming_rule.events_pascal.symbols  = events
+dotnet_naming_rule.events_pascal.style    = pascal
+dotnet_naming_rule.events_pascal.severity = warning
+
+dotnet_naming_rule.handler_methods_on.symbols  = methods
+dotnet_naming_rule.handler_methods_on.style    = on_prefix
+dotnet_naming_rule.handler_methods_on.severity = suggestion
+
+# 非同期メソッドは *Async
+dotnet_naming_rule.async_methods_async.symbols  = async_methods
+dotnet_naming_rule.async_methods_async.style    = async_suffix
+dotnet_naming_rule.async_methods_async.severity = error
+
+# ===== ReSharper（最低限だけ）=====
+resharper_autodetect_indent_settings = true
+resharper_formatter_tags_enabled = true
+resharper_formatter_off_tag = @formatter:off
+resharper_formatter_on_tag  = @formatter:on
+
+# ===== 他言語のインデント =====
+[{*.yaml,*.yml,*.json,*.jsonc,*.har,*.postman_collection,*.postman_environment,.prettierrc,.eslintrc,.babelrc,.stylelintrc}]
+indent_style = space
+indent_size  = 2
+
+[*.asmdef]
+indent_style = space
+indent_size  = 2
+
+[*.asmref]
+indent_style = space
+indent_size  = 2
+
+[*.inputactions]
+indent_style = space
+indent_size  = 2
