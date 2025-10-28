@@ -1,109 +1,52 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ShakeByPerlinNoise : MonoBehaviour
 {
-    // 単一のパーリンノイズ情報を格納する構造体
-    [Serializable]
-    private struct NoiseParam
+    [SerializeField] private Transform target;
+    [SerializeField] private float strengthPos = 0.2f;
+    [SerializeField] private float strengthRot = 3f;
+    [SerializeField] private float duration = 0.4f;
+    [SerializeField] private int vibrato = 20;
+
+    Vector3 _basePos; Quaternion _baseRot;
+    CancellationTokenSource _cts;
+
+    void Awake()
     {
-        // 振幅
-        public float amplitude;
+        if (!target) target = transform;
+        _basePos = target.localPosition;
+        _baseRot = target.localRotation;
+        _cts = new();
+    }
+    void OnDestroy() => _cts?.Cancel();
 
-        // 振動の速さ
-        public float speed;
+    public async UniTask StartShakeAsync(CancellationToken external)
+    {
+        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, external);
+        var ct = linked.Token;
 
-        // パーリンノイズのオフセット
-        [NonSerialized] public float offset;
+        target.localPosition = _basePos;
+        target.localRotation = _baseRot;
 
-        // 乱数のオフセット値を指定する
-        public void SetRandomOffset()
-        {
-            offset = UnityEngine.Random.Range(0f, 256f);
-        }
+        // DOTween の標準シェイクで十分ならこちらでOK（timeScale無視にしたければ SetUpdate(true)）
+        var t1 = target.DOShakePosition(duration, strengthPos, vibrato: vibrato).SetAutoKill(false).Play();
+        var t2 = target.DOShakeRotation(duration, strengthRot, vibrato: vibrato).SetAutoKill(false).Play();
 
-        // 指定時刻のパーリンノイズ値を取得する
-        public float GetValue(float time)
-        {
-            // ノイズ位置を計算
-            var noisePos = speed * time + offset;
+        await UniTask.WhenAll(t1.ToUniTask(cancellationToken: ct), t2.ToUniTask(cancellationToken: ct));
 
-            // -1～1の範囲のノイズ値を取得
-            var noiseValue = 2 * (Mathf.PerlinNoise(noisePos, 0) - 0.5f);
-
-            // 振幅を掛けた値を返す
-            return amplitude * noiseValue;
-        }
+        target.localPosition = _basePos;
+        target.localRotation = _baseRot;
     }
 
-    // パーリンノイズのXYZ情報
-    [Serializable]
-    private struct NoiseTransform
+    public void StopShake()
     {
-        public NoiseParam x, y, z;
-
-        // xyz成分に乱数のオフセット値を指定する
-        public void SetRandomOffset()
-        {
-            x.SetRandomOffset();
-            y.SetRandomOffset();
-            z.SetRandomOffset();
-        }
-
-        // 指定時刻のパーリンノイズ値を取得する
-        public Vector3 GetValue(float time)
-        {
-            return new Vector3(
-                x.GetValue(time),
-                y.GetValue(time),
-                z.GetValue(time)
-            );
-        }
+        target.DOKill();
+        target.localPosition = _basePos;
+        target.localRotation = _baseRot;
     }
-
-    // 位置の揺れ情報
-    [SerializeField] private NoiseTransform _noisePosition;
-
-    // 回転の揺れ情報
-    [SerializeField] private NoiseTransform _noiseRotation;
-
-    private Transform _transform;
-
-    // Transformの初期状態
-    private Vector3 _initLocalPosition;
-    private Quaternion _initLocalQuaternion;
-
-    // 初期化
-    private void Awake()
-    {
-        _transform = transform;
-
-        // Transformの初期値を保持
-        _initLocalPosition = _transform.localPosition;
-        _initLocalQuaternion = _transform.localRotation;
-
-        // パーリンノイズのオフセット初期化
-        _noisePosition.SetRandomOffset();
-        _noiseRotation.SetRandomOffset();
-    }
-
-    // 振動処理
-    private void Update()
-    {
-        // ゲーム開始からの時間取得
-        var time = Time.time;
-
-        // パーリンノイズの値を時刻から取得
-        var noisePos = _noisePosition.GetValue(time);
-        var noiseRot = _noiseRotation.GetValue(time);
-
-        // 各Transformにパーリンノイズの値を加算
-        _transform.localPosition = _initLocalPosition + noisePos * 2;
-        _transform.localRotation = Quaternion.Euler(noiseRot) * _initLocalQuaternion;
-    }
-
 
 }
