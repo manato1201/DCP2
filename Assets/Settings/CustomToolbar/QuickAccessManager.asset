@@ -13,6 +13,22 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
+  - displayName: SceneTransitionManager
+    scenePath: 
+  - displayName: General
+    scenePath: 
+  - displayName: SceneTransitionManager
+    scenePath: 
+  - displayName: SceneTransitData
+    scenePath: 
+  - displayName: Scripts
+    scenePath: 
+  - displayName: DB
+    scenePath: 
+  - displayName: UI
+    scenePath: 
+  - displayName: TypingText
+    scenePath: 
   - displayName: ShakeByPerlinNoise
     scenePath: 
   - displayName: General
@@ -33,33 +49,3 @@ MonoBehaviour:
     scenePath: Assets/MyAssets/Scenes/Title.unity
   - displayName: Text (TMP)
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Main Camera
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SelectStage
-    scenePath: Assets/MyAssets/Scenes/SelectStage.unity
-  - displayName: BookUI_Manato
-    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SampleScene
-    scenePath: Assets/MyAssets/Scenes/SampleScene.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Scenes
-    scenePath: 
-  - displayName: Prefab
-    scenePath: 
-  - displayName: SoundManager
-    scenePath: 
-  - displayName: PieceController
-    scenePath: 
-  - displayName: InputSystem_Actions
-    scenePath: 

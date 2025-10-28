@@ -1,7 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShakeByPerlinNoise : MonoBehaviour
@@ -22,7 +21,15 @@ public class ShakeByPerlinNoise : MonoBehaviour
         _baseRot = target.localRotation;
         _cts = new();
     }
+
     void OnDestroy() => _cts?.Cancel();
+
+    static async UniTask AwaitTweenAsync(Tween tween, CancellationToken ct)
+    {
+        if (tween == null) return;
+        tween.Play();
+        await UniTask.WaitUntil(() => !tween.IsActive() || tween.IsComplete(), PlayerLoopTiming.Update, ct);
+    }
 
     public async UniTask StartShakeAsync(CancellationToken external)
     {
@@ -32,11 +39,10 @@ public class ShakeByPerlinNoise : MonoBehaviour
         target.localPosition = _basePos;
         target.localRotation = _baseRot;
 
-        // DOTween の標準シェイクで十分ならこちらでOK（timeScale無視にしたければ SetUpdate(true)）
-        var t1 = target.DOShakePosition(duration, strengthPos, vibrato: vibrato).SetAutoKill(false).Play();
-        var t2 = target.DOShakeRotation(duration, strengthRot, vibrato: vibrato).SetAutoKill(false).Play();
+        var tPos = target.DOShakePosition(duration, strengthPos, vibrato: vibrato).SetAutoKill(false);
+        var tRot = target.DOShakeRotation(duration, strengthRot, vibrato: vibrato).SetAutoKill(false);
 
-        await UniTask.WhenAll(t1.ToUniTask(cancellationToken: ct), t2.ToUniTask(cancellationToken: ct));
+        await UniTask.WhenAll(AwaitTweenAsync(tPos, ct), AwaitTweenAsync(tRot, ct));
 
         target.localPosition = _basePos;
         target.localRotation = _baseRot;
