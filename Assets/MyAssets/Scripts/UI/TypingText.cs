@@ -1,101 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Text;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
+using UnityEngine;
+
+public interface ITextSO { string T(string key); } // CSV辞書の最小インタフェース
 
 public class TypingText : MonoBehaviour
 {
-    [Header("Text Display Settings")]
-    [SerializeField] private List<TMP_Text> textComponents; // 複数のTextMeshProコンポーネント
-    [SerializeField] private float typingSpeed = 0.05f; // 文字送りの速度
+    [SerializeField] private TMP_Text[] targets;
+    [SerializeField] private float charInterval = 0.03f; // 秒
+    [SerializeField] private bool obeyTimeScale = true;
+    [Header("CSV")]
+    [SerializeField] private ScriptableObject textSoObject; // ITextSO を実装したSOを想定
+    ITextSO _db;
 
-    private bool isTyping = false;        // 現在文字送り中か
-    private bool skipRequested = false;   // スキップリクエストがあったか
-    private Coroutine typingCoroutine;    // 現在動作中のコルーチン
+    CancellationTokenSource _cts;
 
-    void Start()
+    void Awake()
     {
-        if (textComponents == null || textComponents.Count == 0)
-        {
-            Debug.LogError("textComponents が設定されていません！");
-        }
+        _cts = new();
+        _db = textSoObject as ITextSO;
+    }
+    void OnDestroy() => _cts?.Cancel();
+
+    public async UniTask PlayAsync(string key)
+    {
+        var text = _db != null ? _db.T(key) : key; // DBがなければkeyをそのまま
+        foreach (var t in targets) t.text = "";
+
+        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+        var ct = linked.Token;
+
+        foreach (var t in targets)
+            await TypeToAsync(t, text, charInterval, obeyTimeScale, ct);
     }
 
-    /// <summary>
-    /// 指定した番号のテキストコンポーネントに文字送りを開始
-    /// </summary>
-    /// <param name="text">表示するテキスト</param>
-    /// <param name="index">対象のTextMeshProコンポーネントのインデックス</param>
-    public void StartTyping(string text, int index)
+    static async UniTask TypeToAsync(TMP_Text target, string content, float interval, bool obeyScale, CancellationToken ct)
     {
-        if (index < 0 || index >= textComponents.Count)
+        if (!target) return;
+        var sb = new StringBuilder(content.Length);
+        for (int i = 0; i < content.Length; i++)
         {
-            Debug.LogError("指定されたインデックスが範囲外です。");
-            return;
-        }
+            sb.Append(content[i]);
+            target.text = sb.ToString();
 
-        TMP_Text targetTextComponent = textComponents[index];
-        if (targetTextComponent == null)
-        {
-            Debug.LogError($"インデックス {index} に対応するTextMeshProコンポーネントが設定されていません。");
-            return;
-        }
-
-        if (isTyping)
-        {
-            StopTyping(); // 現在の文字送りを停止
-        }
-
-        targetTextComponent.text = ""; // テキストをクリア
-        isTyping = true;
-        skipRequested = false;
-        typingCoroutine = StartCoroutine(TypeText(text, targetTextComponent));
-    }
-
-    /// <summary>
-    /// 指定したテキストコンポーネントで文字送りを実行するコルーチン
-    /// </summary>
-    private IEnumerator TypeText(string text, TMP_Text targetTextComponent)
-    {
-        foreach (char letter in text)
-        {
-            if (skipRequested)
+            if (interval > 0f)
             {
-                targetTextComponent.text = text; // 全テキストを即時表示
-                break;
+                if (obeyScale) await UniTask.Delay((int)(interval * 1000f), cancellationToken: ct);
+                else await UniTask.Delay((int)(interval * 1000f), DelayType.UnscaledDeltaTime, cancellationToken: ct);
             }
-
-            targetTextComponent.text += letter; // 1文字ずつ追加
-            yield return new WaitForSeconds(typingSpeed);
         }
-
-        isTyping = false; // 文字送り終了
-        typingCoroutine = null;
-    }
-
-    /// <summary>
-    /// 文字送りを停止し、全テキストを即時表示
-    /// </summary>
-    public void StopTyping()
-    {
-        skipRequested = true;
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-        // コルーチンが止まったタイミングで即時表示も行いたい場合、下記のように補完
-        // ただしTypeText内のbreakで自動的に全表示されるので、不要な場合は省略OK
-        // if (isTyping && targetTextComponent != null) targetTextComponent.text = ???;
-        isTyping = false;
-    }
-
-    /// <summary>
-    /// 現在の文字送り状態を取得
-    /// </summary>
-    /// <returns>文字送り中かどうか</returns>
-    public bool IsTyping()
-    {
-        return isTyping;
     }
 }

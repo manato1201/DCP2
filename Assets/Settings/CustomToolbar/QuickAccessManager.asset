@@ -12,4 +12,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60da2a327ac4a3fae1fcf7e65264165, type: 3}
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - displayName: ShakeByPerlinNoise
+    scenePath: 
+  - displayName: General
+    scenePath: 
+  - displayName: Scripts
+    scenePath: 
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Text (TMP)
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Scenes
+    scenePath: 
+  - displayName: Button
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Text (TMP)
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Main Camera
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: SelectStage
+    scenePath: Assets/MyAssets/Scenes/SelectStage.unity
+  - displayName: BookUI_Manato
+    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: SampleScene
+    scenePath: Assets/MyAssets/Scenes/SampleScene.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Scenes
+    scenePath: 
+  - displayName: Prefab
+    scenePath: 
+  - displayName: SoundManager
+    scenePath: 
+  - displayName: PieceController
+    scenePath: 
+  - displayName: InputSystem_Actions
+    scenePath: 
