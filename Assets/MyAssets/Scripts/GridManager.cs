@@ -189,7 +189,6 @@ public class GridManager : MonoBehaviour
     public bool IsGridFull()
     {
         int filled = GetFilledCellCount();
-        Debug.Log($"埋まっているセル数: {filled}/{width * height}");
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)

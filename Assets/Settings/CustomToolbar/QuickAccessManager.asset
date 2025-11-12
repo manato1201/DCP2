@@ -13,41 +13,85 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: MissionData
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Scripts
     scenePath: 
-  - displayName: MissionValue
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: SoundManager
     scenePath: 
-  - displayName: New Scene Transit Data
+  - displayName: PieceController
     scenePath: 
-  - displayName: New Sound Service
+  - displayName: InputSystem_Actions
     scenePath: 
-  - displayName: ValueManagement
+  - displayName: GridManager
+    scenePath: 
+  - displayName: GameController
+    scenePath: 
+  - displayName: EnemyManager
+    scenePath: 
+  - displayName: UI
+    scenePath: 
+  - displayName: SO
+    scenePath: 
+  - displayName: old
+    scenePath: 
+  - displayName: Game
+    scenePath: 
+  - displayName: SceneTransitionManager
+    scenePath: 
+  - displayName: BattleSpeedService
+    scenePath: 
+  - displayName: BattleSpeedEntry
+    scenePath: 
+  - displayName: AddressableUtil
+    scenePath: 
+  - displayName: FrameWork
+    scenePath: 
+  - displayName: BookUI_Manato
+    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
+  - displayName: Scenes
     scenePath: 
   - displayName: Resources
     scenePath: 
-  - displayName: Scripts
+  - displayName: Prefab
     scenePath: 
-  - displayName: MyAssets
+  - displayName: Materials
     scenePath: 
-  - displayName: AddressableAssetsData
+  - displayName: SpawnLine
     scenePath: 
-  - displayName: Packed Assets
+  - displayName: Text (TMP)
     scenePath: 
-  - displayName: Default Local Group
+  - displayName: ParentProposalLine
     scenePath: 
-  - displayName: AddressableAssetSettings
+  - displayName: ValueManagement
     scenePath: 
-  - displayName: DefaultObject
-    scenePath: 
-  - displayName: AddressableAssetGroupSortSettings
-    scenePath: 
-  - displayName: Default Local Group
-    scenePath: 
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Result
+  - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: IsGameClear
+    scenePath: 
+  - displayName: Script
+    scenePath: 
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: ValueManagement
+    scenePath: 
+  - displayName: ValueManagement
+    scenePath: 
+  - displayName: KTest
+    scenePath: Assets/Komiya/Scene/KTest.unity
+  - displayName: MissionTest
+    scenePath: Assets/Komiya/Scene/MissionTest.unity

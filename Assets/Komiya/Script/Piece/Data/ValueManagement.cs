@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Value
@@ -6,37 +7,44 @@ namespace Value
     public class ValueManagement : ScriptableObject
     {
         //==============================================
-        //’S“–Ò:¬‹{ƒ
-        //‹@”\:ƒpƒ‰ƒ[ƒ^“™‚Ì’l‚ğ‘S‚ÄŠÇ—‚·‚éScriptableObject
+        //æ‹…å½“è€…:å°å®®ç´”
+        //æ©Ÿèƒ½:ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ç­‰ã®å€¤ã‚’å…¨ã¦ç®¡ç†ã™ã‚‹ScriptableObject
         //==============================================
 
 
 
 
-        [Header("ƒpƒ‰ƒ[ƒ^[ŠÖ˜A")]
-        [Header("‰Šú’l")]
+        [Header("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼é–¢é€£")]
+        [Header("åˆæœŸå€¤")]
         public int InitialParentParamater = 3;
         public int InitialChildParamater = 3;
         public int InitialWhatDay = 0;
 
 
         [Space(32)]
-        [Header("eq‚Ì’l")]
-        [Tooltip("eq‚Ìƒpƒ‰ƒ[ƒ^‚ÌÅ‘å’l")]
+        [Header("è¦ªå­ã®å€¤")]
+        [Tooltip("è¦ªå­ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æœ€å¤§å€¤")]
         public int MaxParameter = 10;
 
-        [Tooltip("e‚Ì’l")]
+        [Tooltip("è¦ªã®å€¤")]
         public int ParentParameter = 3;
 
-        [Tooltip("q‹Ÿ‚Ì’l")]
+        [Tooltip("å­ä¾›ã®å€¤")]
         public int ChildParameter = 3;
 
 
-        [Header("‰½“ú–Ú‚©")]
+        [Header("ä½•æ—¥ç›®ã‹")]
         public int WhatDay = 0;
 
-        [Header("ƒ~ƒbƒVƒ‡ƒ“‚É•K—v‚Èƒpƒ‰ƒ[ƒ^")]
+        [Header("ãƒŸãƒƒã‚·ãƒ§ãƒ³ã«å¿…è¦ãªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿")]
         public int ChildMission = 0;
         public int ParentMission = 0;
+
+        [Header("ã‚¿ã‚¤ãƒãƒ¼")]
+        public int SetTimer = 0;
+        public int LimitTime = 0;
+
+        [Header("ã‚²ãƒ¼ãƒ çŠ¶æ³")]
+        public bool isGameClear = false;
     }
 }
