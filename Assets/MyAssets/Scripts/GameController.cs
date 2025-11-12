@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Value;
+using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     // シングルトンインスタンス
@@ -9,6 +12,9 @@ public class GameController : MonoBehaviour
     public List<GameObject> piecePrefabs; // ピースのPrefabリスト
     public Transform piecesContainer; // 配置ピースの親オブジェクト
     public int pieceCount; // ピースの個数
+
+    [Header("ValueManagaer")]
+    [SerializeField] ValueManagement valueManagement;
 
     private List<GameObject> spawnedPieces = new List<GameObject>();
 
@@ -23,6 +29,27 @@ public class GameController : MonoBehaviour
     {
         pieceCount = piecePrefabs.Count;
         SpawnPieces();
+        StartTimer();
+    }
+
+    private async void StartTimer()
+    {
+        if (valueManagement == null) return;
+
+        valueManagement.LimitTime = valueManagement.SetTimer;
+        
+        while(valueManagement.LimitTime > 0)
+        {
+            Debug.Log("制限時間" + valueManagement.LimitTime);
+            valueManagement.LimitTime--;
+            await UniTask.Delay(1000);
+
+            if (valueManagement.LimitTime == 0)
+            {
+                SceneManager.LoadScene("Result");
+                break;
+            }
+        }
     }
 
     // ピースを配置する
