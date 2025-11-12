@@ -13,39 +13,41 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: SceneTransitionManager
+  - displayName: MissionData
     scenePath: 
-  - displayName: General
+  - displayName: MissionValue
     scenePath: 
-  - displayName: SceneTransitionManager
+  - displayName: New Scene Transit Data
     scenePath: 
-  - displayName: SceneTransitData
+  - displayName: New Sound Service
     scenePath: 
-  - displayName: Scripts
+  - displayName: ValueManagement
     scenePath: 
-  - displayName: DB
-    scenePath: 
-  - displayName: UI
-    scenePath: 
-  - displayName: TypingText
-    scenePath: 
-  - displayName: ShakeByPerlinNoise
-    scenePath: 
-  - displayName: General
+  - displayName: Resources
     scenePath: 
   - displayName: Scripts
     scenePath: 
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Text (TMP)
+  - displayName: MyAssets
+    scenePath: 
+  - displayName: AddressableAssetsData
+    scenePath: 
+  - displayName: Packed Assets
+    scenePath: 
+  - displayName: Default Local Group
+    scenePath: 
+  - displayName: AddressableAssetSettings
+    scenePath: 
+  - displayName: DefaultObject
+    scenePath: 
+  - displayName: AddressableAssetGroupSortSettings
+    scenePath: 
+  - displayName: Default Local Group
+    scenePath: 
+  - displayName: Title
     scenePath: Assets/MyAssets/Scenes/Title.unity
   - displayName: Story
     scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Scenes
-    scenePath: 
-  - displayName: Button
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity

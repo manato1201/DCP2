@@ -12,11 +12,12 @@ EditorBuildSettings:
     path: Assets/MyAssets/Scenes/pazzle.unity
     guid: e2534ad6c90a1044f822d7252aff04ad
   - enabled: 1
-    path: Assets/MyAssets/Scenes/Mission.unity
+    path: Assets/MyAssets/Scenes/MIssion.unity
     guid: b92368a9825768c4c96dda6c8be97878
   - enabled: 1
     path: Assets/MyAssets/Scenes/Result.unity
     guid: 7bb4b7611c869cc44b7accf49b378099
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 53bdbfaa1297a7f4db81b0f7fe61695f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
