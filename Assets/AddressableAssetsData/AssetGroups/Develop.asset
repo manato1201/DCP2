@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Develop
+  m_EditorClassIdentifier: 
+  m_GroupName: Develop
+  m_GUID: ddea15f2a32459148abd67c48b390015
+  m_SerializeEntries:
+  - m_GUID: 83d22fec75b77d54eba1401777121a52
+    m_Address: Assets/MyAssets/Resources/MissionData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ba179f84e20d1d418ecef6d237e2d9d
+    m_Address: Assets/MyAssets/Resources/MissionValue.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a84dd1f24630104448abf1e964367045
+    m_Address: Assets/MyAssets/Resources/New Scene Transit Data.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d691ae4626597af4baf9aeda7b2fb738
+    m_Address: Assets/MyAssets/Resources/New Sound Service.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea2ada35e6b9daf44b2142688876bd38
+    m_Address: Assets/MyAssets/Resources/ValueManagement.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6be174d619edf1e4494240ba76626e08, type: 2}
+    - {fileID: 11400000, guid: 8be9a101dec2820438f425e543d7bbf5, type: 2}

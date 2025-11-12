@@ -357,6 +357,25 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.vectorgraphics": {
+      "version": "2.0.0-preview.25",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.physics2d": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequestwww": "1.0.0",
+        "com.unity.modules.unitywebrequesttexture": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.visualscripting": {
       "version": "1.9.7",
       "depth": 0,
@@ -366,6 +385,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.co.cyberagent.smartaddresser": {
+      "version": "https://github.com/CyberAgentGameEntertainment/SmartAddresser.git?path=/Assets/SmartAddresser",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5e8db1f7ed9831f0ce6e9a3dcd713ae2e63fe901"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
