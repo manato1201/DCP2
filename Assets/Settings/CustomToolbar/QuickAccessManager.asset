@@ -13,79 +13,31 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: Inspector
+  - displayName: SceneAddressCatalog
     scenePath: 
-  - displayName: AnimationClipPreviewWindow
-    scenePath: 
-  - displayName: Editor
-    scenePath: 
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Main Camera
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Route1
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: AutoFocusGameViewOnPlayModeStateChanged
-    scenePath: 
-  - displayName: EventSystemStatusWIndow
-    scenePath: 
-  - displayName: Kogane.EventSystemStatusWIndow
-    scenePath: 
-  - displayName: Test
-    scenePath: 
-  - displayName: MyAssets
+  - displayName: Scene Address Catalog
     scenePath: 
   - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Untitled_Artwork
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: TransitionEffectController
     scenePath: 
-  - displayName: BGM
+  - displayName: PartnerCommentCatalog
     scenePath: 
-  - displayName: Sound
+  - displayName: AddressableUtil
     scenePath: 
-  - displayName: SE
+  - displayName: FrameWork
     scenePath: 
-  - displayName: Packed Assets
+  - displayName: Scripts
     scenePath: 
-  - displayName: Packed Assets
+  - displayName: Book(EndLog)
     scenePath: 
-  - displayName: Packed Assets
+  - displayName: Book(Enemy)
     scenePath: 
-  - displayName: AddressableAssetSettings
+  - displayName: Book(StartLog)
     scenePath: 
-  - displayName: ProfileDataSourceSettings
+  - displayName: DOTweenSettings
     scenePath: 
-  - displayName: DefaultObject
-    scenePath: 
-  - displayName: Scenes
-    scenePath: 
-  - displayName: Develop
-    scenePath: 
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BookUI_Manato
-    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
-  - displayName: Scenes
-    scenePath: 
-  - displayName: Develop
-    scenePath: 
-  - displayName: Default Local Group
-    scenePath: 
-  - displayName: Develop_ContentUpdateGroupSchema
-    scenePath: 
-  - displayName: Develop_BundledAssetGroupSchema
-    scenePath: 
-  - displayName: Schemas
-    scenePath: 
-  - displayName: MyAssets
-    scenePath: 
-  - displayName: SO_Scene
-    scenePath: 
-  - displayName: SO_Scene1
+  - displayName: Scene Transit Data
     scenePath: 
