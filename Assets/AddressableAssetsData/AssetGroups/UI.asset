@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_GUID: 51c84632423964d4c9bee440994190ac
+  m_SerializeEntries:
+  - m_GUID: 128405c2542e053419ef3dab431fa034
+    m_Address: Assets/MyAssets/Image/hari_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c8fb6667f630dc409cb9edfcb092294
+    m_Address: Assets/MyAssets/Image/2ss.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdfb65fd4ec6d39438a9a47f7fca5059
+    m_Address: Assets/MyAssets/Image/Untitled_Artwork.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d47746b83bdc43342ad84466b647a455
+    m_Address: Assets/MyAssets/Image/hari_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9670c5d352a999408e98004d4d9a3b9
+    m_Address: Assets/MyAssets/Image/hari3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 97cf419b8d5037447a00d0491f0d9165, type: 2}
+    - {fileID: 11400000, guid: f5e9fa57846b800408a308db7505454e, type: 2}

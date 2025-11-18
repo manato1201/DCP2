@@ -15,13 +15,23 @@ MonoBehaviour:
   m_GroupName: Develop
   m_GUID: ddea15f2a32459148abd67c48b390015
   m_SerializeEntries:
-  - m_GUID: 83d22fec75b77d54eba1401777121a52
-    m_Address: Assets/MyAssets/Resources/MissionData.asset
+  - m_GUID: 47df31a5868b4584198d9713f3168cca
+    m_Address: Assets/MyAssets/Resources/SO_Scene1.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9ba179f84e20d1d418ecef6d237e2d9d
-    m_Address: Assets/MyAssets/Resources/MissionValue.asset
+  - m_GUID: 581bce06d5e1610489de3e6bb0d47fe5
+    m_Address: Assets/MyAssets/Resources/Book(EndLog).csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70eac06922e6bfb4088f050ff9b7d231
+    m_Address: Assets/MyAssets/Resources/SO_Scene.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7958b7396062b114baff213719692cdd
+    m_Address: Assets/MyAssets/Resources/Book(StartLog).csv
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -30,13 +40,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d60f41275bb7aea4bbca5e81b26cfdb4
+    m_Address: Assets/MyAssets/Resources/DOTweenSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d691ae4626597af4baf9aeda7b2fb738
     m_Address: Assets/MyAssets/Resources/New Sound Service.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ea2ada35e6b9daf44b2142688876bd38
-    m_Address: Assets/MyAssets/Resources/ValueManagement.asset
+  - m_GUID: eac74598abe837745a9c40cf31f3d4dc
+    m_Address: Assets/MyAssets/Resources/Book(Enemy).csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee957011b64ddea4f9fef55c439a368f
+    m_Address: Assets/MyAssets/Resources/DB_Image.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

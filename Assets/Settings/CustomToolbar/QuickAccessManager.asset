@@ -13,41 +13,79 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: MissionData
+  - displayName: Inspector
     scenePath: 
-  - displayName: MissionValue
+  - displayName: AnimationClipPreviewWindow
     scenePath: 
-  - displayName: New Scene Transit Data
+  - displayName: Editor
     scenePath: 
-  - displayName: New Sound Service
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Main Camera
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Route1
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: AutoFocusGameViewOnPlayModeStateChanged
     scenePath: 
-  - displayName: ValueManagement
+  - displayName: EventSystemStatusWIndow
     scenePath: 
-  - displayName: Resources
+  - displayName: Kogane.EventSystemStatusWIndow
     scenePath: 
-  - displayName: Scripts
+  - displayName: Test
     scenePath: 
   - displayName: MyAssets
     scenePath: 
-  - displayName: AddressableAssetsData
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Untitled_Artwork
+    scenePath: 
+  - displayName: BGM
+    scenePath: 
+  - displayName: Sound
+    scenePath: 
+  - displayName: SE
     scenePath: 
   - displayName: Packed Assets
     scenePath: 
-  - displayName: Default Local Group
+  - displayName: Packed Assets
+    scenePath: 
+  - displayName: Packed Assets
     scenePath: 
   - displayName: AddressableAssetSettings
     scenePath: 
+  - displayName: ProfileDataSourceSettings
+    scenePath: 
   - displayName: DefaultObject
     scenePath: 
-  - displayName: AddressableAssetGroupSortSettings
+  - displayName: Scenes
+    scenePath: 
+  - displayName: Develop
+    scenePath: 
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: BookUI_Manato
+    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
+  - displayName: Scenes
+    scenePath: 
+  - displayName: Develop
     scenePath: 
   - displayName: Default Local Group
     scenePath: 
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Develop_ContentUpdateGroupSchema
+    scenePath: 
+  - displayName: Develop_BundledAssetGroupSchema
+    scenePath: 
+  - displayName: Schemas
+    scenePath: 
+  - displayName: MyAssets
+    scenePath: 
+  - displayName: SO_Scene
+    scenePath: 
+  - displayName: SO_Scene1
+    scenePath: 

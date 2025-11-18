@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Scenes
+  m_EditorClassIdentifier: 
+  m_GroupName: Scenes
+  m_GUID: b1707440389ec794498fec2674530a32
+  m_SerializeEntries:
+  - m_GUID: 3473335aac13bab4a8e4fa1ee4740394
+    m_Address: Assets/MyAssets/Scenes/Select.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 549d763f31324d846a4a5f505f637128
+    m_Address: Assets/MyAssets/Scenes/Story.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67af363078fcbb34ea730c389b4304fe
+    m_Address: Assets/MyAssets/Scenes/Title.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bb4b7611c869cc44b7accf49b378099
+    m_Address: Assets/MyAssets/Scenes/Result.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b92368a9825768c4c96dda6c8be97878
+    m_Address: Assets/MyAssets/Scenes/MIssion.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2534ad6c90a1044f822d7252aff04ad
+    m_Address: Assets/MyAssets/Scenes/pazzle.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f172796d807cb28408e0e208b7f4373f
+    m_Address: Assets/MyAssets/Scenes/BookUI_Manato.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 598256da295390b4cbd2053b4f1efd42, type: 2}
+    - {fileID: 11400000, guid: 90ef54631ac9bfd43adb09f99e67728e, type: 2}

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0e78e38e043674e9bdb959fa58a1da, type: 3}
-  m_Name: New Sound Service
+  m_Script: {fileID: 11500000, guid: b22f89e7ca58eef428159f03a405ee07, type: 3}
+  m_Name: SO_Scene
   m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
-  bgmGroup: {fileID: 0}
-  seGroup: {fileID: 0}
-  entries:
-  - key: 
-    clip: {fileID: 0}
-    type: 0
+  SceneName:
+  - Name: Title
+  - Name: Select
+  - Name: Story
+  - Name: MIssion
+  - Name: pazzle
+  - Name: Result
