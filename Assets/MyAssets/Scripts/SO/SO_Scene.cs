@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -6,28 +6,28 @@ using UnityEngine;
 
 
 
-namespace DB
+namespace SO
 {
-    [CreateAssetMenu(fileName = "DB_Scene", menuName = "Scriptable Objects/DB_Scene")]
+    [CreateAssetMenu(fileName = "SO_Scene", menuName = "Scriptable Objects/SO_Scene")]
 
     
-    public class DB_Scene : ScriptableObject
+    public class SO_Scene : ScriptableObject
     {
 
         #region QOL向上処理
         // CakeParamsSOが保存してある場所のパス
-        public const string PATH = "DB_Scene";
+        public const string PATH = "SO_Scene";
 
-        // CakeParamsDBの実体
-        private static DB_Scene _entity = null;
-        public static DB_Scene Entity
+        // CakeParamsSOの実体
+        private static SO_Scene _entity = null;
+        public static SO_Scene Entity
         {
             get
             {
                 // 初アクセス時にロードする
                 if (_entity == null)
                 {
-                    _entity = Resources.Load<DB_Scene>(PATH);
+                    _entity = Resources.Load<SO_Scene>(PATH);
 
                     //ロード出来なかった場合はエラーログを表示
                     if (_entity == null)
@@ -41,7 +41,7 @@ namespace DB
         }
         #endregion
 
-        [Header("DB_Scene")] public List<SceneObj> SceneName;
+        [Header("SO_Scene")] public List<SceneObj> SceneName;
     }
     [Serializable]
     public class SceneObj

@@ -16,21 +16,12 @@ public class SceneTransitionManager : MonoBehaviour
     void Awake() { _cts = new(); }
     void OnDestroy() { _cts?.Cancel(); }
 
-    public async UniTask LoadSceneAsync(string addressableSceneKey, SceneTransitData.Payload payload)
+    public async UniTask LoadSceneAsync(AssetReference sceneRef, SceneTransitData.Payload p)
     {
-        if (transitData) transitData.payload = payload;
-
-        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-        var ct = linked.Token;
-
+        if (transitData) transitData.payload = p;
+        var ct = this.GetCancellationTokenOnDestroy();
         if (transition) await transition.PlayOutAsync(ct);
-
-        // SceneInstance は ResourceProviders 名前空間にあります
-        AsyncOperationHandle<SceneInstance> handle =
-            Addressables.LoadSceneAsync(addressableSceneKey, LoadSceneMode.Single, true);
-
-        await handle.Task;
-
+        await Addressables.LoadSceneAsync(sceneRef, LoadSceneMode.Single, true).Task;
         if (transition) await transition.PlayInAsync(ct);
     }
 

@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9014568801856628082}
-  - component: {fileID: 5784820581131560225}
   - component: {fileID: 9184510250535687616}
+  - component: {fileID: 5949541651362180825}
+  - component: {fileID: 7558889176382720155}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -33,23 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5784820581131560225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780513436681083793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d634f23a20db55b4a8a3bc93f4accb3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dbScene: {fileID: 11400000, guid: 47df31a5868b4584198d9713f3168cca, type: 2}
-  transitionController: {fileID: 9184510250535687616}
-  transitionButtons:
-  - {fileID: 0}
-  transitionMaterialIndex: 0
 --- !u!114 &9184510250535687616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +46,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da29ae9739d5528418ec2d098c33249b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionMaterials:
-  - {fileID: 2100000, guid: 4588005b52437654d9a7d99576ed8769, type: 2}
-  transitionDuration: 1.2
+  overlay: {fileID: 0}
+  transitionMats:
+  - {fileID: 2100000, guid: 1ff2b9a3a23fbac438e8514b0e35ce80, type: 2}
+  durationIn: 0.6
+  durationOut: 0.6
+--- !u!114 &5949541651362180825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780513436681083793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726d1b01d8aa69b43bfe20b567d74d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition: {fileID: 9184510250535687616}
+  transitData: {fileID: 11400000, guid: a84dd1f24630104448abf1e964367045, type: 2}
+--- !u!114 &7558889176382720155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780513436681083793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa114220f955e44eaca770cf7fca065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionManager: {fileID: 5949541651362180825}
+  transitionFX: {fileID: 9184510250535687616}
+  transitData: {fileID: 11400000, guid: a84dd1f24630104448abf1e964367045, type: 2}
+  sceneCatalog: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
+  btnStartGame: {fileID: 0}
+  btnBackTitle: {fileID: 0}
+  btnFadeDemo: {fileID: 0}
+  btnLoadAsset: {fileID: 0}
+  btnUnloadAsset: {fileID: 0}
+  prefabRef:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  sceneRef:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  spawnRoot: {fileID: 0}

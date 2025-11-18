@@ -13,85 +13,31 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Title
+  - displayName: SceneAddressCatalog
+    scenePath: 
+  - displayName: Scene Address Catalog
+    scenePath: 
+  - displayName: Manager
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Scripts
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: TransitionEffectController
     scenePath: 
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: SoundManager
-    scenePath: 
-  - displayName: PieceController
-    scenePath: 
-  - displayName: InputSystem_Actions
-    scenePath: 
-  - displayName: GridManager
-    scenePath: 
-  - displayName: GameController
-    scenePath: 
-  - displayName: EnemyManager
-    scenePath: 
-  - displayName: UI
-    scenePath: 
-  - displayName: SO
-    scenePath: 
-  - displayName: old
-    scenePath: 
-  - displayName: Game
-    scenePath: 
-  - displayName: SceneTransitionManager
-    scenePath: 
-  - displayName: BattleSpeedService
-    scenePath: 
-  - displayName: BattleSpeedEntry
+  - displayName: PartnerCommentCatalog
     scenePath: 
   - displayName: AddressableUtil
     scenePath: 
   - displayName: FrameWork
     scenePath: 
-  - displayName: BookUI_Manato
-    scenePath: Assets/MyAssets/Scenes/BookUI_Manato.unity
-  - displayName: Scenes
+  - displayName: EnemyManager
     scenePath: 
-  - displayName: Resources
+  - displayName: Book(EndLog)
     scenePath: 
-  - displayName: Prefab
+  - displayName: Book(Enemy)
     scenePath: 
-  - displayName: Materials
+  - displayName: Book(StartLog)
     scenePath: 
-  - displayName: SpawnLine
+  - displayName: DOTweenSettings
     scenePath: 
-  - displayName: Text (TMP)
+  - displayName: Scene Transit Data
     scenePath: 
-  - displayName: ParentProposalLine
-    scenePath: 
-  - displayName: ValueManagement
-    scenePath: 
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: IsGameClear
-    scenePath: 
-  - displayName: Script
-    scenePath: 
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: ValueManagement
-    scenePath: 
-  - displayName: ValueManagement
-    scenePath: 
-  - displayName: KTest
-    scenePath: Assets/Komiya/Scene/KTest.unity
-  - displayName: MissionTest
-    scenePath: Assets/Komiya/Scene/MissionTest.unity

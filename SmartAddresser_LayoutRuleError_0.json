@@ -1,0 +1,26 @@
+{
+    "addressRuleErrors": [
+        {
+            "addressRuleId": "650e83a8-56d4-477d-b9aa-51883102c24d",
+            "addressableAssetGroupGuid": "d0530de03e7e58545aa88e39f08ba8ab",
+            "addressableAssetGroupName": "Audio_BGM",
+            "assetGroupErrors": [
+                {
+                    "assetGroupId": "82f50c78-7774-4ba4-bb3f-d13605405da8",
+                    "assetGroupName": "Default Asset Group",
+                    "assetFilterErrors": [
+                        {
+                            "assetFilterId": "8fbc7587-2d88-4a05-b6b9-77e76a2ddae4",
+                            "assetFilterTypeName": "ObjectBasedAssetFilter",
+                            "errorMessages": [
+                                "There are null reference objects."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "labelRuleErrors": [],
+    "versionRuleErrors": []
+}

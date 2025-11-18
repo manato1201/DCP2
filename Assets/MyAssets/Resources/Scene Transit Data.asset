@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22f89e7ca58eef428159f03a405ee07, type: 3}
-  m_Name: DB_Scene
+  m_Script: {fileID: 11500000, guid: 0429cbd07525c4a47ab214a8493e7e78, type: 3}
+  m_Name: Scene Transit Data
   m_EditorClassIdentifier: 
-  SceneName:
-  - Name: MIssion
-  - Name: pazzle
+  payload:
+    key: 
+    intVal: 0
+    floatVal: 0
+    strVal: 
