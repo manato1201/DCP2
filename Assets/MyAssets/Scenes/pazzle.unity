@@ -627,6 +627,7 @@ MonoBehaviour:
   piecePrefabs: []
   piecesContainer: {fileID: 609615792}
   pieceCount: 0
+  valueManagement: {fileID: 11400000, guid: aab92cb885beac749b2dd20b3819e973, type: 2}
 --- !u!114 &398629143
 MonoBehaviour:
   m_ObjectHideFlags: 0

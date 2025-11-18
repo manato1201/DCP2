@@ -29,7 +29,7 @@ MonoBehaviour:
     scenePath: 
   - displayName: FrameWork
     scenePath: 
-  - displayName: Scripts
+  - displayName: EnemyManager
     scenePath: 
   - displayName: Book(EndLog)
     scenePath: 

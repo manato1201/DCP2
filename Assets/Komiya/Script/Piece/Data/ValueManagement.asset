@@ -21,3 +21,5 @@ MonoBehaviour:
   WhatDay: 1
   ChildMission: 2
   ParentMission: 2
+  SetTimer: 10
+  LimitTime: 0
