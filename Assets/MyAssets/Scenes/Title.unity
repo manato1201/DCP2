@@ -981,7 +981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: matDur
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: overlay
@@ -989,7 +989,7 @@ PrefabInstance:
       objectReference: {fileID: 866514446}
     - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: overlayFadeDur
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: transitionMatPrototypes.Array.size

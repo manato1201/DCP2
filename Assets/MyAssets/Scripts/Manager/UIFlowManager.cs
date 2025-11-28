@@ -21,9 +21,8 @@ public sealed class UIFlowManager : MonoBehaviour
     [SerializeField] private Button btnGame;
     [SerializeField] private Button btnResult;
 
-     [SerializeField] private Button btnFadeDemo;     // トランジション手動再生
-    // [SerializeField] private Button btnLoadAsset;    // Addressableロード
-    // [SerializeField] private Button btnUnloadAsset;  // Addressable解放
+
+
 
     [Header("Addressables Asset")]
     [SerializeField] private AssetReferenceGameObject prefabRef; // 任意のプレハブ参照
@@ -47,9 +46,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (btnStory) btnStory.onClick.AddListener(OnClick_Story);
         if (btnGame) btnGame.onClick.AddListener(OnClick_Game);
         if (btnResult) btnResult.onClick.AddListener(OnClick_Result);
-        // if (btnFadeDemo) btnFadeDemo.onClick.AddListener(OnClick_FadeDemo);
-        // if (btnLoadAsset) btnLoadAsset.onClick.AddListener(OnClick_LoadAsset);
-        // if (btnUnloadAsset) btnUnloadAsset.onClick.AddListener(OnClick_UnloadAsset);
+
     }
 
     void OnDisable()
@@ -60,9 +57,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (btnStory) btnStory.onClick.RemoveListener(OnClick_Story);
         if (btnGame) btnGame.onClick.RemoveListener(OnClick_Game);
         if (btnResult) btnResult.onClick.RemoveListener(OnClick_Result);
-        // if (btnFadeDemo) btnFadeDemo.onClick.RemoveListener(OnClick_FadeDemo);
-        // if (btnLoadAsset) btnLoadAsset.onClick.RemoveListener(OnClick_LoadAsset);
-        // if (btnUnloadAsset) btnUnloadAsset.onClick.RemoveListener(OnClick_UnloadAsset);
+
     }
 
     void OnDestroy()
@@ -82,9 +77,7 @@ public sealed class UIFlowManager : MonoBehaviour
     void OnClick_Game() => GameAsync().Forget();
     void OnClick_Result() => ResultAsync().Forget();
 
-    //void OnClick_FadeDemo() => FadeDemoAsync().Forget();
-    void OnClick_LoadAsset() => LoadAssetAsync().Forget();
-    void OnClick_UnloadAsset() => UnloadAsset();
+
 
     // -----------------------------
     // Scene: 遷移（Addressablesシーン）
@@ -95,8 +88,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "from", isFade = false };
-        //await transitionManager.LoadSceneAsync(sceneCatalog.TitleScene.Address, payload);
-        //FadeDemoAsync().Forget();
+
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), payload);
         UnloadAsset();
     }
@@ -105,8 +97,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "from",  isFade = false };
-        //await transitionManager.LoadSceneAsync(sceneCatalog.TitleScene.Address, payload);
-        //FadeDemoAsync().Forget();
+
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Select), payload);
         UnloadAsset();
     }
@@ -115,8 +106,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "from",  isFade = false };
-        //await transitionManager.LoadSceneAsync(sceneCatalog.TitleScene.Address, payload);
-        //FadeDemoAsync().Forget();
+
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), payload);
         UnloadAsset();
     }
@@ -125,8 +115,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "stage",  isFade = false };
-        //await transitionManager.LoadSceneAsync(sceneCatalog.GameScene.Address, payload);
-        //FadeDemoAsync().Forget();
+
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Puzzle), payload);
         UnloadAsset();
     }
@@ -135,27 +124,12 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "stage",  isFade = true };
-        //await transitionManager.LoadSceneAsync(sceneCatalog.GameScene.Address, payload);
-        //FadeDemoAsync().Forget();
+
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Result), payload);
         UnloadAsset();
     }
 
 
-
-
-    // -----------------------------
-    // Transition: 手動再生（In/Out）
-    // -----------------------------
-    // async UniTaskVoid FadeDemoAsync()
-    // {
-    //     if (transitionFX == null) return;
-    //     var ct = this.GetCancellationTokenOnDestroy();
-    //     await transitionFX.PlayInAsync(ct);                  // 画面明転
-    //     await UniTask.Delay(600, cancellationToken: ct);     // 何らかの処理
-    //
-    //     await transitionFX.PlayOutAsync(ct);                 // 画面暗転
-    // }
 
     // -----------------------------
     // Addressables: アセットのロード/解放

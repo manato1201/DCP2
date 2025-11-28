@@ -15,6 +15,18 @@ MonoBehaviour:
   items:
   - displayName: Manager
     scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Title.unity
   - displayName: EventSystem
     scenePath: Assets/MyAssets/Scenes/Title.unity
   - displayName: Manager
@@ -31,9 +43,3 @@ MonoBehaviour:
     scenePath: Assets/MyAssets/Scenes/Select.unity
   - displayName: Image
     scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Scene Transit Data
-    scenePath: 
-  - displayName: Sound Service
-    scenePath: 
