@@ -17,3 +17,4 @@ MonoBehaviour:
     intVal: 0
     floatVal: 0
     strVal: 
+    isFade: 0

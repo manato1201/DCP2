@@ -13,31 +13,27 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: SceneAddressCatalog
-    scenePath: 
-  - displayName: Scene Address Catalog
-    scenePath: 
   - displayName: Manager
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Canvas
+  - displayName: EventSystem
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: TransitionEffectController
-    scenePath: 
-  - displayName: PartnerCommentCatalog
-    scenePath: 
-  - displayName: AddressableUtil
-    scenePath: 
-  - displayName: FrameWork
-    scenePath: 
-  - displayName: EnemyManager
-    scenePath: 
-  - displayName: Book(EndLog)
-    scenePath: 
-  - displayName: Book(Enemy)
-    scenePath: 
-  - displayName: Book(StartLog)
-    scenePath: 
-  - displayName: DOTweenSettings
-    scenePath: 
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Image
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Button (2)
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Image
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
   - displayName: Scene Transit Data
+    scenePath: 
+  - displayName: Sound Service
     scenePath: 

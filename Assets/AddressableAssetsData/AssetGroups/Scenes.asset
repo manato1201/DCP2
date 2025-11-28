@@ -46,7 +46,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f172796d807cb28408e0e208b7f4373f
-    m_Address: Assets/MyAssets/Scenes/BookUI_Manato.unity
+    m_Address: Assets/MyAssets/Scenes/BookUI.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
