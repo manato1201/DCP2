@@ -45,43 +45,133 @@ using UnityEngine.UI;
 
 public class TransitionEffectController : MonoBehaviour
 {
-    [Header("Mask/Overlay")]
-    [SerializeField] private Image overlay;                 // 全画面フェード
-    [SerializeField] private List<Material> transitionMats; // _Value を使うマテリアル群
-    [SerializeField] private float durationIn = 0.6f;
-    [SerializeField] private float durationOut = 0.6f;
-    readonly int PID_Value = Shader.PropertyToID("_Value");
+    [Header("Overlay (全画面Image/TMP)")]
+    [SerializeField] private Graphic overlay;
+    [SerializeField] private bool useOverlayFade = true;     // αフェードを使うか
+    [SerializeField] private float overlayFadeDur = 0.3f;    // αアニメ時間
 
-    CancellationTokenSource _cts;
+    [Header("マテリアル演出 (_Value を 0⇄1)")]
+    [SerializeField] private bool useMaterialAnimation = true;
+    [SerializeField] private Material[] transitionMatPrototypes;
+    [SerializeField] private float matDur = 0.6f;
+    [SerializeField] private bool instantiateMaterials = true;
 
-    void Awake() { _cts = new(); InstantiateMaterials(); }
-    void OnDestroy() { _cts?.Cancel(); }
+    private static readonly int PID_VALUE = Shader.PropertyToID("_Value");
+    private Material[] _mats;
 
-    void InstantiateMaterials()
+    void Awake()
     {
-        for (int i = 0; i < transitionMats.Count; i++)
-            if (transitionMats[i]) transitionMats[i] = new Material(transitionMats[i]); // 共有副作用防止
+        // マテリアルは共有を汚さない
+        if (transitionMatPrototypes != null && transitionMatPrototypes.Length > 0)
+        {
+            _mats = new Material[transitionMatPrototypes.Length];
+            for (int i = 0; i < transitionMatPrototypes.Length; i++)
+            {
+                var src = transitionMatPrototypes[i];
+                _mats[i] = (instantiateMaterials && src) ? new Material(src) : src;
+                if (_mats[i]) _mats[i].SetFloat(PID_VALUE, 0f); // 初期は“明転側”
+            }
+        }
+
+        // Overlay初期は明転（α=0）
+        if (overlay)
+        {
+            var c = overlay.color; c.a = 0f; overlay.color = c;
+            overlay.material = null; // 初期は未割当
+        }
     }
 
-    public async UniTask PlayInAsync(CancellationToken external)
+    /// <summary>
+    /// 暗転：(_Value 0→1) →（必要ならα 0→1）
+    /// </summary>
+    public async UniTask PlayOutAsync(CancellationToken ct, int matIndex = 0)
     {
-        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, external);
-        var ct = linked.Token;
+        if (overlay == null) return;
 
-        var tasks = new List<UniTask>();
-        if (overlay) tasks.Add(UiAnimationLibrary.FadeGraphicAsync(overlay, 0f, durationIn, ct));
-        foreach (var m in transitionMats) if (m) tasks.Add(UiAnimationLibrary.MaterialFloatAsync(m, PID_Value, 0f, durationIn, ct));
-        await UniTask.WhenAll(tasks);
+        // まず見える状態に（α=1に即時設定：ここは“見せる”ための固定）
+        SetOverlayAlpha(1f);
+
+        // マテリアル演出 0→1
+        if (useMaterialAnimation)
+        {
+            var mat = GetMat(matIndex);
+            if (mat)
+            {
+                AssignOverlayMaterial(mat);
+                mat.SetFloat(PID_VALUE, 0f);
+                await UiAnimationLibrary.MaterialFloatAsync(mat, PID_VALUE, 1f, matDur, ct);
+            }
+        }
+
+        // 追加のαフェード（必要な場合のみ。ここは0→1のアニメ）
+        if (useOverlayFade)
+        {
+            await UiAnimationLibrary.FadeGraphicAsync(overlay, 1f, overlayFadeDur, ct); // ★ αアニメ（フェード）
+        }
     }
 
-    public async UniTask PlayOutAsync(CancellationToken external)
+    /// <summary>
+    /// 明転：(_Value 1→0) → α 1→0
+    /// </summary>
+    public async UniTask PlayInAsync(CancellationToken ct, int matIndex = 0)
     {
-        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, external);
-        var ct = linked.Token;
+        if (overlay == null) return;
 
-        var tasks = new List<UniTask>();
-        if (overlay) tasks.Add(UiAnimationLibrary.FadeGraphicAsync(overlay, 1f, durationOut, ct));
-        foreach (var m in transitionMats) if (m) tasks.Add(UiAnimationLibrary.MaterialFloatAsync(m, PID_Value, 1f, durationOut, ct));
-        await UniTask.WhenAll(tasks);
+        // マテリアル演出 1→0
+        if (useMaterialAnimation)
+        {
+            var mat = GetMat(matIndex);
+            if (mat)
+            {
+                AssignOverlayMaterial(mat);
+                mat.SetFloat(PID_VALUE, 1f);
+                await UiAnimationLibrary.MaterialFloatAsync(mat, PID_VALUE, 0f, matDur, ct);
+            }
+        }
+
+        // αを下げて画面復帰（ここがフェードアウト＝透明にする処理）
+        if (useOverlayFade)
+        {
+            await UiAnimationLibrary.FadeGraphicAsync(overlay, 0f, overlayFadeDur, ct); // ★ αアニメ（フェード）
+        }
+        else
+        {
+            SetOverlayAlpha(0f);
+        }
+
+        // 終了後はマテリアルを外す（任意）
+        //AssignOverlayMaterial(null);
+    }
+
+    public void PrepareForPlayIn()
+    {
+        // 黒で覆う（α=1）
+        if (overlay) {
+            var c = overlay.color; c.a = 1f; overlay.color = c;
+        }
+        // マテリアル側も1に
+        if (_mats != null) foreach (var m in _mats) if (m) m.SetFloat(PID_VALUE, 1f);
+
+        // オーバーレイにマテリアルを割り当て（必要なら0番など）
+        AssignOverlayMaterial(GetMat(0));
+    }
+
+    // -------------------- helpers --------------------
+    private Material GetMat(int index)
+    {
+        if (_mats == null || _mats.Length == 0) return null;
+        index = Mathf.Clamp(index, 0, _mats.Length - 1);
+        return _mats[index];
+    }
+
+    private void AssignOverlayMaterial(Material mat)
+    {
+        overlay.material = mat;       // UIはPropertyBlock不可。直接差し替え
+        overlay.SetMaterialDirty();
+    }
+
+    private void SetOverlayAlpha(float a)
+    {
+        var c = overlay.color; c.a = a; overlay.color = c;
     }
 }

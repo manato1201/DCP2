@@ -649,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -924,6 +924,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
     - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: btnTitle
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: btnSelect
+      value: 
+      objectReference: {fileID: 1120641646}
+    - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: btnFadeDemo
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: btnStartGame
       value: 
       objectReference: {fileID: 1120641646}
@@ -968,9 +980,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: matDur
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: overlay
       value: 
       objectReference: {fileID: 866514446}
+    - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: overlayFadeDur
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: transitionMatPrototypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184510250535687616, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: 'transitionMatPrototypes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ff2b9a3a23fbac438e8514b0e35ce80, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

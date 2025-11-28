@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public enum SceneId { Title, Select, Story, Mission, Puzzle, Result }
+public enum SceneId { Title, Select,BookUI, Story, Mission, Puzzle, Result }
 
 [CreateAssetMenu(menuName = "Config/SceneAddressCatalog")]
 public sealed class SceneAddressCatalog : ScriptableObject

@@ -47,10 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlay: {fileID: 0}
-  transitionMats:
+  overlayFadeDur: 0.3
+  transitionMatPrototypes:
   - {fileID: 2100000, guid: 1ff2b9a3a23fbac438e8514b0e35ce80, type: 2}
-  durationIn: 0.6
-  durationOut: 0.6
+  shaderFloatName: _Value
+  matDur: 0.6
+  instantiateMaterials: 1
 --- !u!114 &5949541651362180825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,12 +82,13 @@ MonoBehaviour:
   transitionManager: {fileID: 5949541651362180825}
   transitionFX: {fileID: 9184510250535687616}
   transitData: {fileID: 11400000, guid: a84dd1f24630104448abf1e964367045, type: 2}
-  sceneCatalog: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
-  btnStartGame: {fileID: 0}
-  btnBackTitle: {fileID: 0}
+  catalog: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
+  btnTitle: {fileID: 0}
+  btnSelect: {fileID: 0}
+  btnStory: {fileID: 0}
+  btnGame: {fileID: 0}
+  btnResult: {fileID: 0}
   btnFadeDemo: {fileID: 0}
-  btnLoadAsset: {fileID: 0}
-  btnUnloadAsset: {fileID: 0}
   prefabRef:
     m_AssetGUID: 
     m_SubObjectName: 

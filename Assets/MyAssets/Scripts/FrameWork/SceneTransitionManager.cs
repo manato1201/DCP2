@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -16,13 +17,30 @@ public class SceneTransitionManager : MonoBehaviour
     void Awake() { _cts = new(); }
     void OnDestroy() { _cts?.Cancel(); }
 
+    private void Start()
+    {
+        if (transition == null || transitData == null) return;
+
+        var p = GetPayloadAs<SceneTransitData.Payload>(transitData);
+        if (!p.isFade)
+        {
+            Debug.Log("明転");
+            transition.PrepareForPlayIn();
+            transition.PlayInAsync(CancellationToken.None).Forget();
+        }
+
+        // 使い捨て：読み終えたら初期化（次遷移に持ち越さない）
+        transitData.payload = default;
+    }
+
     public async UniTask LoadSceneAsync(AssetReference sceneRef, SceneTransitData.Payload p)
     {
         if (transitData) transitData.payload = p;
         var ct = this.GetCancellationTokenOnDestroy();
+        Debug.Log("暗転");
         if (transition) await transition.PlayOutAsync(ct);
         await Addressables.LoadSceneAsync(sceneRef, LoadSceneMode.Single, true).Task;
-        if (transition) await transition.PlayInAsync(ct);
+        //if (transition) await transition.PlayInAsync(ct);
     }
 
     public static T GetPayloadAs<T>(SceneTransitData data) where T : struct
