@@ -13,33 +13,41 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Prefab
+    scenePath: 
+  - displayName: Sound
+    scenePath: 
+  - displayName: Scenes
+    scenePath: 
+  - displayName: Editor
+    scenePath: 
+  - displayName: MyAssets
+    scenePath: 
+  - displayName: SE
+    scenePath: 
   - displayName: Title
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
   - displayName: Select
     scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: MessageBox
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Image
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Title
     scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Image
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Button (2)
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Image
-    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Scenes
+    scenePath: 

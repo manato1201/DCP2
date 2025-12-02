@@ -74,9 +74,9 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Seed: 10
-    - _Size: 43.1
-    - _Smoothing: 0.00001
+    - _Seed: 9.08
+    - _Size: 14.94
+    - _Smoothing: 0.11
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -85,7 +85,7 @@ Material:
     - _Value: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 0, g: 0.69803923, b: 0.6557733, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
