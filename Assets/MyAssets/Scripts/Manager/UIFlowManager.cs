@@ -18,6 +18,7 @@ public sealed class UIFlowManager : MonoBehaviour
     [SerializeField] private Button btnTitle;
     [SerializeField] private Button btnSelect;
     [SerializeField] private Button btnStory;
+    [SerializeField] private Button btnBook;
     [SerializeField] private Button btnGame;
     [SerializeField] private Button btnResult;
 
@@ -44,6 +45,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (btnTitle) btnTitle.onClick.AddListener(OnClick_Title);
         if (btnSelect) btnSelect.onClick.AddListener(OnClick_Select);
         if (btnStory) btnStory.onClick.AddListener(OnClick_Story);
+        if (btnBook) btnBook.onClick.AddListener(OnClick_Book);
         if (btnGame) btnGame.onClick.AddListener(OnClick_Game);
         if (btnResult) btnResult.onClick.AddListener(OnClick_Result);
 
@@ -55,6 +57,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (btnTitle) btnTitle.onClick.RemoveListener(OnClick_Title);
         if (btnSelect) btnSelect.onClick.RemoveListener(OnClick_Select);
         if (btnStory) btnStory.onClick.RemoveListener(OnClick_Story);
+        if (btnBook) btnBook.onClick.RemoveListener(OnClick_Book);
         if (btnGame) btnGame.onClick.RemoveListener(OnClick_Game);
         if (btnResult) btnResult.onClick.RemoveListener(OnClick_Result);
 
@@ -74,6 +77,7 @@ public sealed class UIFlowManager : MonoBehaviour
     void OnClick_Title() => TitleAsync().Forget();
     void OnClick_Select() => SelectAsync().Forget();
     void OnClick_Story() => StoryAsync().Forget();
+    void OnClick_Book() => BookAsync().Forget();
     void OnClick_Game() => GameAsync().Forget();
     void OnClick_Result() => ResultAsync().Forget();
 
@@ -108,6 +112,16 @@ public sealed class UIFlowManager : MonoBehaviour
         var payload = new SceneTransitData.Payload { key = "from",  isFade = false };
 
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), payload);
+        UnloadAsset();
+    }
+
+    async UniTaskVoid BookAsync()
+    {
+        if (transitionManager == null ) return;
+        LoadAssetAsync().Forget();
+        var payload = new SceneTransitData.Payload { key = "from",  isFade = false };
+
+        await transitionManager.LoadSceneAsync(catalog.Get(SceneId.BookUI), payload);
         UnloadAsset();
     }
     async UniTaskVoid GameAsync()

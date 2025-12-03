@@ -843,6 +843,10 @@ PrefabInstance:
       value: Manager
       objectReference: {fileID: 0}
     - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: btnBook
+      value: 
+      objectReference: {fileID: 61774994}
+    - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: catalog
       value: 
       objectReference: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
