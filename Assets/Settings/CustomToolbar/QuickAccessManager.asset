@@ -13,6 +13,68 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
+  - displayName: Archive
+    scenePath: 
+  - displayName: Scene
+    scenePath: 
+  - displayName: KTest
+    scenePath: Assets/Komiya/Archive/Scene/KTest.unity
+  - displayName: MissionTest
+    scenePath: Assets/Komiya/Archive/Scene/MissionTest.unity
+  - displayName: Script
+    scenePath: 
+  - displayName: Piece
+    scenePath: 
+  - displayName: Data
+    scenePath: 
+  - displayName: ShapeData
+    scenePath: 
+  - displayName: ValueManagement
+    scenePath: 
+  - displayName: ChildClickForwarder
+    scenePath: 
+  - displayName: ChildProposalLine
+    scenePath: 
+  - displayName: InstantiatePiece
+    scenePath: 
+  - displayName: ParentProposalLine
+    scenePath: 
+  - displayName: Piece
+    scenePath: 
+  - displayName: PieceHandler
+    scenePath: 
+  - displayName: PieceInvoker
+    scenePath: 
+  - displayName: SetProposaler
+    scenePath: 
+  - displayName: Text (TMP)
+    scenePath: 
+  - displayName: DayManagement
+    scenePath: 
+  - displayName: DebugParameter
+    scenePath: 
+  - displayName: NomalCellProducer
+    scenePath: 
+  - displayName: MIssionProcedure
+    scenePath: 
+  - displayName: MissionCell
+    scenePath: 
+  - displayName: Mission
+    scenePath: 
+  - displayName: CellData
+    scenePath: 
+  - displayName: Archive
+    scenePath: 
+  - displayName: Komiya
+    scenePath: 
+  - displayName: Scene
+    scenePath: 
+  - displayName: KTest
+    scenePath: Assets/Komiya/Scene/KTest.unity
+  - displayName: MissionTest
+    scenePath: Assets/Komiya/Scene/MissionTest.unity
+  - displayName: MissionCell
+    scenePath: 
   - displayName: Prefab
     scenePath: 
   - displayName: Sound
@@ -20,34 +82,4 @@ MonoBehaviour:
   - displayName: Scenes
     scenePath: 
   - displayName: Editor
-    scenePath: 
-  - displayName: MyAssets
-    scenePath: 
-  - displayName: SE
-    scenePath: 
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: MessageBox
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Image
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Scenes
     scenePath: 
