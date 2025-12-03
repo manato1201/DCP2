@@ -47,11 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlay: {fileID: 0}
-  overlayFadeDur: 0.3
+  useOverlayFade: 1
+  overlayFadeDur: 0.6
+  useMaterialAnimation: 1
   transitionMatPrototypes:
-  - {fileID: 2100000, guid: 1ff2b9a3a23fbac438e8514b0e35ce80, type: 2}
-  shaderFloatName: _Value
-  matDur: 0.6
+  - {fileID: 2100000, guid: d07a36b24e04ff145b7412ee0cbc6c68, type: 2}
+  matDur: 1.2
   instantiateMaterials: 1
 --- !u!114 &5949541651362180825
 MonoBehaviour:
@@ -86,9 +87,9 @@ MonoBehaviour:
   btnTitle: {fileID: 0}
   btnSelect: {fileID: 0}
   btnStory: {fileID: 0}
+  btnBook: {fileID: 0}
   btnGame: {fileID: 0}
   btnResult: {fileID: 0}
-  btnFadeDemo: {fileID: 0}
   prefabRef:
     m_AssetGUID: 
     m_SubObjectName: 
