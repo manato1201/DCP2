@@ -1,16 +1,16 @@
 {
     "addressRuleErrors": [
         {
-            "addressRuleId": "650e83a8-56d4-477d-b9aa-51883102c24d",
-            "addressableAssetGroupGuid": "d0530de03e7e58545aa88e39f08ba8ab",
-            "addressableAssetGroupName": "Audio_BGM",
+            "addressRuleId": "76cc13ef-b563-4cb1-ab27-829992b63337",
+            "addressableAssetGroupGuid": "802f91ce4af5ae2429c92d367c162f97",
+            "addressableAssetGroupName": "Log",
             "assetGroupErrors": [
                 {
-                    "assetGroupId": "82f50c78-7774-4ba4-bb3f-d13605405da8",
+                    "assetGroupId": "36b9b726-2339-4bf5-9779-faedbf675098",
                     "assetGroupName": "Default Asset Group",
                     "assetFilterErrors": [
                         {
-                            "assetFilterId": "8fbc7587-2d88-4a05-b6b9-77e76a2ddae4",
+                            "assetFilterId": "2a596ceb-4722-42db-bfa2-0d8fb5754123",
                             "assetFilterTypeName": "ObjectBasedAssetFilter",
                             "errorMessages": [
                                 "There are null reference objects."

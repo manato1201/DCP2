@@ -1431,7 +1431,12 @@ MonoBehaviour:
   - {fileID: 220017549}
   charInterval: 0.03
   obeyTimeScale: 1
-  textSoObject: {fileID: 0}
+  csvAsset:
+    m_AssetGUID: 7b695e5aee43717489dc5a89a93c4541
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!4 &1986998597
 Transform:
   m_ObjectHideFlags: 0
