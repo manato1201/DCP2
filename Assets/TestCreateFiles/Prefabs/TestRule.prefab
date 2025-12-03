@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &300435785232679402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 340463824537184257}
+  - component: {fileID: 3961897296304060669}
+  m_Layer: 0
+  m_Name: TestRule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &340463824537184257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300435785232679402}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3961897296304060669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300435785232679402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc433730ed43b34d896056ae2952737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridWidth: 5
+  gridHeight: 5
+  cellSize: 1
+  blockPiecePrefab: {fileID: 9040663012887635638, guid: b1f7d7152ae07ff4c889f9797d256791, type: 3}
+  gridCellPrefab: {fileID: 5889106339950076278, guid: 329a9481fb82ea74f8b672e6dd022e69, type: 3}
+  availableShapes:
+  - {fileID: 11400000, guid: 3940937b463566a41a2cb8e8fb03338f, type: 2}
+  shadowOffset: {x: 0, y: 0, z: 0}
+  shadowAlpha: 0
+  paletteSpawnSlots: []
