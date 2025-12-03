@@ -13,77 +13,29 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
+  - displayName: GameObject
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Shooter
+    scenePath: 
+  - displayName: piece
+    scenePath: 
+  - displayName: Shooter
+    scenePath: 
+  - displayName: ObjectPool
+    scenePath: 
   - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Transition_Rect
-    scenePath: 
-  - displayName: Image
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Title.unity
+    scenePath: Assets/MyAssets/Scenes/Story.unity
   - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Transition_Spread
     scenePath: 
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: AddressableAssetSettings
-    scenePath: 
-  - displayName: ProfileDataSourceSettings
-    scenePath: 
-  - displayName: DefaultObject
-    scenePath: 
-  - displayName: AddressableAssetGroupSortSettings
-    scenePath: 
-  - displayName: UI
+  - displayName: GameObject
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: FrameWork
     scenePath: 
   - displayName: TextManager
     scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: TextManager
+  - displayName: TextTemplateUtil
     scenePath: 
-  - displayName: Manager
+  - displayName: PartnerCommentCatalog
     scenePath: 
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: EnemyManager
+  - displayName: CommentFormatter
     scenePath: 
-  - displayName: PieceController
-    scenePath: 
-  - displayName: InputSystem_Actions
-    scenePath: 
-  - displayName: GridManager
-    scenePath: 
-  - displayName: GameController
-    scenePath: 
-  - displayName: Scripts
-    scenePath: 
-  - displayName: TextManager
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Prefab
-    scenePath: 
-  - displayName: Sound
-    scenePath: 
-  - displayName: Scenes
-    scenePath: 
-  - displayName: Editor
-    scenePath: 
-  - displayName: MyAssets
-    scenePath: 
-  - displayName: SE
-    scenePath: 
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
