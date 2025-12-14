@@ -13,29 +13,29 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: GameObject
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Shooter
+  - displayName: GridCell
     scenePath: 
-  - displayName: piece
+  - displayName: Block
     scenePath: 
-  - displayName: Shooter
+  - displayName: Group
     scenePath: 
-  - displayName: ObjectPool
-    scenePath: 
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Manager
-    scenePath: 
-  - displayName: GameObject
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: FrameWork
-    scenePath: 
-  - displayName: TextManager
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: TextTemplateUtil
-    scenePath: 
-  - displayName: PartnerCommentCatalog
-    scenePath: 
-  - displayName: CommentFormatter
-    scenePath: 
+  - displayName: 'Slot3 : sprite'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: 'Slot2 : sprite'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: 'Slot1 : sprite'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot1
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot2
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot1
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot2
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot3
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot1 (2)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Slot1 (1)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity

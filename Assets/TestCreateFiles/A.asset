@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3835dc6dfbce8b9419d90d0a73cf5fcc, type: 3}
   m_Name: A
   m_EditorClassIdentifier: 
-  ShapeCoordinates: []
+  ShapeCoordinates:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   blockElement: 0
