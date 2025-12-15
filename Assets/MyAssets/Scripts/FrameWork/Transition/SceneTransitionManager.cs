@@ -33,14 +33,24 @@ public class SceneTransitionManager : MonoBehaviour
         transitData.payload = default;
     }
 
-    public async UniTask LoadSceneAsync(AssetReference sceneRef, SceneTransitData.Payload p)
+    public async UniTask LoadSceneAsync(string address, SceneTransitData.Payload p)
     {
+        if (string.IsNullOrEmpty(address)) { Debug.LogError("[Addr] empty scene address"); return; }
         if (transitData) transitData.payload = p;
+
         var ct = this.GetCancellationTokenOnDestroy();
-        Debug.Log("暗転");
         if (transition) await transition.PlayOutAsync(ct);
-        await Addressables.LoadSceneAsync(sceneRef, LoadSceneMode.Single, true).Task;
-        //if (transition) await transition.PlayInAsync(ct);
+
+        await Addressables.InitializeAsync().Task; // 保険
+
+        var h = Addressables.LoadSceneAsync(address, LoadSceneMode.Single, true);
+        h.Completed += op =>
+        {
+            if (op.Status != AsyncOperationStatus.Succeeded)
+                Debug.LogError($"[Addr] LoadScene FAILED addr={address} ex={op.OperationException}");
+            else
+                Debug.Log($"[Addr] LoadScene OK addr={address}");
+        };
     }
 
     public static T GetPayloadAs<T>(SceneTransitData data) where T : struct

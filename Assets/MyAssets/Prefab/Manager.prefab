@@ -83,7 +83,7 @@ MonoBehaviour:
   transitionManager: {fileID: 5949541651362180825}
   transitionFX: {fileID: 9184510250535687616}
   transitData: {fileID: 11400000, guid: a84dd1f24630104448abf1e964367045, type: 2}
-  catalog: {fileID: 11400000, guid: d0b895a6cfcd4cf4e97f9813b73c0371, type: 2}
+  catalog: {fileID: 11400000, guid: 578dea7159f1f3e49a65565c17342e32, type: 2}
   btnTitle: {fileID: 0}
   btnSelect: {fileID: 0}
   btnStory: {fileID: 0}

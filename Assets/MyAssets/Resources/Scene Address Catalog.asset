@@ -14,44 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - id: 0
-    scene:
-      m_AssetGUID: 67af363078fcbb34ea730c389b4304fe
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    address: Assets/MyAssets/Scenes/Title.unity
   - id: 1
-    scene:
-      m_AssetGUID: 3473335aac13bab4a8e4fa1ee4740394
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    address: Assets/MyAssets/Scenes/Select.unity
   - id: 2
-    scene:
-      m_AssetGUID: f172796d807cb28408e0e208b7f4373f
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    address: Assets/MyAssets/Scenes/BookUI.unity
   - id: 3
-    scene:
-      m_AssetGUID: 549d763f31324d846a4a5f505f637128
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    address: Assets/MyAssets/Scenes/Story.unity
   - id: 5
-    scene:
-      m_AssetGUID: e2534ad6c90a1044f822d7252aff04ad
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
-  - id: 6
-    scene:
-      m_AssetGUID: 7bb4b7611c869cc44b7accf49b378099
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    address: Assets/MyAssets/Scenes/Puzzle.unity
