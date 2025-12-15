@@ -40,11 +40,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eac74598abe837745a9c40cf31f3d4dc
-    m_Address: Assets/MyAssets/Resources/EnemyLog.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
   m_SchemaSet:

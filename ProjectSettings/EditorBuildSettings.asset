@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MyAssets/Scenes/Result.unity
     guid: 7bb4b7611c869cc44b7accf49b378099
+  - enabled: 1
+    path: Assets/TestCreateFiles/Clear.unity
+    guid: 1d3100f1df8515643b636b0952a4eef7
+  - enabled: 1
+    path: Assets/TestCreateFiles/Over.unity
+    guid: 9f661093cbdc2c14881e273e45b98fe1
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 53bdbfaa1297a7f4db81b0f7fe61695f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

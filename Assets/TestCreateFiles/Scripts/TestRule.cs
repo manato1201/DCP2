@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Playables;
 
 public class TestRule : GridPuzzleBase
 {
     private PuzzleController controller;
-    //タイマー
-    [Header("Timer Settings")]
+    //ゲーム内の制限時間等
+    [Header("Limit Settings")]
     [SerializeField] private float timeLimit;
 
     //プレファブ
@@ -31,8 +32,8 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private float shadowAlpha;
 
     //オブジェクト親を設定するためのTransform
-    private Transform gridCellParent;
-    private Transform blocksParent;
+    [SerializeField] private Transform gridCellParent;
+    [SerializeField] private Transform blocksParent;
 
     //パレットの設置座標
     [Header("Pallete Settings")]
@@ -46,12 +47,36 @@ public class TestRule : GridPuzzleBase
 
     //どのスロットからドラッグ開始したか
     private int draggedSlotIndex = -1;
+
+    //制限ターン数
+    [SerializeField] private int limitTurn = 3;
+
+    [Header("Pool Settings")]
+    [SerializeField] private PrefabFactory groupFactory;
+    [SerializeField] private PrefabFactory pieceFactory;
+
+    private ObjectPool<BlockGroup> groupPool;
+    private ObjectPool<piece> piecePool;
+
+    //消去ライン数
+    private int clearedLine = 0;
+
+
+    [Header("Palette Settings")]
+    [SerializeField] private float paletteBlockScale = 0.6f; // 例: 60%のサイズにする
+
     #region インターフェース
     public override void Initialize(PuzzleController controller)
     {
         base.Initialize(controller);
 
         GameObject originObj = GameObject.FindWithTag("GridOrigin");
+
+        //オブジェクトプール
+        groupPool = new ObjectPool<BlockGroup>(groupFactory, initial: 3, max: 5);
+        piecePool = new ObjectPool<piece>(pieceFactory, initial: 20, max: 50);
+        groupPool.Prewarm();
+        piecePool.Prewarm();
 
         if (originObj != null)
         {
@@ -65,13 +90,23 @@ public class TestRule : GridPuzzleBase
 
         this.controller = controller;
 
-        //("GridCells"という名前の空オブジェクトを生成)
-        gridCellParent = new GameObject("GridCells").transform;
-        //("Blocks"という名前の空オブジェクトを生成)
-        blocksParent = new GameObject("Blocks").transform;
 
-        gridCellParent.SetParent(this.transform);
-        blocksParent.SetParent(this.transform);
+        // インスペクターで設定されていない場合のみ、自動生成する
+        if (gridCellParent == null)
+        {
+            GameObject cellObj = new GameObject("GridCells");
+            cellObj.transform.SetParent(this.transform);
+            cellObj.transform.localPosition = Vector3.zero; // 位置ズレ防止
+            gridCellParent = cellObj.transform;
+        }
+
+        if (blocksParent == null)
+        {
+            GameObject blockObj = new GameObject("Blocks");
+            blockObj.transform.SetParent(this.transform);
+            blockObj.transform.localPosition = Vector3.zero; // 位置ズレ防止
+            blocksParent = blockObj.transform;
+        }
 
         //背景グリッドを生成
         CreateVisualGrid();
@@ -114,7 +149,7 @@ public class TestRule : GridPuzzleBase
                 if (hitGroup.isPaletteBlock)
                 {
                     draggedBlockGroup = hitGroup;
-
+                    draggedBlockGroup.transform.localScale = Vector3.one;
                     //どのスロットから掴んだか記憶する
                     draggedSlotIndex = paletteSlotMap[hitGroup];
                 }
@@ -190,9 +225,11 @@ public class TestRule : GridPuzzleBase
 
                     // そのスロットに新しいブロックを補充する
                     SpawnRandomBlockInSlot(draggedSlotIndex);
+
+
                 }
 
-                Destroy(draggedBlockGroup.gameObject);
+                draggedBlockGroup.Release();
             }
             else
             {
@@ -203,6 +240,7 @@ public class TestRule : GridPuzzleBase
                     // パレットからで置けなかった場合、そのクローンは元の位置、回転に戻す
                     draggedBlockGroup.transform.position = blockOriginalPosition;
                     draggedBlockGroup.transform.rotation = blockOriginalRotation;
+                    draggedBlockGroup.transform.localScale = Vector3.one * paletteBlockScale;
                 }
                 else
                 {
@@ -295,8 +333,8 @@ public class TestRule : GridPuzzleBase
         // ---消去実行 ---
         if (linesClearedCount > 0)
         {
-            controller.AddClearScore(linesClearedCount * 100);
-
+            //controller.AddClearScore(linesClearedCount * 100);
+            clearedLine++;
             if (coordsToClear.Count > 0)
             {
                 Debug.Log("Clear!");
@@ -314,10 +352,20 @@ public class TestRule : GridPuzzleBase
                     {
                         // 親への通知
                         BlockGroup parentGroup = blockObj.GetComponentInParent<BlockGroup>();
-                        if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
+                        //if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
 
-                        
-                        Destroy(blockObj);
+                        var p = blockObj.GetComponent<piece>();
+                        if (p != null)
+                        {
+                            p.Release();    
+                        }
+                        else
+                        {
+                            blockObj.SetActive(false);
+                        }
+
+
+                            Destroy(blockObj);
 
                         gridVisuals[coord.x, coord.y] = null;
                     }
@@ -332,6 +380,8 @@ public class TestRule : GridPuzzleBase
         }
         return false;
     }
+
+    
 
     /// <summary>     
     /// ゲームオーバー処理
@@ -352,17 +402,38 @@ public class TestRule : GridPuzzleBase
         return timeLimit;
     }
 
+    public override int GetTurnLimit()
+    {
+        return limitTurn;
+    }
+
     /// <summary>
     /// タイマーが終了したときに呼び出される関数
     /// </summary>
     public override void OnTimerEnded()
     {
         Debug.Log("タイマーが終了しました。");
-
+        OnChainFinish();
     }
 
 
+    /// <summary>
+    /// パズルシーンから戦闘シーンに移行
+    /// </summary>
+    public override void ChangeGameStep()
+    {
+        int damage = clearedLine * 100; //現在の消去ライン数から算出
 
+        controller.SwitchToBattleRule(damage);
+    }
+
+    /// <summary>
+    /// パズルシーンの終了時に呼び出す
+    /// </summary>
+    public void OnChainFinish()
+    {
+        ChangeGameStep();
+    }
 
     #endregion
 
@@ -372,7 +443,6 @@ public class TestRule : GridPuzzleBase
     {
         if (gridCellPrefab == null) return; //プレファブがnullならなにもしない
 
-        Transform gridCellParent = new GameObject("GridCells").transform;
 
         for (int x = 0; x < gridWidth; x++)
         {
@@ -397,20 +467,18 @@ public class TestRule : GridPuzzleBase
     /// <param name="y"></param>
     private BlockGroup SpawnBlockAt(BlockShape shape, Vector3 worldPos)
     {
-        //BlockGroupの親オブジェクト
-        GameObject groupObj = new GameObject($"BlockGroup_{shape.name}");
-        groupObj.transform.position = worldPos;
-        groupObj.transform.SetParent(blocksParent);
+        BlockGroup newGroup = groupPool.Get();
 
-        //BlockGroupコンポーネントを追加し、欠片を生成
-        BlockGroup newGroup = groupObj.AddComponent<BlockGroup>();
+        // 【修正】先に初期化を行います（ここで一度位置がリセットされます）
+        newGroup.Initialize(shape, piecePool, blocksParent, this.cellSize);
 
+        // 【修正】初期化が終わった後に、本来置きたい位置で上書きします
+        newGroup.transform.position = worldPos;
 
-        newGroup.Initialize(shape, blockPiecePrefab, groupObj.transform);
+        newGroup.name = $"BlockGroup_{shape.name}";
 
         return newGroup;
     }
-
 
 
 
@@ -551,7 +619,7 @@ public class TestRule : GridPuzzleBase
         if (paletteGroups[slotIndex] != null)
         {
             paletteSlotMap.Remove(paletteGroups[slotIndex]);
-            Destroy(paletteGroups[slotIndex].gameObject);
+            paletteGroups[slotIndex].Release();
             paletteGroups[slotIndex] = null;
         }
 
@@ -559,7 +627,7 @@ public class TestRule : GridPuzzleBase
 
         Vector3 spawnPos = paletteSpawnSlots[slotIndex].position;
         BlockGroup newGroup = SpawnBlockAt(randomShape, spawnPos);
-
+        newGroup.transform.localScale = Vector3.one * paletteBlockScale;
         int colorId = (int)randomShape.blockElement + 1;
         foreach (GameObject blocks in newGroup.childBlocks)
         {
@@ -577,19 +645,27 @@ public class TestRule : GridPuzzleBase
     /// <param name="sourceGroup"></param>
     private void CreateShadow(BlockGroup sourceGroup, int rotationIndex)
     {
-        //本体を複製して影を作る
-        GameObject shadowObj = Instantiate(sourceGroup.gameObject, sourceGroup.transform.position, sourceGroup.transform.rotation, sourceGroup.transform);
-        shadowObj.name = "ShadowBlock";
-        shadowGroup = shadowObj.GetComponent<BlockGroup>();
+        shadowGroup = groupPool.Get();
+
+        // 【修正】先に初期化を行います
+        shadowGroup.Initialize(sourceGroup.shape, piecePool, sourceGroup.transform.parent, this.cellSize);
+
+        // 【修正】その後に位置と回転をコピーして上書きします
+        shadowGroup.transform.position = sourceGroup.transform.position;
+        shadowGroup.transform.rotation = sourceGroup.transform.rotation;
 
         shadowGroup.isPaletteBlock = false;
+        shadowGroup.name = "ShadowBlock";
 
-        foreach (Transform child in shadowObj.transform)
+        // 色を半透明にする処理（以下変更なし）
+        foreach (var childBlock in shadowGroup.childBlocks)
         {
-            Collider2D col = child.GetComponent<Collider2D>();
-            if (col != null) Destroy(col);
+            if (childBlock == null) continue;
 
-            SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+            Collider2D col = childBlock.GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
+            SpriteRenderer sr = childBlock.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
                 sr.color = new Color(0, 0, 0, shadowAlpha);
@@ -597,8 +673,6 @@ public class TestRule : GridPuzzleBase
             }
         }
     }
-
-
     /// <summary>
     /// 影を削除する
     /// </summary>
@@ -607,11 +681,10 @@ public class TestRule : GridPuzzleBase
     {
         if (shadowGroup != null)
         {
-            Destroy(shadowGroup.gameObject);
+            shadowGroup.Release();
             shadowGroup = null;
         }
     }
-
     /// <summary>
     /// blockIdに応じてgridCellの色を設定
     /// </summary>

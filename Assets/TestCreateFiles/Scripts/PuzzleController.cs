@@ -1,16 +1,32 @@
-using System.Runtime.CompilerServices;
-using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PuzzleController : MonoBehaviour
 {
-    //Œ»İg—p‚·‚éƒQ[ƒ€ƒ‹[ƒ‹
-    [SerializeField] private GameObject ruleObject;
+    //ç¾åœ¨ä½¿ç”¨ã™ã‚‹ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ«
+    [SerializeField] private GameObject ruleObject; //ãƒ‘ã‚ºãƒ«ãƒ«ãƒ¼ãƒ«
+
+    [SerializeField] private TestRule puzzleRule;   
+    [SerializeField] private BattleRule battleRule;   //ãƒãƒˆãƒ«ãƒ«ãƒ¼ãƒ«
+
+    [SerializeField] private GameObject puzzleParent;
+    [SerializeField] private GameObject battleParent;
 
     private IPuzzleRule currentRule;
     [SerializeField]private float currentTimer;
+    [SerializeField] private int currentTurn;
+
     private bool isTimerActive;
 
     public GameState currentState;
+
+    [SerializeField] private BattleUIManager uiManager;
+    [SerializeField] private UnitStatus targetEnemy;
+    [SerializeField] private bool isGameClear = false;
+    [SerializeField] private Slider timerSlider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,13 +36,17 @@ public class PuzzleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Debug.Log(currentRule.ToString());
+        }
         //OnControllerUpdate();
     }
 
-    //---ƒ{ƒ^ƒ“QÆ---
+    //---ãƒœã‚¿ãƒ³å‚ç…§---
 
     /// <summary>
-    /// ƒ{ƒ^ƒ“‚ÅŒÄ‚Ño‚·‚±‚Æ‚ğ‘z’è‚µ‚½AƒuƒƒbƒN‚Ì‰ñ“]ƒƒ\ƒbƒh
+    /// ãƒœã‚¿ãƒ³ã§å‘¼ã³å‡ºã™ã“ã¨ã‚’æƒ³å®šã—ãŸã€ãƒ–ãƒ­ãƒƒã‚¯ã®å›è»¢ãƒ¡ã‚½ãƒƒãƒ‰
     /// </summary>
     /// <param name="index"></param>
     public void OnRotateButtonPressed(int index)
@@ -37,56 +57,116 @@ public class PuzzleController : MonoBehaviour
     }
 
     /// <summary>
-    /// Start‚ÅŒÄ‚Ño‚µ
+    /// Startã§å‘¼ã³å‡ºã—
     /// </summary>
     public void OnControllerStart()
     {
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
+
         if (currentRule == null)
         {
-            Debug.LogError("ruleObject‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI :PuzzleController");
+            Debug.LogError("ruleObjectãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ï¼ :PuzzleController");
             return;
         }
+
+        float limit = currentRule.GetTimeLimit();
+        if (limit > 0)
+        {
+            currentTimer = limit;
+            isTimerActive = true;
+
+            // â˜…è¿½åŠ : ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã®æœ€å¤§å€¤ã¨ç¾åœ¨å€¤ã‚’è¨­å®š
+            if (timerSlider != null)
+            {
+                timerSlider.maxValue = limit;
+                timerSlider.value = limit;
+                timerSlider.gameObject.SetActive(true); // ã‚¿ã‚¤ãƒãƒ¼ãŒã‚ã‚‹æ™‚ã ã‘è¡¨ç¤º
+            }
+        }
+        else
+        {
+            isTimerActive = false;
+            // ã‚¿ã‚¤ãƒãƒ¼ãŒãªã„ãƒ«ãƒ¼ãƒ«ãªã‚‰ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’éš ã™
+            if (timerSlider != null) timerSlider.gameObject.SetActive(false);
+        }
+
+        OnTimerStart();
         
         StartGame();
     }
 
     /// <summary>
-    /// Update‚ÅŒÄ‚Ño‚µ
+    /// Updateã§å‘¼ã³å‡ºã—
     /// </summary>
     public void OnControllerUpdate()
     {
-        if (currentState != GameState.Playing) return; //ƒvƒŒƒC’†‚Å‚Í‚È‚¢ê‡‚Ís‚í‚È‚¢
-
-        //ƒ‹[ƒ‹‚É]‚Á‚ÄXV
+        //ãƒ«ãƒ¼ãƒ«ã«å¾“ã£ã¦æ›´æ–°
         currentRule.OnUpdate();
 
-        //“ü—Íˆ—
+        //å…¥åŠ›å‡¦ç†
         currentRule.HandleInput();
 
 
-        //ƒ^ƒCƒ}[ˆ—
+        //ã‚¿ã‚¤ãƒãƒ¼å‡¦ç†
         if (isTimerActive)
         {
             currentTimer -= Time.deltaTime;
-            //ƒ^ƒCƒ}[‚ÌUI‚ÌXVˆ—‚Í‚±‚±‚Å‚ÌŒÄ‚Ño‚µ‚ğ‘z’è
+
+            if (timerSlider != null)
+            {
+                timerSlider.value = currentTimer;
+            }
+
+            //ã‚¿ã‚¤ãƒãƒ¼ã®UIã®æ›´æ–°å‡¦ç†ã¯ã“ã“ã§ã®å‘¼ã³å‡ºã—ã‚’æƒ³å®š
             if (currentTimer <= 0)
             {
                 currentTimer = 0;
                 isTimerActive = false;
 
                 currentRule.OnTimerEnded();
-                //ƒ‹[ƒ‹‘¤‚ÅUŒ‚—Í‚ÌŠm’è
-                //ƒpƒYƒ‹¨í“¬‚Ö‚Ì‘JˆÚ
+                //ãƒ«ãƒ¼ãƒ«å´ã§æ”»æ’ƒåŠ›ã®ç¢ºå®š
+                //ãƒ‘ã‚ºãƒ«â†’æˆ¦é—˜ã¸ã®é·ç§»
             }
         }
     }
 
-    //ƒQ[ƒ€ŠJn
+    public void OnTimerStart()
+    {
+        isTimerActive = true;
+    }
+
+    public void OnTimerRestart()
+    {
+        currentTimer = currentRule.GetTimeLimit();
+        isTimerActive = true;
+    }
+
+    public void OnTurnStart()
+    {
+        currentTurn = currentRule.GetTurnLimit();
+    }
+
+    bool IsGameEnd()
+    {
+        if(currentTurn == 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //ã‚²ãƒ¼ãƒ é–‹å§‹
     private void StartGame()
     {        
-        //ƒ^ƒCƒ}[‚Ìİ’è
+        //ã‚¿ã‚¤ãƒãƒ¼ã®è¨­å®š
         float limit = currentRule.GetTimeLimit();
+        OnTurnStart();
+        uiManager.SetHPUI(currentTurn);
+
+        battleParent.SetActive(false);
+        puzzleParent.SetActive(true);
+
         if (limit > 0)
         {
             currentTimer = limit;
@@ -97,36 +177,85 @@ public class PuzzleController : MonoBehaviour
             isTimerActive = false;
         }
 
+        if(targetEnemy != null)
+        {
+            targetEnemy.OnUIStart();
+        }
         currentState = GameState.Playing;
-        //ƒ‹[ƒ‹‚É]‚Á‚Ä‰Šú‰»
+        //ãƒ«ãƒ¼ãƒ«ã«å¾“ã£ã¦åˆæœŸåŒ–
         currentRule.Initialize(this);
     }
 
     /// <summary>
-    /// ƒQ[ƒ€ƒVƒXƒeƒ€‚É‰‚¶‚Ä•ÏX
+    /// ã‚²ãƒ¼ãƒ ã‚·ã‚¹ãƒ†ãƒ ã«å¿œã˜ã¦å¤‰æ›´
     /// </summary>
     /// <param name="score"></param>
     public void AddClearScore(int score)
     {
-        Debug.Log("ƒXƒRƒA‚Í" +  score + "‚Å‚·");
+        Debug.Log("ã‚¹ã‚³ã‚¢ã¯" +  score + "ã§ã™");
     }
 
     /// <summary>
-    /// ƒ‹[ƒ‹‘¤‚ÅƒuƒƒbƒN‚ğİ’u‚µ‚½Û‚É’Ê’m
+    /// ãƒ«ãƒ¼ãƒ«å´ã§ãƒ–ãƒ­ãƒƒã‚¯ã‚’è¨­ç½®ã—ãŸéš›ã«é€šçŸ¥
     /// </summary>
     public void NotifyBlockLanded()
     {
-        //ƒ‹[ƒ‹‘¤‚É’…’n‚ğ’Ê’m
+        //ãƒ«ãƒ¼ãƒ«å´ã«ç€åœ°ã‚’é€šçŸ¥
         currentRule.OnBlockLanded();
     }
 
-    public void GameOver()
+    /// <summary>
+    /// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
+    /// </summary>
+    async public void GameOver()
     {
-        currentState = GameState.GameOver;
+        await UniTask.Delay(5000);
+        SceneManager.LoadScene("Over");
         
     }
 
-    
+    async public void GameClear()
+    {
+        isGameClear = true;
+
+        await UniTask.Delay(5000);
+        SceneManager.LoadScene("Clear");
+    }
+
+
+    //ãƒ‘ã‚ºãƒ«å†…å®¹ã‹ã‚‰ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å‚ç…§ã—ãƒãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã¸ç§»è¡Œ
+    public void SwitchToBattleRule(int damage)
+    {
+        battleRule.SetBattleData(damage);
+
+        currentRule = battleRule;
+        currentRule.Initialize(this);
+        isTimerActive = false;
+        currentState = GameState.Battle;
+        puzzleParent.SetActive(false);
+        battleParent.SetActive(true);
+    }
+
+    //æˆ¦é—˜ã‹ã‚‰ãƒ‘ã‚ºãƒ«ã«ç§»è¡Œ
+    public void SwitchToPuzzleRule()
+    {
+        currentTurn--;
+        uiManager.SetHPUI(currentTurn);
+
+        if (IsGameEnd())    //æ®‹ã‚Šã‚¿ãƒ¼ãƒ³æ•°ãŒï¼ãªã‚‰ã°
+        {
+            GameOver();
+        }
+        else
+        {
+            currentRule = puzzleRule;
+            OnTimerRestart();
+            currentState = GameState.Playing;
+            puzzleParent.SetActive(true);
+            battleParent.SetActive(false);
+
+        }
+    }
 }
 
 public enum GameState
@@ -135,4 +264,5 @@ public enum GameState
     Playing,
     Paused,
     GameOver,
+    Battle,
 }

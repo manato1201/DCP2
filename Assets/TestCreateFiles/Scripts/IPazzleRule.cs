@@ -1,39 +1,45 @@
 public interface IPuzzleRule
 {
-    //---�p�Y���Q�[���S�̂̂ЂȌ^---
+    //---パズルゲーム全体のひな型---
 
-    //�Q�[���J�n���̏���������
+    //ゲーム開始時の初期化処理
     void Initialize(PuzzleController controller);
 
-    //���t���[���̍X�V����
+    //毎フレームの更新処理
     void OnUpdate();
 
-    //�v���C���[�̓��͏���
+    //プレイヤーの入力処理
     void HandleInput();
 
-    //�u���b�N�����n�����Ƃ��̏���
+    //ブロックが着地したときの処理
     void OnBlockLanded();
 
-    //���C�������Ȃǂ̃`�F�b�N����
+    //ライン消去などのチェック処理
     bool CheckForClear();
 
-    //�Q�[���I�[�o�[����
+    //ゲームオーバー判定
     bool IsGameOver();
 
     /// <summary>
-    /// ���̃��[���̐������Ԃ�Ԃ�
-    /// -1�܂���0�̏ꍇ�u���Ԑ��������v�Ƃ���
+    /// このルールの制限時間を返す
+    /// -1または0の場合「時間制限無し」とする
     /// </summary>
     /// <returns></returns>
     float GetTimeLimit();
 
     /// <summary>
-    /// �������Ԃ��؂ꂽ���̏��������[�����Őݒ肷��
-    /// �Q�[���I�[�o�[�⎟�̃^�[���ւ̐i�s�Ȃǂ̏��������
+    /// 制限時間が切れた時の処理をルール側で設定する
+    /// ゲームオーバーや次のターンへの進行などの処理を作る
     /// </summary>
     void OnTimerEnded();
 
-    //�u���b�N�̉�]�ɗ��p����֐�
+    //ブロックの回転に利用する関数
     void TryRotatePaletteBlock(int index);
+
+    //ゲームの段階を変更
+    void ChangeGameStep();
+
+    //残りターン数を返す
+    int GetTurnLimit();
 
 }

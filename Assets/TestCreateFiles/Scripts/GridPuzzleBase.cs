@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
 {
-    //---ƒOƒŠƒbƒh‚ğg‚Á‚½ƒpƒYƒ‹ƒQ[ƒ€‚Ì‚Ğ‚ÈŒ^---
+    //---ã‚°ãƒªãƒƒãƒ‰ã‚’ä½¿ã£ãŸãƒ‘ã‚ºãƒ«ã‚²ãƒ¼ãƒ ã®ã²ãªå‹---
 
     [Header("Base Grid Settings")]
     [SerializeField] protected int gridWidth = 8;
@@ -14,71 +14,85 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
     [SerializeField] protected Transform gridOrigin;
     [SerializeField] protected Vector3 gizmoOffset;
 
-    protected GameObject[,] gridVisuals;    //ƒuƒƒbƒN‚ÌŠÇ—
-    protected int[,] gridInt;   //”’l‚ÌŠÇ—
+    protected GameObject[,] gridVisuals;    //ãƒ–ãƒ­ãƒƒã‚¯ã®ç®¡ç†
+    protected int[,] gridInt;   //æ•°å€¤ã®ç®¡ç†
     protected GameObject[,] cellObjects;
 
     /// <summary>
-    /// ‰Šú‰»ˆ—
+    /// åˆæœŸåŒ–å‡¦ç†
     /// </summary>
     /// <param name="controller"></param>
     public virtual void Initialize(PuzzleController controller)
     {
-        //ƒOƒŠƒbƒh‚Ì‰Šú‰»
+        //ã‚°ãƒªãƒƒãƒ‰ã®åˆæœŸåŒ–
         gridVisuals = new GameObject[gridWidth, gridHeight];
         gridInt = new int[gridWidth, gridHeight];
         cellObjects = new GameObject[gridWidth, gridHeight];
 
     }
 
-    //---ƒQ[ƒ€“à—e‚É‚æ‚Á‚½ˆ—‚Ìã‘‚ğ‘z’è‚µ‚Ä‚¢‚éŠÖ”
+    //---ã‚²ãƒ¼ãƒ å†…å®¹ã«ã‚ˆã£ãŸå‡¦ç†ã®ä¸Šæ›¸ã‚’æƒ³å®šã—ã¦ã„ã‚‹é–¢æ•°
     public abstract void OnUpdate();
     public abstract void HandleInput();
     public abstract void OnBlockLanded();
     public abstract bool CheckForClear();
     public abstract bool IsGameOver();
 
-    //---ƒfƒtƒHƒ‹ƒg‚ª‚ ‚éƒƒ\ƒbƒh---
+    //---ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãŒã‚ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰---
 
     /// <summary>
-    /// §ŒÀŠÔ‚ğ•Ô‚· ƒ^ƒCƒ}[‚ª•s—v‚Èê‡A-1‚Ü‚½‚Í0‚ğ•Ô‚·‚æ‚¤‚É‚·‚é
-    /// ƒ‹[ƒ‹‚É‰‚¶‚Äoverride‚ğs‚¤@‰Šúó‘Ô‚Å‚Í-1‚ğ•Ô‚·
+    /// åˆ¶é™æ™‚é–“ã‚’è¿”ã™ ã‚¿ã‚¤ãƒãƒ¼ãŒä¸è¦ãªå ´åˆã€-1ã¾ãŸã¯0ã‚’è¿”ã™ã‚ˆã†ã«ã™ã‚‹
+    /// ãƒ«ãƒ¼ãƒ«ã«å¿œã˜ã¦overrideã‚’è¡Œã†ã€€åˆæœŸçŠ¶æ…‹ã§ã¯-1ã‚’è¿”ã™
     /// </summary>
     /// <returns></returns>
     public virtual float GetTimeLimit()
     {
-        return -1;  //ƒfƒtƒHƒ‹ƒg‚Å‚ÍŠÔ§ŒÀ‚Í–³‚¢
+        return -1;  //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯æ™‚é–“åˆ¶é™ã¯ç„¡ã„
     }
 
     /// <summary>
-    /// ŠÔØ‚ê‚Ìˆ—
-    /// ƒ‹[ƒ‹‚É‰‚¶‚Äoverride‚ğs‚¤@‰Šúó‘Ô‚Å‚ÍDebug.Log‚Ì‚İ
+    /// ã‚¿ãƒ¼ãƒ³æ•°ã‚’è¿”ã™ã€€åŸºæœ¬ã¯åˆ¶é™æ™‚é–“ã¨åŒæ§˜
+    /// </summary>
+    /// <returns></returns>
+    public virtual int GetTurnLimit()
+    {
+        return -1;
+    }
+
+
+    /// <summary>
+    /// æ™‚é–“åˆ‡ã‚Œã®å‡¦ç†
+    /// ãƒ«ãƒ¼ãƒ«ã«å¿œã˜ã¦overrideã‚’è¡Œã†ã€€åˆæœŸçŠ¶æ…‹ã§ã¯Debug.Logã®ã¿
     /// </summary>
     public virtual void OnTimerEnded()
     {
-        Debug.Log("ƒ^ƒCƒ}[I—¹‚Ìˆ—‚ªŒÄ‚Ño‚³‚ê‚Ü‚µ‚½");
+        Debug.Log("ã‚¿ã‚¤ãƒãƒ¼çµ‚äº†æ™‚ã®å‡¦ç†ãŒå‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸ");
     }
 
     /// <summary>
-    /// ƒpƒŒƒbƒg‚ª‘¶İ‚·‚éƒ‹[ƒ‹‚É‚¨‚¢‚ÄAƒpƒŒƒbƒg“à‚ÌƒuƒƒbƒN‚ğ‰ñ“]‚·‚é‚½‚ß‚Ìƒƒ\ƒbƒh
+    /// ãƒ‘ãƒ¬ãƒƒãƒˆãŒå­˜åœ¨ã™ã‚‹ãƒ«ãƒ¼ãƒ«ã«ãŠã„ã¦ã€ãƒ‘ãƒ¬ãƒƒãƒˆå†…ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’å›è»¢ã™ã‚‹ãŸã‚ã®ãƒ¡ã‚½ãƒƒãƒ‰
     /// </summary>
     /// <param name="index"></param>
     public virtual void TryRotatePaletteBlock(int index)
     {
-        //‰ñ“]‚ª•K—v‚Èƒ‹[ƒ‹‚Ìê‡AŒp³æ‚Åˆ—‚ğÀ‘•
+        //å›è»¢ãŒå¿…è¦ãªãƒ«ãƒ¼ãƒ«ã®å ´åˆã€ç¶™æ‰¿å…ˆã§å‡¦ç†ã‚’å®Ÿè£…
     }
 
+    public virtual void ChangeGameStep()
+    {
+        //ãƒ‘ã‚ºãƒ«<->æˆ¦é—˜ã€€ã®è¦ç´ ãŒã‚ã‚‹ã‚²ãƒ¼ãƒ ã®å ´åˆã€å†…å®¹ã‚’å®Ÿè£…
+    }
 
-    //---‹¤’ÊŠÖ”---
+    //---å…±é€šé–¢æ•°---
 
-    //ƒOƒŠƒbƒhÀ•W¨ƒ[ƒ‹ƒhÀ•W
+    //ã‚°ãƒªãƒƒãƒ‰åº§æ¨™â†’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
     protected Vector3 GridToWorld(int x, int y)
     {
         Vector3 originPos = (gridOrigin != null)? gridOrigin.position : Vector3.zero;
         return originPos + new Vector3(x * cellSize, y * cellSize, 0);
     }
 
-    //ƒ[ƒ‹ƒhÀ•W¨ƒOƒŠƒbƒhÀ•W
+    //ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™â†’ã‚°ãƒªãƒƒãƒ‰åº§æ¨™
     protected Vector2Int WorldToGrid(Vector3 worldPos)
     {
         Vector3 originPos = (gridOrigin != null)? gridOrigin.position : Vector3.zero; 
@@ -87,13 +101,13 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
         return new Vector2Int(Mathf.RoundToInt(relativeX / cellSize), Mathf.RoundToInt(relativeY /cellSize));
     }
 
-    //”ÍˆÍ‚Ìƒ`ƒFƒbƒN
+    //ç¯„å›²ã®ãƒã‚§ãƒƒã‚¯
     protected bool IsValidGridPosition(Vector2Int coord)
     {
         return coord.x >= 0 && coord.x < gridWidth && coord.y >= 0 && coord.y < gridHeight;
     }
 
-    //ƒOƒŠƒbƒh‚Ö‚Ì‘‚«‚İ
+    //ã‚°ãƒªãƒƒãƒ‰ã¸ã®æ›¸ãè¾¼ã¿
     protected void SetGridValue(Vector2Int coord, int value, GameObject visualObj)
     {
         if (!IsValidGridPosition(coord)) return;
@@ -101,7 +115,7 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
         gridVisuals[coord.x, coord.y] = visualObj;
     }
 
-    //”wŒiƒZƒ‹‚ÌF‚ğ•ÏX
+    //èƒŒæ™¯ã‚»ãƒ«ã®è‰²ã‚’å¤‰æ›´
     protected void SetGridCellColor(Vector2Int coord, Color color)
     {
         if (!IsValidGridPosition(coord)) return;
@@ -117,9 +131,10 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
         }
     }
 
+    
 
     /// <summary>
-    /// ƒfƒoƒbƒO—pFƒV[ƒ“ƒrƒ…[‚ÉƒOƒŠƒbƒh‚Ì“à•”ƒf[ƒ^‚ğ•`‰æ
+    /// ãƒ‡ãƒãƒƒã‚°ç”¨ï¼šã‚·ãƒ¼ãƒ³ãƒ“ãƒ¥ãƒ¼ã«ã‚°ãƒªãƒƒãƒ‰ã®å†…éƒ¨ãƒ‡ãƒ¼ã‚¿ã‚’æç”»
     /// </summary>
     protected virtual void OnDrawGizmos()
     {
@@ -132,23 +147,23 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
                 int value = gridInt[x, y];
                 Vector3 pos = GridToWorld(x, y);
 
-                // šC³‰ÓŠ: ŒÅ’è’l(0.5f‚È‚Ç)‚Å‚Í‚È‚­AƒCƒ“ƒXƒyƒNƒ^[‚Ì•Ï”‚ğ‘«‚·
+                // â˜…ä¿®æ­£ç®‡æ‰€: å›ºå®šå€¤(0.5fãªã©)ã§ã¯ãªãã€ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã®å¤‰æ•°ã‚’è¶³ã™
                 Vector3 drawPos = pos + gizmoOffset;
 
 #if UNITY_EDITOR
-                // •¶š‚Ì•\¦
+                // æ–‡å­—ã®è¡¨ç¤º
                 GUIStyle style = new GUIStyle();
                 style.normal.textColor = (value == 0) ? Color.gray : Color.white;
                 style.fontSize = 20;
                 style.fontStyle = FontStyle.Bold;
 
-                // •¶šˆÊ’ui•¶š‚Í­‚µ’†‰›‚©‚ç‚¸‚ê‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å”÷’²®—pj
+                // æ–‡å­—ä½ç½®ï¼ˆæ–‡å­—ã¯å°‘ã—ä¸­å¤®ã‹ã‚‰ãšã‚Œã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§å¾®èª¿æ•´ç”¨ï¼‰
                 style.alignment = TextAnchor.MiddleCenter;
 
                 Handles.Label(drawPos, value.ToString(), style);
 #endif
 
-                // ˜gü‚Ì•\¦
+                // æ ç·šã®è¡¨ç¤º
                 if (value != 0)
                 {
                     Gizmos.color = new Color(1, 0, 0, 0.5f);
