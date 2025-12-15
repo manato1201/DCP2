@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PuzzleController : MonoBehaviour
 {
     //現在使用するゲームルール
@@ -22,7 +24,9 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] private BattleUIManager uiManager;
     [SerializeField] private UnitStatus targetEnemy;
-    [SerializeField] private bool isGameClear = false; 
+    [SerializeField] private bool isGameClear = false;
+    [SerializeField] private Slider timerSlider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,6 +68,28 @@ public class PuzzleController : MonoBehaviour
             Debug.LogError("ruleObjectが設定されていません！ :PuzzleController");
             return;
         }
+
+        float limit = currentRule.GetTimeLimit();
+        if (limit > 0)
+        {
+            currentTimer = limit;
+            isTimerActive = true;
+
+            // ★追加: スライダーの最大値と現在値を設定
+            if (timerSlider != null)
+            {
+                timerSlider.maxValue = limit;
+                timerSlider.value = limit;
+                timerSlider.gameObject.SetActive(true); // タイマーがある時だけ表示
+            }
+        }
+        else
+        {
+            isTimerActive = false;
+            // タイマーがないルールならスライダーを隠す
+            if (timerSlider != null) timerSlider.gameObject.SetActive(false);
+        }
+
         OnTimerStart();
         
         StartGame();
@@ -85,6 +111,12 @@ public class PuzzleController : MonoBehaviour
         if (isTimerActive)
         {
             currentTimer -= Time.deltaTime;
+
+            if (timerSlider != null)
+            {
+                timerSlider.value = currentTimer;
+            }
+
             //タイマーのUIの更新処理はここでの呼び出しを想定
             if (currentTimer <= 0)
             {
@@ -132,6 +164,9 @@ public class PuzzleController : MonoBehaviour
         OnTurnStart();
         uiManager.SetHPUI(currentTurn);
 
+        battleParent.SetActive(false);
+        puzzleParent.SetActive(true);
+
         if (limit > 0)
         {
             currentTimer = limit;
@@ -172,15 +207,18 @@ public class PuzzleController : MonoBehaviour
     /// <summary>
     /// ゲームオーバー
     /// </summary>
-    public void GameOver()
+    async public void GameOver()
     {
+        await UniTask.Delay(5000);
         SceneManager.LoadScene("Over");
         
     }
 
-    public void GameClear()
+    async public void GameClear()
     {
         isGameClear = true;
+
+        await UniTask.Delay(5000);
         SceneManager.LoadScene("Clear");
     }
 
@@ -195,7 +233,7 @@ public class PuzzleController : MonoBehaviour
         isTimerActive = false;
         currentState = GameState.Battle;
         puzzleParent.SetActive(false);
-
+        battleParent.SetActive(true);
     }
 
     //戦闘からパズルに移行
@@ -214,6 +252,7 @@ public class PuzzleController : MonoBehaviour
             OnTimerRestart();
             currentState = GameState.Playing;
             puzzleParent.SetActive(true);
+            battleParent.SetActive(false);
 
         }
     }

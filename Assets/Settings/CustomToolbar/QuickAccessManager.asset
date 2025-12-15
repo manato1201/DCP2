@@ -13,29 +13,25 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: GridCell
+  - displayName: Damage
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Damage
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Text (TMP)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: "\u30D1\u30BA\u30EB_\u76E4\u9762_1"
     scenePath: 
-  - displayName: Block
+  - displayName: DamgaeDisplay
     scenePath: 
-  - displayName: Group
+  - displayName: Scripts
     scenePath: 
+  - displayName: TimeSlider
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: GridCell(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: PaletteBox
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: 'Slot3 : sprite'
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: 'Slot2 : sprite'
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: 'Slot1 : sprite'
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot1
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot2
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot1
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot2
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot3
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot1 (2)
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Slot1 (1)
+  - displayName: TimeSlider
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
