@@ -7,17 +7,16 @@ public enum SceneId { Title, Select,BookUI, Story, Mission, Puzzle, Result }
 [CreateAssetMenu(menuName = "Config/SceneAddressCatalog")]
 public sealed class SceneAddressCatalog : ScriptableObject
 {
-    [Serializable]
-    public struct Entry
-    {
-        public SceneId id;
-        public AssetReference scene;  // ← Addressable化した .unity をInspectorで割り当て
-    }
+    [System.Serializable]
+    public struct Entry { public SceneId id; public string address; }
+
     public Entry[] entries;
 
-    public AssetReference Get(SceneId id)
+    public string Get(SceneId id)
     {
-        foreach (var e in entries) if (e.id == id) return e.scene;
+        for (int i = 0; i < entries.Length; i++)
+            if (entries[i].id == id) return entries[i].address;
+        Debug.LogError($"[Catalog] address not found for {id}");
         return null;
     }
 }
