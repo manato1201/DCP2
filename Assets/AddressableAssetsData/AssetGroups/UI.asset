@@ -15,8 +15,48 @@ MonoBehaviour:
   m_GroupName: UI
   m_GUID: 51c84632423964d4c9bee440994190ac
   m_SerializeEntries:
+  - m_GUID: 02934a56bb84d34428e83cc56be3a5bf
+    m_Address: Assets/MyAssets/Image/Board_2_Mass.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08e4a8c4c436ccd48afbc4c9fe659529
+    m_Address: Assets/MyAssets/Image/Board_1_Background.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a1f9780311908448ba73c568a8735ca
+    m_Address: Assets/MyAssets/Image/Board_2_Background.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d4c7db9fcb138f48b00b8762c4f2a51
+    m_Address: Assets/MyAssets/Image/hand-heart.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 128405c2542e053419ef3dab431fa034
     m_Address: Assets/MyAssets/Image/hari_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23a4489fa67583b478dd5b7ee3cfba6e
+    m_Address: Assets/MyAssets/Image/backspace.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26d7f1d3b480df44980f0ddcd57c01d0
+    m_Address: Assets/MyAssets/Image/download-simple.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b699fee64b6e5347bd0e17bc81129aa
+    m_Address: Assets/MyAssets/Image/book-bookmark.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3916852f1b6c6ff4396cdf2e8c0ce53f
+    m_Address: Assets/MyAssets/Image/Board_2_Piece.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -45,13 +85,48 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ed20b57108547a419e55dbb7ee464e9
+    m_Address: Assets/MyAssets/Image/Board_2_Circular Gauge.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
     m_Address: "Assets/MyAssets/Image/\u30B2\u30FC\u30E0\u30C6\u30AD\u30B9\u30C8\u98A8\u30B7\u30F3\u30D7\u30EB\u30B3\u30E1\u30F3\u30C8\u6B0417-1024x576.png"
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fa407d3b8c70584bad365d5a3ba276a
+    m_Address: Assets/MyAssets/Image/game-controller.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81642acb9eb92854789df46f67b47097
+    m_Address: Assets/MyAssets/Image/Board_1_Piece.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 948d943f6f9220443bca395c789a6ce8
+    m_Address: Assets/MyAssets/Image/arrows-counter-clockwise.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a904305b3cf5314498b46c79e547276b
+    m_Address: Assets/MyAssets/Image/book-open-text.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdfb65fd4ec6d39438a9a47f7fca5059
     m_Address: Assets/MyAssets/Image/Untitled_Artwork.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb0eba8b190d71d45a5b8fe176ff6dab
+    m_Address: Assets/MyAssets/Image/Board_1_Mass.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4467657b71c8144f8c8be9b706f5233
+    m_Address: Assets/MyAssets/Image/Board_1_Circular Gauge.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -62,6 +137,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9670c5d352a999408e98004d4d9a3b9
     m_Address: Assets/MyAssets/Image/hari3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da2b33d65aeff9f46835d5badb2b1ff9
+    m_Address: Assets/MyAssets/Image/book-open.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e82b88303f5c9b64999e48029dfc1295
+    m_Address: Assets/MyAssets/Image/SchoolYard.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: feaa121663f75ef418cda33bff131915
+    m_Address: Assets/MyAssets/Image/arrow-clockwise.svg
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
