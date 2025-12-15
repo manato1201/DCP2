@@ -13,29 +13,39 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: GameObject
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: PazzleTest
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
     scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Shooter
-    scenePath: 
-  - displayName: piece
-    scenePath: 
-  - displayName: Shooter
-    scenePath: 
-  - displayName: ObjectPool
-    scenePath: 
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
   - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: PazzleTest
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
     scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Manager
-    scenePath: 
-  - displayName: GameObject
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: FrameWork
-    scenePath: 
-  - displayName: TextManager
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: TextTemplateUtil
-    scenePath: 
-  - displayName: PartnerCommentCatalog
-    scenePath: 
-  - displayName: CommentFormatter
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: AddressableAssetSettings
     scenePath: 

@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Log
   m_GUID: 802f91ce4af5ae2429c92d367c162f97
   m_SerializeEntries:
+  - m_GUID: 578dea7159f1f3e49a65565c17342e32
+    m_Address: Assets/MyAssets/Resources/Scene Address Catalog.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b695e5aee43717489dc5a89a93c4541
     m_Address: Assets/MyAssets/Resources/CommuLog.csv
     m_ReadOnly: 0
@@ -22,11 +27,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a84dd1f24630104448abf1e964367045
     m_Address: Assets/MyAssets/Resources/Scene Transit Data.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d0b895a6cfcd4cf4e97f9813b73c0371
-    m_Address: Assets/MyAssets/Resources/Scene Address Catalog.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
