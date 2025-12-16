@@ -14,7 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Audio_BGM
   m_GUID: d0530de03e7e58545aa88e39f08ba8ab
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 32cd9fffe5482bb4bbffa338fa02d9e4
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Select.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92607ec6cbb9b7346be438fa177e9e9a
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Title.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8eccfe76900e5f46a36bfbd63da325f
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Puzzle.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1e8f50adf720f9428a6ec169010cd54
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Serious.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f24c95df5a2da6e4aa85fc82ce482cf0
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Enjoy.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
   m_SchemaSet:

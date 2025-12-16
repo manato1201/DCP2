@@ -17,69 +17,25 @@ MonoBehaviour:
     scenePath: 
   - displayName: Resources
     scenePath: 
-  - displayName: Button
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Button (1)
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Player
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Charcter
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: SVG Image
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: TitleButton
-    scenePath: Assets/MyAssets/Scenes/Select.unity
   - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: SVG Image
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: book-bookmark
-    scenePath: 
-  - displayName: book-open-textSprite
-    scenePath: 
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: arrow-clockwise
-    scenePath: 
-  - displayName: book-openSprite
-    scenePath: 
-  - displayName: 2ss
-    scenePath: 
-  - displayName: char1
-    scenePath: 
-  - displayName: player1
-    scenePath: 
-  - displayName: "\u30B2\u30FC\u30E0\u30C6\u30AD\u30B9\u30C8\u98A8\u30B7\u30F3\u30D7\u30EB\u30B3\u30E1\u30F3\u30C8\u6B0417-1024x576"
-    scenePath: 
-  - displayName: SchoolYard
-    scenePath: 
-  - displayName: Image
-    scenePath: 
-  - displayName: PazzleTest
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: "\u30B3\u30F3\u30DD 1_3"
-    scenePath: 
-  - displayName: "\u30B3\u30F3\u30DD 1_2"
-    scenePath: 
-  - displayName: Untitled_Artwork
-    scenePath: 
-  - displayName: player4
-    scenePath: 
-  - displayName: MyAssets
-    scenePath: 
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: MessageBox
+    scenePath: Assets/MyAssets/Scenes/Story.unity
   - displayName: BookUI
     scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzle
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: PazzleTest
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
   - displayName: Title
     scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: Text (TMP)
+    scenePath: Assets/MyAssets/Scenes/Story.unity
