@@ -70,6 +70,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 468526f4dca61244f9c9cd529be1d5a0
+    m_Address: Assets/MyAssets/Image/player3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 541057625bd729749ab9bcf7db141023
     m_Address: Assets/MyAssets/Image/p0275_m.png
     m_ReadOnly: 0
@@ -85,6 +90,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b775ffc0553390468ab1d36b4ab09e6
+    m_Address: "Assets/MyAssets/Image/\u30B3\u30F3\u30DD 1_2.gif"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ed20b57108547a419e55dbb7ee464e9
     m_Address: Assets/MyAssets/Image/Board_2_Circular Gauge.png
     m_ReadOnly: 0
@@ -92,6 +102,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
     m_Address: "Assets/MyAssets/Image/\u30B2\u30FC\u30E0\u30C6\u30AD\u30B9\u30C8\u98A8\u30B7\u30F3\u30D7\u30EB\u30B3\u30E1\u30F3\u30C8\u6B0417-1024x576.png"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d443ba0c5b828b4086518ba770e5856
+    m_Address: Assets/MyAssets/Image/player4.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -115,13 +130,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba88074b8a35a3047b64998c1a7051a6
+    m_Address: Assets/MyAssets/Image/player2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdfb65fd4ec6d39438a9a47f7fca5059
     m_Address: Assets/MyAssets/Image/Untitled_Artwork.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c785b1f6cef32d9478aa44812ed33df8
+    m_Address: Assets/MyAssets/Image/char1.PNG
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb0eba8b190d71d45a5b8fe176ff6dab
     m_Address: Assets/MyAssets/Image/Board_1_Mass.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdb09cfa2b811554890d6bf3a2f134c9
+    m_Address: Assets/MyAssets/Image/player1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -132,6 +162,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d47746b83bdc43342ad84466b647a455
     m_Address: Assets/MyAssets/Image/hari_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6f8fd142cb89a14492eadb22506dc1c
+    m_Address: "Assets/MyAssets/Image/\u30B3\u30F3\u30DD 1_3.mp4"
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -11,6 +11,8 @@ public class BattleUIManager: MonoBehaviour
     [SerializeField] private Sprite trueHP;
     [SerializeField] private Sprite falseHP;
 
+    [SerializeField] private Image attackGaugeImage;
+
     [SerializeField] private GameObject damageTextPrefab;
     public void SetHPSlider(float ratio)
     {
@@ -32,6 +34,22 @@ public class BattleUIManager: MonoBehaviour
         {
             popup.Setup(damage);
         }
+    }
+
+    /// <summary>
+    /// ダメージゲージの表示を更新する
+    /// </summary>
+    /// <param name="current">現在の蓄積ダメージ</param>
+    /// <param name="max">ダメージ上限値</param>
+    public void UpdateAttackGauge(int current, int max)
+    {
+        if (attackGaugeImage == null) return;
+
+        // 0.0 ～ 1.0 の割合に変換
+        float ratio = (float)current / max;
+
+        // fillAmountにセット (1.0を超えても見た目は1.0で止まるが、念のためClampしても良い)
+        attackGaugeImage.fillAmount = Mathf.Clamp01(ratio);
     }
 
     public void SetHPUI(int limitHP)
