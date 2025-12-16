@@ -13,43 +13,31 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: UI(empty)
+  - displayName: CountDownText
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: PaletteBox
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: PuzzleParrent
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: PuzzleObjects
+  - displayName: Panel
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: SchoolYard
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: MainParent
+  - displayName: Panel
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: BattleRule
+  - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: 'Rules : Rule'
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: AttackGauge (1)
+  - displayName: CountDownText
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: Enemy
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: HPSlider
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: BattleObjects
+  - displayName: AttackGauge
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: PuzzleObjects
+  - displayName: AttackGauge (1)
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Canvas
+  - displayName: HP3
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: TestRule
+  - displayName: HP2
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: SchoolYard
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: MainParent
+  - displayName: HP1
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity

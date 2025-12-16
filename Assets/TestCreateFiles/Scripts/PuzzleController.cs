@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
@@ -28,21 +29,11 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private bool isGameClear = false;
     [SerializeField] private Slider timerSlider;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //OnControllerStart();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Debug.Log(currentRule.ToString());
-        }
-        //OnControllerUpdate();
-    }
+    [Header("CountDown")]
+    [SerializeField] private GameObject countdownPanel;
+    [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private GameObject mainParentObject;
 
     //---ボタン参照---
 
@@ -57,51 +48,75 @@ public class PuzzleController : MonoBehaviour
         currentRule.TryRotatePaletteBlock(index);
     }
 
+
+    private async UniTaskVoid StartGameSequence()
+    {
+        // 1. 準備状態にする（この間は操作不能にする）
+        // もしGameStateに "Preparing" がなければ追加するか、Pause扱いにしておく
+        currentState = GameState.Paused;
+
+        // カウントダウンUIを表示、盤面はまだ隠しておく（必要なら）
+        if (countdownPanel != null) countdownPanel.SetActive(true);
+        if (mainParentObject != null) mainParentObject.SetActive(false);
+
+        // 2. カウントダウン処理 (3 -> 2 -> 1 -> GO)
+        int count = 3;
+        while (count > 0)
+        {
+            if (countdownText != null) countdownText.text = count.ToString();
+
+            // 1秒待機 (キャンセル対応付き)
+            await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            count--;
+        }
+
+        // "GO!" 表示
+        if (countdownText != null) countdownText.text = "GO!";
+        await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
+
+        // 3. ゲーム開始
+        if (countdownPanel != null) countdownPanel.SetActive(false); // パネルを消す
+        if (mainParentObject != null) mainParentObject.SetActive(true); // ★指定のオブジェクトを表示
+
+        // ステートをプレイ中に変更
+        currentState = GameState.Playing;
+
+        // タイマー計測開始などの処理があればここで呼ぶ
+        OnTimerStart();
+        StartGame();
+        Debug.Log("Game Started!");
+    }
+
     /// <summary>
     /// Startで呼び出し
     /// </summary>
     /// 
+    /// <summary>
+    /// Startで呼び出し
+    /// </summary>
     public void OnControllerStart()
     {
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
         if (currentRule == null)
         {
-            Debug.LogError("ruleObjectが設定されていません！ :PuzzleController");
+            Debug.LogError("ruleObjectにIPuzzleRuleが実装されていません！ :PuzzleController");
             return;
         }
 
-        float limit = currentRule.GetTimeLimit();
-        if (limit > 0)
-        {
-            currentTimer = limit;
-            isTimerActive = true;
-
-            // ★追加: スライダーの最大値と現在値を設定
-            if (timerSlider != null)
-            {
-                timerSlider.maxValue = limit;
-                timerSlider.value = limit;
-                timerSlider.gameObject.SetActive(true); // タイマーがある時だけ表示
-            }
-        }
-        else
-        {
-            isTimerActive = false;
-            // タイマーがないルールならスライダーを隠す
-            if (timerSlider != null) timerSlider.gameObject.SetActive(false);
-        }
-
-        OnTimerStart();
         ResetDamage();
-        StartGame();
-    }
 
+        StartGameSequence().Forget();
+    }
     /// <summary>
     /// Updateで呼び出し
     /// </summary>
     public void OnControllerUpdate()
     {
+        if (currentState != GameState.Playing) return;
+        if (currentRule == null) return;
+
         //ルールに従って更新
         currentRule.OnUpdate();
 
@@ -228,6 +243,8 @@ public class PuzzleController : MonoBehaviour
         currentState = GameState.Battle;
         puzzleParent.SetActive(false);
         battleParent.SetActive(true);
+
+        uiManager.ShowDamage(currentTotalDamage, targetEnemy.transform.position);
     }
 
     //戦闘からパズルに移行

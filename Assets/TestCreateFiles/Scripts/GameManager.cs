@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
         controller.OnControllerUpdate();
     }
 
-    private void Awake()
+    private void Start()
     {
         
         controller.OnControllerStart();

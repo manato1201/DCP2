@@ -422,6 +422,7 @@ public class TestRule : GridPuzzleBase
     /// </summary>
     public override void ChangeGameStep()
     {
+        if (controller == null) Debug.LogError("Controllerがnullです！");
         controller.SwitchToBattleRule();
     }
 
