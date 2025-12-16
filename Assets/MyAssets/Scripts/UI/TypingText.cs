@@ -5,89 +5,179 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class TypingText : MonoBehaviour
 {
-    [Header("表示先とタイミング")]
+    [Header("表示先")]
     [SerializeField] private TMP_Text[] targets;
     [SerializeField] private float charInterval = 0.03f; // 秒
-    [SerializeField] private bool obeyTimeScale = true;
+    [SerializeField] private bool obeyTimeScale = false; // WebGL配慮で既定はUnscaled
 
-    [Header("CSV（Addressables）")]
-    [SerializeField] private AssetReference csvAsset; // ← CSVをAddressables登録して割り当て
-    private Dictionary<string, string> _db;                   // キー→本文
+    [Header("CSV（AddressablesのTextAsset）")]
+    [SerializeField] private AssetReference csvAsset;
+
+    // キー→本文。キーは "chap-no" 形式（例: "1-3"）
+    private Dictionary<string, string> _db;
     private bool _dbLoaded;
+    private AsyncOperationHandle<TextAsset> _csvHandle;
 
-    CancellationTokenSource _cts;
+    // 表示中のキャンセル（スキップ用）
+    private CancellationTokenSource _ctsTyping;
 
-    void Awake() => _cts = new();
-    void OnDestroy() => _cts?.Cancel();
-
-    public async UniTask PlayAsync(string keyOrText)
+    void OnDestroy()
     {
-        // 1) DBを必要時ロード
-        if (!_dbLoaded && csvAsset.RuntimeKeyIsValid())
-            await EnsureDbLoadedAsync(_cts.Token);
-
-        // 2) キーが存在するなら本文へ展開。無ければ引数そのままを本文扱い
-        var text = (_dbLoaded && _db.TryGetValue(keyOrText, out var val)) ? val : keyOrText;
-
-        // 3) 全ターゲットをクリアしてからタイプ開始
-        foreach (var t in targets) if (t) t.text = "";
-
-        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-        var ct = linked.Token;
-
-        foreach (var t in targets)
-            await TypeToAsync(t, text, charInterval, obeyTimeScale, ct);
+        _ctsTyping?.Cancel();
+        if (_dbLoaded && _csvHandle.IsValid())
+        {
+            // 運用で常駐させたいならこのReleaseは外す
+            Addressables.Release(_csvHandle);
+        }
     }
 
-    // -------- CSV読込・パース --------
+    // -------- 公開API --------
+
+    // そのままキー or 生テキスト
+    public async UniTask PlayAsync(string keyOrText, CancellationToken ct = default)
+    {
+        if (!_dbLoaded && csvAsset.RuntimeKeyIsValid())
+            await EnsureDbLoadedAsync(ct);
+
+        var text = (_dbLoaded && _db.TryGetValue(keyOrText, out var v)) ? v : keyOrText;
+        await TypeToAllTargetsAsync(text, ct);
+    }
+
+    // CHAP & No 指定（例: chap=1, no=3 -> "1-3"）
+    public UniTask PlayAsync(int chap, int no, CancellationToken ct = default)
+        => PlayAsync(MakeKey(chap, no), ct);
+
+    // 途中で全表示（TextManagerのクリックで呼ぶ）
+    public void ForceComplete()
+    {
+        _ctsTyping?.Cancel(); // 現在のタイプを止める
+        foreach (var t in targets) if (t) t.maxVisibleCharacters = int.MaxValue;
+    }
+
+    // -------- 内部処理 --------
+
     private async UniTask EnsureDbLoadedAsync(CancellationToken ct)
     {
         _db = new Dictionary<string, string>(256);
-        var handle = csvAsset.LoadAssetAsync<TextAsset>();
-        var ta = await handle.Task;
-        if (ta == null)
+
+        _csvHandle = csvAsset.LoadAssetAsync<TextAsset>();
+        var ta = await _csvHandle.Task;
+        if (!ta)
         {
-            Debug.LogWarning("[TypingText] CSV(TextAsset) が null。キー参照はスキップします。");
+            Debug.LogWarning("[TypingText] CSV(TextAsset) が null。キー参照はスキップ。");
             _dbLoaded = false;
             return;
         }
-        ParseCsvToDict(ta.text, _db);
+        ParseCsvToDict_CSV(ta.text, _db);
         _dbLoaded = true;
-        // Addressables.Release(handle); // 常時使うなら保持でOK。サイズが辛ければReleaseへ
     }
 
-    // 最小限のCSVパーサ（想定：1行目ヘッダ。キー列名に 'CommentNo'、本文列名に 'Comment'）
-    private static void ParseCsvToDict(string csv, Dictionary<string,string> dict)
+    // 期待する列名:
+    //   CHAP, No, Comment  （Comment が無ければ Text を見る）
+    // キーは "CHAP-No"
+    private void ParseCsvToDict_CSV(string csvText, System.Collections.Generic.Dictionary<string, string> outDict)
     {
-        if (string.IsNullOrEmpty(csv)) return;
+        outDict.Clear();
+        if (string.IsNullOrEmpty(csvText)) return;
 
-        using var reader = new System.IO.StringReader(csv);
-        string? line = reader.ReadLine(); // header
-        if (line == null) return;
+        using var sr = new System.IO.StringReader(csvText);
 
-        // ヘッダ走査（単純CSV想定。必要なら正規のCSVパーサに置換）
-        var headers = line.Split(',');
-        int keyIdx = System.Array.FindIndex(headers, h => h.Trim().Equals("CommentNo"));
-        int txtIdx = System.Array.FindIndex(headers, h => h.Trim().Equals("Comment"));
-        if (keyIdx < 0 || txtIdx < 0) { keyIdx = 0; txtIdx = 1; } // フォールバック
+        // ---- ヘッダー行 ----
+        var headerLine = sr.ReadLine();
+        if (headerLine == null)
+        {
+            Debug.LogError("[TypingText] CSV が空です。");
+            return;
+        }
 
-        while ((line = reader.ReadLine()) != null)
+        var header = TextTemplateUtil.SplitCsvLine(headerLine);
+        // 期待：No, CommentNo, Comment
+        int idxNo        = header.FindIndex(h => string.Equals(h, "No", System.StringComparison.OrdinalIgnoreCase));
+        int idxCommentNo = header.FindIndex(h => string.Equals(h, "CommentNo", System.StringComparison.OrdinalIgnoreCase));
+        int idxComment   = header.FindIndex(h => string.Equals(h, "Comment", System.StringComparison.OrdinalIgnoreCase));
+
+        if (idxNo < 0 || idxCommentNo < 0 || idxComment < 0)
+        {
+            Debug.LogError("[TypingText] CSV ヘッダが期待と違う（No, CommentNo, Comment が必要）");
+            return;
+        }
+
+        // ---- データ行 ----
+        string line;
+        while ((line = sr.ReadLine()) != null)
         {
             if (string.IsNullOrWhiteSpace(line)) continue;
-            var cols = SplitCsvLine(line);
-            if (cols.Length <= System.Math.Max(keyIdx, txtIdx)) continue;
 
-            var key = cols[keyIdx].Trim();
-            var val = cols[txtIdx];
-            if (!string.IsNullOrEmpty(key))
-                dict[key] = val;
+            var cols = TextTemplateUtil.SplitCsvLine(line);
+            // 足りない列はスキップ
+            if (cols.Count <= idxComment) continue;
+
+            var noStr        = cols[idxNo].Trim();
+            var commentNoStr = cols[idxCommentNo].Trim();
+            var comment      = cols[idxComment];
+
+            if (string.IsNullOrEmpty(noStr) || string.IsNullOrEmpty(commentNoStr)) continue;
+
+            // キーは「No-CommentNo」に統一（例: 1-3）
+            var key = $"{noStr}-{commentNoStr}";
+            if (!outDict.ContainsKey(key))
+            {
+                outDict.Add(key, comment);
+            }
+            else
+            {
+                // 重複は最後を優先する or 無視する。必要ならログ
+                outDict[key] = comment;
+            }
         }
     }
 
-    // ダブルクォート対応の簡易スプリット
+    private static string MakeKey(int chap, int no) => $"{chap}-{no}";
+
+    // すべてのターゲットに“同時に”タイプ表示
+    private async UniTask TypeToAllTargetsAsync(string text, CancellationToken external)
+    {
+        foreach (var t in targets) if (t) { t.text = text; t.maxVisibleCharacters = 0; } // 先に文字列を入れる
+
+        _ctsTyping?.Cancel();
+        _ctsTyping = CancellationTokenSource.CreateLinkedTokenSource(external);
+        var ct = _ctsTyping.Token;
+
+        var tasks = new List<UniTask>(targets.Length);
+        foreach (var t in targets)
+            tasks.Add(TypeCoroutineAsync(t, text, charInterval, obeyTimeScale, ct));
+
+        await UniTask.WhenAll(tasks);
+    }
+
+    // TMPの maxVisibleCharacters を使ったタイプ表示（高速・GC少なめ）
+    private static async UniTask TypeCoroutineAsync(TMP_Text target, string content, float interval, bool obeyScale, CancellationToken ct)
+    {
+        if (!target) return;
+
+        target.ForceMeshUpdate();
+        target.maxVisibleCharacters = 0;
+
+        // 既に target.text に全文が入っている前提
+        int total = target.textInfo.characterCount;
+        for (int i = 0; i < total; i++)
+        {
+            ct.ThrowIfCancellationRequested();
+            target.maxVisibleCharacters = i + 1;
+
+            if (interval > 0f)
+            {
+                if (obeyScale) await UniTask.Delay((int)(interval * 1000f), cancellationToken: ct);
+                else await UniTask.Delay((int)(interval * 1000f), DelayType.UnscaledDeltaTime, cancellationToken: ct);
+            }
+        }
+    }
+
+    // ダブルクォート対応の簡易スプリット（既存流用）
     private static string[] SplitCsvLine(string line)
     {
         var list = new List<string>();
@@ -98,36 +188,13 @@ public class TypingText : MonoBehaviour
             char c = line[i];
             if (c == '\"')
             {
-                // 連続二重引用符はエスケープ
                 if (inQ && i + 1 < line.Length && line[i + 1] == '\"') { sb.Append('\"'); i++; }
                 else inQ = !inQ;
             }
-            else if (c == ',' && !inQ)
-            {
-                list.Add(sb.ToString());
-                sb.Clear();
-            }
+            else if (c == ',' && !inQ) { list.Add(sb.ToString()); sb.Clear(); }
             else sb.Append(c);
         }
         list.Add(sb.ToString());
         return list.ToArray();
-    }
-
-    // -------- タイプ処理 --------
-    static async UniTask TypeToAsync(TMP_Text target, string content, float interval, bool obeyScale, CancellationToken ct)
-    {
-        if (!target) return;
-        var sb = new StringBuilder(content.Length);
-        for (int i = 0; i < content.Length; i++)
-        {
-            sb.Append(content[i]);
-            target.text = sb.ToString();
-
-            if (interval > 0f)
-            {
-                if (obeyScale) await UniTask.Delay((int)(interval * 1000f), cancellationToken: ct);
-                else await UniTask.Delay((int)(interval * 1000f), DelayType.UnscaledDeltaTime, cancellationToken: ct);
-            }
-        }
     }
 }

@@ -1,16 +1,16 @@
 {
     "addressRuleErrors": [
         {
-            "addressRuleId": "76cc13ef-b563-4cb1-ab27-829992b63337",
-            "addressableAssetGroupGuid": "802f91ce4af5ae2429c92d367c162f97",
-            "addressableAssetGroupName": "Log",
+            "addressRuleId": "b1b36b91-7587-4f70-80b7-981c572fb4fe",
+            "addressableAssetGroupGuid": "e7fa69cf6f7a1a44f89aaa41b5657ea3",
+            "addressableAssetGroupName": "Font",
             "assetGroupErrors": [
                 {
-                    "assetGroupId": "36b9b726-2339-4bf5-9779-faedbf675098",
+                    "assetGroupId": "72cf1575-cf32-470b-a6f8-8c879ace14a0",
                     "assetGroupName": "Default Asset Group",
                     "assetFilterErrors": [
                         {
-                            "assetFilterId": "2a596ceb-4722-42db-bfa2-0d8fb5754123",
+                            "assetFilterId": "1221b08d-b1a2-49bb-bdf2-a349f9b2cf2c",
                             "assetFilterTypeName": "ObjectBasedAssetFilter",
                             "errorMessages": [
                                 "There are null reference objects."

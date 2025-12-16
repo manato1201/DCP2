@@ -109,7 +109,7 @@ public sealed class UIFlowManager : MonoBehaviour
     {
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
-        var payload = new SceneTransitData.Payload { key = "from",  isFade = false };
+        var payload = new SceneTransitData.Payload { chap = "CHAP1",key = "from",  isFade = false };
 
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), payload);
         UnloadAsset();

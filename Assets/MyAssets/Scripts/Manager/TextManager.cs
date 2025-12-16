@@ -1,102 +1,88 @@
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 依存: PartnerCommentCatalog / CommentFormatter / TypingText
 public sealed class TextManager : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private Button textBoxButton;     // テキストボックス（クリック受付）
-    [SerializeField] private TypingText typing;        // 文字送り担当（targetsはTypingText側で設定）
-    [SerializeField] private Button transitionButton;  // ← 最後に表示するボタン（最初は非表示にしておく）
+    [SerializeField] private Button textBoxButton;     // クリック受付
+    [SerializeField] private TypingText typing;        // 文字送り（TypingText は ForceComplete() 実装必須）
+    [SerializeField] private Button transitionButton;  // 最後に出すボタン
 
-    [Header("CSV 取得条件")]
-    [SerializeField] private int characterId = 0;
-    [SerializeField] private PartnerCommentState[] flow;  // 再生順（空ならデフォルト採用）
+    [Header("開始CHAP")]
+    [SerializeField] private SceneTransitData transit; // payload から chap を受ける（string か int 想定）
+    [SerializeField] private string defaultChap = "CHAP1"; // 例: "1" や "CHAP1"。StoryCsv 側のキー仕様に合わせる
 
-    [Header("表示整形")]
-    [SerializeField] private int maxLineLen = 14; // 句読点優先の最大行長
+    // 内部
+    readonly List<StoryLine> _lines = new();
+    int _index = 0;
+    bool _isTyping = false;
 
-    // 内部状態
-    private readonly List<string> _lines = new();
-    private int _index;
-    private bool _isTyping;
-    private string _currentFullText;
-    private CancellationTokenSource _cts;
+    // シーン生存用（破棄時キャンセル）
+    CancellationTokenSource _ctsScene;
+    // 行ごとのスキップ用（毎行作り直す）
+    CancellationTokenSource _ctsLine;
 
     void Awake()
     {
-        _cts = new();
-        if (transitionButton) transitionButton.gameObject.SetActive(false); // 最初は隠す
+        _ctsScene = new();
+        if (transitionButton) transitionButton.gameObject.SetActive(false);
     }
 
     void OnEnable()
     {
-        if (textBoxButton) textBoxButton.onClick.AddListener(OnClickTextBox);
+        if (textBoxButton) textBoxButton.onClick.AddListener(OnClickBox);
     }
 
     void OnDisable()
     {
-        if (textBoxButton) textBoxButton.onClick.RemoveListener(OnClickTextBox);
+        if (textBoxButton) textBoxButton.onClick.RemoveListener(OnClickBox);
     }
 
     void OnDestroy()
     {
-        _cts?.Cancel();
+        _ctsLine?.Cancel();
+        _ctsScene?.Cancel();
     }
 
-    async void Start()
+    private async void Start()
     {
-        // CSV→行列構築→先頭をタイプ開始
-        await BuildFlowAsync(_cts.Token);
-        _index = 0;
-        await PlayCurrentAsync(_cts.Token);
-    }
+        // CSVロード（Addressables 内部で実施）
+        await StoryCsv.EnsureLoadedAsync();
 
-    // ---------------- CSV→文面構築 ----------------
-    private async UniTask BuildFlowAsync(CancellationToken ct)
-    {
+        // 開始CHAP（Payload に chap が無ければ default）
+        var chapKey = !string.IsNullOrEmpty(transit?.payload.chap) ? transit.payload.chap : defaultChap;
+
         _lines.Clear();
+        _lines.AddRange(StoryCsv.GetLines(chapKey));
 
-        // デフォルトの流れ（空なら）
-        if (flow == null || flow.Length == 0)
+        if (_lines.Count == 0)
         {
-            flow = new[]
-            {
-                PartnerCommentState.StartTraining,
-                PartnerCommentState.FinishTraining,
-                PartnerCommentState.CompleteTraining
-            };
+            Debug.LogError($"[TextManager] CHAP '{chapKey}' の行が見つかりません。CSV/アドレッサブル設定を確認してください。");
+            return;
         }
 
-        foreach (var st in flow)
-        {
-            var raw = await PartnerCommentCatalog.GetCommentAsync(characterId, st);
-            if (string.IsNullOrWhiteSpace(raw)) continue;
-
-            var formatted = CommentFormatter.FormatForTextbox(raw, maxLineLen);
-            _lines.Add(formatted);
-            await UniTask.Yield(ct);
-        }
+        _index = 0;
+        await PlayCurrentAsync(_ctsScene.Token);
     }
 
-    // ---------------- クリック処理 ----------------
-    private void OnClickTextBox()
+    // クリック
+    private void OnClickBox()
     {
         if (_lines.Count == 0) return;
 
         if (_isTyping)
         {
-            // 1回目クリック：全文即時表示
-            ForceShowFullText();
+            // タイプ中 → スキップ（行用CTSをCancel→TypingTextに全表示を指示）
+            _ctsLine?.Cancel();
+            typing?.ForceComplete();
             _isTyping = false;
             return;
         }
 
-        // 2回目クリック：次の文章へ
+        // 次へ
         NextAsync().Forget();
     }
 
@@ -105,54 +91,45 @@ public sealed class TextManager : MonoBehaviour
         _index++;
         if (_index >= _lines.Count)
         {
-            // 最後のIDを表示済み → 遷移ボタンを出す（Scene遷移はUIFlow側で）
+            // 最後の子番号 → 遷移ボタンON、以降クリック無効
             if (transitionButton)
             {
                 transitionButton.gameObject.SetActive(true);
                 transitionButton.interactable = true;
             }
-            // テキストボックスは不要なら押せなくしておく
             if (textBoxButton) textBoxButton.interactable = false;
             return;
         }
 
-        await PlayCurrentAsync(_cts.Token);
+        await PlayCurrentAsync(_ctsScene.Token);
     }
 
-    // ---------------- 1文のタイプ再生 ----------------
-    private async UniTask PlayCurrentAsync(CancellationToken ct)
+    private async UniTask PlayCurrentAsync(CancellationToken ctScene)
     {
         if (!typing)
         {
-            Debug.LogError("[TextManager] TypingText が未設定");
+            Debug.LogError("[TextManager] TypingText 未設定");
             return;
         }
 
-        // 次文開始時は遷移ボタンを隠す（再利用時の保険）
-        if (transitionButton) transitionButton.gameObject.SetActive(false);
-        if (textBoxButton) textBoxButton.interactable = true;
+        var line = _lines[_index];
 
-        _currentFullText = _lines[_index];
+        // 必要なら整形
+        var formatted = CommentFormatter.FormatForTextbox(line.text, FormatCommentLineLen.MoreGameTraining);
+
+        // 古い行のスキップを確実に停止してから新しいCTSを張る
+        _ctsLine?.Cancel();
+        _ctsLine = CancellationTokenSource.CreateLinkedTokenSource(ctScene);
+
         _isTyping = true;
-
         try
         {
-            await typing.PlayAsync(_currentFullText); // TypingTextに任せる
+            // 1文をタイプ表示（TypingText 側は PlayAsync(string, CancellationToken) を実装している想定）
+            await typing.PlayAsync(formatted, _ctsLine.Token);
         }
-        //catch (OperationCanceledException) { /* 無視 */ }
         finally
         {
             _isTyping = false;
         }
-    }
-
-    // ---------------- 即時全文表示 ----------------
-    private void ForceShowFullText()
-    {
-        if (!typing) return;
-
-        // TypingText の targets と同じ階層にある TMP_Text へ一括反映
-        var targets = GetComponentsInChildren<TMP_Text>(includeInactive: true);
-        foreach (var t in targets) if (t) t.text = _currentFullText;
     }
 }

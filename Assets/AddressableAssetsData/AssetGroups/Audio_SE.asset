@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Audio_SE
   m_GUID: d10eae8dd4ecf4546b4ed74a4d04da03
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 89beba0f034959147aad8a40500a499f
+    m_Address: Assets/MyAssets/Sound/SE/SE_TextClick.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94383bba0eacfdd45aa57bcd82ca4e2b
+    m_Address: Assets/MyAssets/Sound/SE/SE_piece.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
   m_SchemaSet:

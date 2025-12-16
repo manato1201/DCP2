@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Font
+  m_EditorClassIdentifier: 
+  m_GroupName: Font
+  m_GUID: e7fa69cf6f7a1a44f89aaa41b5657ea3
+  m_SerializeEntries:
+  - m_GUID: 603b1928a0a9ca543b2b026fdf822ec8
+    m_Address: "Assets/MyAssets/Font/\u3053\u3068\u308A\u6587\u5B57\u3075\u3049\u3093\u3068\u8A66\u7528\u7248-OT
+      SDF.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7621147f0a3ad24c92c414150c48f20
+    m_Address: "Assets/MyAssets/Font/\u3053\u3068\u308A\u6587\u5B57\u3075\u3049\u3093\u3068\u8A66\u7528\u7248-OT.otf"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d55a7abd369f112449dcf2ac29150594
+    m_Address: Assets/MyAssets/Font/japanese_full.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a95ee10c4e169c946b0061fb85b749de, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ef07ad201896b12469b1897bf40a328e, type: 2}
+    - {fileID: 11400000, guid: 80de478956aa5544582af96fc2484c55, type: 2}

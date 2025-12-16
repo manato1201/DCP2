@@ -29,4 +29,44 @@ public static class TextTemplateUtil
         }
         return s;
     }
+    // CSV 1行を分解（ダブルクォート対応, " 内の , を保護）
+    public static System.Collections.Generic.List<string> SplitCsvLine(string line)
+    {
+        var cells = new System.Collections.Generic.List<string>();
+        if (string.IsNullOrEmpty(line)) { cells.Add(string.Empty); return cells; }
+
+        bool inQuote = false;
+        var sb = new System.Text.StringBuilder();
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+
+            if (c == '"')
+            {
+                // 連続する "" はエスケープされた " とみなす
+                if (inQuote && i + 1 < line.Length && line[i + 1] == '"')
+                {
+                    sb.Append('"');
+                    i++; // もう1つ進める
+                }
+                else
+                {
+                    inQuote = !inQuote; // クォートの開閉を反転
+                }
+            }
+            else if (c == ',' && !inQuote)
+            {
+                cells.Add(sb.ToString());
+                sb.Clear();
+            }
+            else
+            {
+                sb.Append(c);
+            }
+        }
+        cells.Add(sb.ToString());
+        return cells;
+    }
+
 }
