@@ -333,8 +333,8 @@ public class TestRule : GridPuzzleBase
         // ---消去実行 ---
         if (linesClearedCount > 0)
         {
-            //controller.AddClearScore(linesClearedCount * 100);
             clearedLine++;
+            controller.AddDamage(10);
             if (coordsToClear.Count > 0)
             {
                 Debug.Log("Clear!");
@@ -422,9 +422,7 @@ public class TestRule : GridPuzzleBase
     /// </summary>
     public override void ChangeGameStep()
     {
-        int damage = clearedLine * 100; //現在の消去ライン数から算出
-
-        controller.SwitchToBattleRule(damage);
+        controller.SwitchToBattleRule();
     }
 
     /// <summary>

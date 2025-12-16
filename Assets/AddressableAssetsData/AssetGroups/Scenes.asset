@@ -15,8 +15,43 @@ MonoBehaviour:
   m_GroupName: Scenes
   m_GUID: b1707440389ec794498fec2674530a32
   m_SerializeEntries:
+  - m_GUID: 3473335aac13bab4a8e4fa1ee4740394
+    m_Address: Assets/MyAssets/Scenes/Select.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 549d763f31324d846a4a5f505f637128
+    m_Address: Assets/MyAssets/Scenes/Story.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67af363078fcbb34ea730c389b4304fe
+    m_Address: Assets/MyAssets/Scenes/Title.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bb4b7611c869cc44b7accf49b378099
+    m_Address: Assets/MyAssets/Scenes/Result.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
     m_Address: Assets/MyAssets/Scenes/PazzleTest.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b92368a9825768c4c96dda6c8be97878
+    m_Address: Assets/MyAssets/Scenes/MIssion.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2534ad6c90a1044f822d7252aff04ad
+    m_Address: Assets/MyAssets/Scenes/pazzle.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f172796d807cb28408e0e208b7f4373f
+    m_Address: Assets/MyAssets/Scenes/BookUI.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

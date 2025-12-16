@@ -17,7 +17,8 @@ public class PuzzleController : MonoBehaviour
     private IPuzzleRule currentRule;
     [SerializeField]private float currentTimer;
     [SerializeField] private int currentTurn;
-
+    [SerializeField] private int maxDamageCap = 500;
+    private int currentTotalDamage = 0;
     private bool isTimerActive;
 
     public GameState currentState;
@@ -59,6 +60,7 @@ public class PuzzleController : MonoBehaviour
     /// <summary>
     /// Startで呼び出し
     /// </summary>
+    /// 
     public void OnControllerStart()
     {
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
@@ -91,7 +93,7 @@ public class PuzzleController : MonoBehaviour
         }
 
         OnTimerStart();
-        
+        ResetDamage();
         StartGame();
     }
 
@@ -186,14 +188,6 @@ public class PuzzleController : MonoBehaviour
         currentRule.Initialize(this);
     }
 
-    /// <summary>
-    /// ゲームシステムに応じて変更
-    /// </summary>
-    /// <param name="score"></param>
-    public void AddClearScore(int score)
-    {
-        Debug.Log("スコアは" +  score + "です");
-    }
 
     /// <summary>
     /// ルール側でブロックを設置した際に通知
@@ -224,9 +218,9 @@ public class PuzzleController : MonoBehaviour
 
 
     //パズル内容からダメージを参照しバトルシーンへ移行
-    public void SwitchToBattleRule(int damage)
+    public void SwitchToBattleRule()
     {
-        battleRule.SetBattleData(damage);
+        battleRule.SetBattleData(currentTotalDamage);
 
         currentRule = battleRule;
         currentRule.Initialize(this);
@@ -241,6 +235,7 @@ public class PuzzleController : MonoBehaviour
     {
         currentTurn--;
         uiManager.SetHPUI(currentTurn);
+        ResetDamage();
 
         if (IsGameEnd())    //残りターン数が０ならば
         {
@@ -256,7 +251,27 @@ public class PuzzleController : MonoBehaviour
 
         }
     }
+
+    public void ResetDamage()
+    {
+        currentTotalDamage = 0;
+        uiManager.UpdateAttackGauge(currentTotalDamage, maxDamageCap);
+    }
+
+    public void AddDamage(int damage)
+    {
+        currentTotalDamage += damage;
+
+        if(currentTotalDamage > maxDamageCap)
+        {
+            currentTotalDamage = maxDamageCap;
+        }
+
+        uiManager.UpdateAttackGauge(currentTotalDamage, maxDamageCap);
+
+    }
 }
+
 
 public enum GameState
 {

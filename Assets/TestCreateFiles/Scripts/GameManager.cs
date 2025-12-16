@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,8 +9,9 @@ public class GameManager : MonoBehaviour
         controller.OnControllerUpdate();
     }
 
-    private void Start()
+    private void Awake()
     {
+        
         controller.OnControllerStart();
     }
 }
