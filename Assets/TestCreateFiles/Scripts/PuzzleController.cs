@@ -194,6 +194,12 @@ public class PuzzleController : MonoBehaviour
             isTimerActive = false;
         }
 
+        if(timerSlider != null)
+        {
+            timerSlider.maxValue = limit;
+            timerSlider.value = limit;
+        }
+
         if(targetEnemy != null)
         {
             targetEnemy.OnUIStart();

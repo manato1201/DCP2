@@ -13,31 +13,39 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: CountDownText
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Panel
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: SchoolYard
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Panel
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: CountDownText
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Enemy
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: HPSlider
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: AttackGauge
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: AttackGauge (1)
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: HP3
+  - displayName: UI(empty)
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
   - displayName: HP2
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: HP1
+  - displayName: Panel
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: PuzzleObjects
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: player
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: TestRule
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: BattleRule
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: 'Puzzle : Controller'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: 'GridOrigin : Transform'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: GM(Test)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: 'Rules : Rule'
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: TestRule
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: TimeSlider
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Background
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: ObjectPool
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: RotateButton3
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: RotateButton2
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
