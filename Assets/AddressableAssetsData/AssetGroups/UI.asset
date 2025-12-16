@@ -105,6 +105,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b775ffc0553390468ab1d36b4ab09e6
+    m_Address: "Assets/MyAssets/Image/\u30B3\u30F3\u30DD 1_2.gif"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ed20b57108547a419e55dbb7ee464e9
     m_Address: Assets/MyAssets/Image/Board_2_Circular Gauge.png
     m_ReadOnly: 0
@@ -112,6 +117,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
     m_Address: Assets/MyAssets/Image/CommentText.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d443ba0c5b828b4086518ba770e5856
+    m_Address: Assets/MyAssets/Image/player4.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

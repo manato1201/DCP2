@@ -133,44 +133,49 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
 
     
 
-    /// <summary>
-    /// デバッグ用：シーンビューにグリッドの内部データを描画
-    /// </summary>
-    protected virtual void OnDrawGizmos()
-    {
-        if (gridInt == null) return;
+//    /// <summary>
+//    /// デバッグ用：シーンビューにグリッドの内部データを描画
+//    /// </summary>
+//    protected virtual void OnDrawGizmos()
+//    {
+//        // gridIntがnullの場合は中止
+//        if (gridInt == null) return;
 
-        for (int x = 0; x < gridWidth; x++)
-        {
-            for (int y = 0; y < gridHeight; y++)
-            {
-                int value = gridInt[x, y];
-                Vector3 pos = GridToWorld(x, y);
+//        // ★追加: ゲーム再生中（Application.isPlayingがtrue）は
+//        // シーン遷移時のエラーを防ぐために描画をスキップする
+//        if (Application.isPlaying) return;
+//        for (int x = 0; x < gridWidth; x++)
+//        {
+//            for (int y = 0; y < gridHeight; y++)
+//            {
+//                int value = gridInt[x, y];
+//                Vector3 pos = GridToWorld(x, y);
 
-                // ★修正箇所: 固定値(0.5fなど)ではなく、インスペクターの変数を足す
-                Vector3 drawPos = pos + gizmoOffset;
+//                // ★修正箇所: 固定値(0.5fなど)ではなく、インスペクターの変数を足す
+//                Vector3 drawPos = pos + gizmoOffset;
 
-#if UNITY_EDITOR
-                // 文字の表示
-                GUIStyle style = new GUIStyle();
-                style.normal.textColor = (value == 0) ? Color.gray : Color.white;
-                style.fontSize = 20;
-                style.fontStyle = FontStyle.Bold;
+//#if UNITY_EDITOR
+//                // 文字の表示
+//                GUIStyle style = new GUIStyle();
+//                style.normal.textColor = (value == 0) ? Color.gray : Color.white;
+//                style.fontSize = 20;
+//                style.fontStyle = FontStyle.Bold;
 
-                // 文字位置（文字は少し中央からずれることがあるので微調整用）
-                style.alignment = TextAnchor.MiddleCenter;
+//                // 文字位置（文字は少し中央からずれることがあるので微調整用）
+//                style.alignment = TextAnchor.MiddleCenter;
 
-                Handles.Label(drawPos, value.ToString(), style);
-#endif
+//                Handles.Label(drawPos, value.ToString(), style);
 
-                // 枠線の表示
-                if (value != 0)
-                {
-                    Gizmos.color = new Color(1, 0, 0, 0.5f);
-                    Gizmos.DrawWireCube(drawPos, new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f));
-                }
-            }
-        }
-    }
+//#endif
+
+//                // 枠線の表示
+//                if (value != 0)
+//                {
+//                    Gizmos.color = new Color(1, 0, 0, 0.5f);
+//                    Gizmos.DrawWireCube(drawPos, new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f));
+//                }
+//            }
+//        }
+//    }
 
 }
