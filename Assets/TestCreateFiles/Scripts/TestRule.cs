@@ -434,6 +434,39 @@ public class TestRule : GridPuzzleBase
         ChangeGameStep();
     }
 
+    /// <summary>
+    /// プールから出したブロックを初期状態(新品)に戻す
+    /// </summary>
+    private void ResetBlockState(GameObject blockObj)
+    {
+        // 1. コライダーを復活させる
+        var col = blockObj.GetComponent<BoxCollider2D>();
+        if (col != null)
+        {
+            col.enabled = true;
+            col.isTrigger = false; // Triggerにしていた場合は戻す
+        }
+
+        // 2. 描画設定を戻す
+        var sr = blockObj.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.color = Color.white; // 透明になっていたのを不透明(白)に戻す
+            sr.sortingOrder = 0;    // 奥に行っていたのを手前に戻す（0または適切な値）
+
+            // もし影用のマテリアルなどをセットしていた場合はここで元に戻す
+            // sr.material = defaultMaterial; 
+        }
+
+        // 3. レイヤーを戻す (影用レイヤーに変更していた場合)
+        // Default または 設定しているレイヤー名("Block"など) に戻す
+        blockObj.layer = LayerMask.NameToLayer("Default");
+
+        // 4. 回転やスケールも念のためリセット
+        blockObj.transform.localScale = Vector3.one;
+        blockObj.transform.rotation = Quaternion.identity;
+    }
+
     #endregion
 
     #region ヘルパー関数
@@ -470,6 +503,18 @@ public class TestRule : GridPuzzleBase
 
         // 【修正】先に初期化を行います（ここで一度位置がリセットされます）
         newGroup.Initialize(shape, piecePool, blocksParent, this.cellSize);
+
+        if (newGroup.childBlocks != null)
+        {
+            foreach (GameObject child in newGroup.childBlocks)
+            {
+                if (child != null)
+                {
+                    ResetBlockState(child);
+                }
+            }
+        }
+
 
         // 【修正】初期化が終わった後に、本来置きたい位置で上書きします
         newGroup.transform.position = worldPos;

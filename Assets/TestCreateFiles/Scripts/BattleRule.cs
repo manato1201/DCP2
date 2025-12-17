@@ -22,7 +22,10 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         Debug.Log($"戦闘開始！ ダメージ: {damageToDeal}");
         AttackSequence();
     }
-
+    public void SetTarget(UnitStatus target)
+    {
+        this.targetEnemy = target;
+    }
 
 
     public void OnUpdate()
