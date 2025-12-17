@@ -9,7 +9,7 @@ public class PuzzleController : MonoBehaviour
     //現在使用するゲームルール
     [SerializeField] private GameObject ruleObject; //パズルルール
 
-    [SerializeField] private TestRule puzzleRule;   
+    [SerializeField] private TestRule puzzleRule;
     [SerializeField] private BattleRule battleRule;   //バトルルール
 
     [SerializeField] private GameObject puzzleParent;
@@ -44,7 +44,7 @@ public class PuzzleController : MonoBehaviour
     public void OnRotateButtonPressed(int index)
     {
         if (currentState != GameState.Playing) return;
-        
+
         currentRule.TryRotatePaletteBlock(index);
     }
 
@@ -91,7 +91,7 @@ public class PuzzleController : MonoBehaviour
     /// <summary>
     /// Startで呼び出し
     /// </summary>
-    /// 
+    ///
     /// <summary>
     /// Startで呼び出し
     /// </summary>
@@ -175,7 +175,7 @@ public class PuzzleController : MonoBehaviour
 
     //ゲーム開始
     private void StartGame()
-    {        
+    {
         //タイマーの設定
         float limit = currentRule.GetTimeLimit();
         OnTurnStart();
@@ -226,7 +226,7 @@ public class PuzzleController : MonoBehaviour
     {
         await UniTask.Delay(5000);
         SceneManager.LoadScene("Over");
-        
+
     }
 
     async public void GameClear()

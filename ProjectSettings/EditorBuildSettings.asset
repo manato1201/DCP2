@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/MyAssets/Scenes/PazzleTest.unity
+    path: Assets/MyAssets/Scenes/Pazzle.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/MyAssets/Scenes/Title.unity
@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/MyAssets/Scenes/BookUI.unity
     guid: f172796d807cb28408e0e208b7f4373f
   - enabled: 1
-    path: Assets/MyAssets/Scenes/pazzle.unity
+    path: Assets/MyAssets/Scenes/pazzleTest1.unity
     guid: e2534ad6c90a1044f822d7252aff04ad
   - enabled: 1
     path: Assets/MyAssets/Scenes/MIssion.unity

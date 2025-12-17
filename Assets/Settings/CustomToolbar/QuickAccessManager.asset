@@ -13,22 +13,14 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: CommuLog
-    scenePath: 
-  - displayName: Resources
-    scenePath: 
-  - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: MessageBox
-    scenePath: Assets/MyAssets/Scenes/Story.unity
   - displayName: BookUI
     scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: pazzleTest1
+    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
   - displayName: MIssion
     scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: PazzleTest
-    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Pazzle
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
   - displayName: Result
     scenePath: Assets/MyAssets/Scenes/Result.unity
   - displayName: Title
@@ -37,5 +29,23 @@ MonoBehaviour:
     scenePath: Assets/MyAssets/Scenes/Story.unity
   - displayName: Select
     scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Text (TMP)
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzleTest1
+    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: Pazzle
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
     scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: GotoPreviousPageButton
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: GotoNextPageButton
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
