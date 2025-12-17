@@ -22,4 +22,4 @@ MonoBehaviour:
   - id: 3
     address: Assets/MyAssets/Scenes/Story.unity
   - id: 5
-    address: Assets/MyAssets/Scenes/Puzzle.unity
+    address: Assets/MyAssets/Scenes/Pazzle.unity
