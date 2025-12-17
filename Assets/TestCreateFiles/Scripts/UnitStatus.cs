@@ -5,7 +5,7 @@ public class UnitStatus : MonoBehaviour
 {
     [Header("Status Settings")]
     [SerializeField] private int maxHP = 100;
-    private int currentHP = 10;
+    [SerializeField] private int currentHP = 10;
 
     public UnityEvent<float> OnHPChanged;
 

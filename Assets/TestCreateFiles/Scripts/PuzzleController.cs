@@ -194,7 +194,19 @@ public class PuzzleController : MonoBehaviour
             isTimerActive = false;
         }
 
-        if(timerSlider != null)
+        if (targetEnemy != null && uiManager != null)
+        {
+            // 重複登録を防ぐために一度削除してから登録
+            targetEnemy.OnHPChanged.RemoveListener(uiManager.SetHPSlider);
+            targetEnemy.OnHPChanged.AddListener(uiManager.SetHPSlider);
+
+            // 死亡時のイベントなども必要ならここで登録
+            // targetEnemy.OnDead.RemoveListener(OnEnemyDead);
+            // targetEnemy.OnDead.AddListener(OnEnemyDead);
+        }
+
+
+        if (timerSlider != null)
         {
             timerSlider.maxValue = limit;
             timerSlider.value = limit;
@@ -242,7 +254,7 @@ public class PuzzleController : MonoBehaviour
     public void SwitchToBattleRule()
     {
         battleRule.SetBattleData(currentTotalDamage);
-
+        battleRule.SetTarget(targetEnemy);
         currentRule = battleRule;
         currentRule.Initialize(this);
         isTimerActive = false;
