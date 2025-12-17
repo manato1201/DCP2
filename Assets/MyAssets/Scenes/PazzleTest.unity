@@ -1299,7 +1299,7 @@ PrefabInstance:
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'availableShapes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 565be394eedb7c7459d9e0a495d0e1ab, type: 2}
+      objectReference: {fileID: 11400000, guid: 800643a10cebd8347bdf7bfff2718096, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'availableShapes.Array.data[1]'
       value: 
@@ -1307,7 +1307,15 @@ PrefabInstance:
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'availableShapes.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 565be394eedb7c7459d9e0a495d0e1ab, type: 2}
+      objectReference: {fileID: 11400000, guid: d191710fb1b850248a95e60dfc6b9fec, type: 2}
+    - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
+      propertyPath: 'availableShapes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d191710fb1b850248a95e60dfc6b9fec, type: 2}
+    - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
+      propertyPath: 'availableShapes.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d191710fb1b850248a95e60dfc6b9fec, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'paletteSpawnSlots.Array.data[0]'
       value: 

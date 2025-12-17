@@ -13,29 +13,25 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: CommuLog
-    scenePath: 
-  - displayName: Resources
-    scenePath: 
-  - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: MessageBox
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: PazzleTest
+  - displayName: TestRule
     scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: Text (TMP)
-    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Block
+    scenePath: 
+  - displayName: Prefabs
+    scenePath: 
+  - displayName: Block(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Block(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Block(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Block(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: Block(Clone)
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: BlockGroup_+
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: BlockGroup_+
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
+  - displayName: BlockGroup_L
+    scenePath: Assets/MyAssets/Scenes/PazzleTest.unity
