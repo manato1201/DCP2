@@ -6,3 +6,10 @@
 
 ### 現在制作中
 
+##担当
+
+manato1201:framework層担当
+
+Komiyajun:パズルゲームロジック層担当
+
+morisawa:UI層担当
