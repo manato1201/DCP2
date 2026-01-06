@@ -20,6 +20,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05314353e4c92054c8b66a1f9ca68ed3
+    m_Address: Assets/MyAssets/Image/01_base_green 1/save.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 059a1a848dcb2934a97cd845108e32a5
+    m_Address: Assets/MyAssets/Image/Bg_Outdoors2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06fad378486d61944b89db581f8f871c
+    m_Address: Assets/MyAssets/Image/01_base_green/02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08aa18576ce3e1642a15bb78ce86d170
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/log_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 08e4a8c4c436ccd48afbc4c9fe659529
     m_Address: Assets/MyAssets/Image/Board_1_Background.png
     m_ReadOnly: 0
@@ -75,8 +95,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cd5f3dfcd3d536428edadfbedf5fec2
+    m_Address: Assets/MyAssets/Image/01_base_green 1/load.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41723ab94809bbd459fc38a4847bd852
+    m_Address: Assets/MyAssets/Image/01_base_green/05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 468526f4dca61244f9c9cd529be1d5a0
     m_Address: Assets/MyAssets/Image/player3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46fd709c7ad1e9544b9f5f34a9d435ec
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/load_h.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -90,6 +125,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 542e74ddcdf1b2d48bff54a425145466
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/auto_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54a4a1c127e274a42ad7a379eb54b2b6
+    m_Address: Assets/MyAssets/Image/01_base_green/01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63071c5b96e13fa44a04837271b8eec3
     m_Address: Assets/MyAssets/Image/BookUI_Cover.png
     m_ReadOnly: 0
@@ -100,8 +145,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6b775ffc0553390468ab1d36b4ab09e6
-    m_Address: "Assets/MyAssets/Image/\u30B3\u30F3\u30DD 1_2.gif"
+  - m_GUID: 68be7b37ac76c4d4dae0f6e06f526e1b
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/save_h.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -115,13 +160,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
-    m_Address: Assets/MyAssets/Image/CommentText.png
+  - m_GUID: 78c944ebb50c698459946364c732e60c
+    m_Address: Assets/MyAssets/Image/01_base_green 1/auto.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7d443ba0c5b828b4086518ba770e5856
-    m_Address: Assets/MyAssets/Image/player4.png
+  - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
+    m_Address: Assets/MyAssets/Image/CommentText.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -140,6 +185,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89ad7cb9ffde8024aadd80d07ebc5942
+    m_Address: Assets/MyAssets/Image/01_base_green/04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89c5906fee4983f43a3ea63ecde13e60
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/log_h.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 948d943f6f9220443bca395c789a6ce8
     m_Address: Assets/MyAssets/Image/arrows-counter-clockwise.svg
     m_ReadOnly: 0
@@ -150,8 +205,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ed52a51ba7438849a132eeb506c902f
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/auto_h.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a904305b3cf5314498b46c79e547276b
     m_Address: Assets/MyAssets/Image/book-open-text.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aab04f9ab519dc841852a60d01743318
+    m_Address: Assets/MyAssets/Image/01_base_green 1/log.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aef13cd076ac7514da4ce522cfca5d84
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/load_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afe8cc393bc9a8c4cb9705ea8b9095fa
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/skip_h.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba1c65409b6b47a479f10f0cf5d6fa8e
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/save_c.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -175,8 +255,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7ee00a46a31d4f46977a0332ddc2436
+    m_Address: Assets/MyAssets/Image/01_base_green/03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb0eba8b190d71d45a5b8fe176ff6dab
     m_Address: Assets/MyAssets/Image/Board_1_Mass.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc086e8defbdaa6459c22c14481a656c
+    m_Address: Assets/MyAssets/Image/01_base_green 1/skip.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -207,6 +297,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da2b33d65aeff9f46835d5badb2b1ff9
     m_Address: Assets/MyAssets/Image/book-open.svg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3609731284aba949be78659bb7a9587
+    m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/skip_c.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

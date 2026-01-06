@@ -15,6 +15,31 @@ MonoBehaviour:
   m_GroupName: Audio_SE
   m_GUID: d10eae8dd4ecf4546b4ed74a4d04da03
   m_SerializeEntries:
+  - m_GUID: 3b671d88366611644bd46f452e199852
+    m_Address: Assets/MyAssets/Sound/SE/SE_Attack.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4683d1fa9542bd447b1f9855a6cf5381
+    m_Address: Assets/MyAssets/Sound/SE/SE_Damage.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47d9a460964511a4a96195ce55e771c6
+    m_Address: Assets/MyAssets/Sound/SE/SE_Transition.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b5324ad86d66bf4591b79a4e53f4aa6
+    m_Address: Assets/MyAssets/Sound/SE/SE_BookPage.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8052ec18c7e8b5349a83daf6b11e8adf
+    m_Address: Assets/MyAssets/Sound/SE/SE_Cancel.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89beba0f034959147aad8a40500a499f
     m_Address: Assets/MyAssets/Sound/SE/SE_TextClick.mp3
     m_ReadOnly: 0
@@ -22,6 +47,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 94383bba0eacfdd45aa57bcd82ca4e2b
     m_Address: Assets/MyAssets/Sound/SE/SE_piece.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a244671f2c77e474ebd4233c42c6817c
+    m_Address: Assets/MyAssets/Sound/SE/SE_Align.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b71a5f0c610927a4d9d0f38503390b18
+    m_Address: Assets/MyAssets/Sound/SE/SE_Defeat.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3c17dfc6b40cf34fb822bbc49dde7bf
+    m_Address: Assets/MyAssets/Sound/SE/SE_GageUp.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

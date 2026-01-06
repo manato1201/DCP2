@@ -21,6 +21,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4e0a539c58de1a41b9af29d7e23ba2d
+    m_Address: Assets/MyAssets/Font/cinecaption226 SDF.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b7621147f0a3ad24c92c414150c48f20
     m_Address: "Assets/MyAssets/Font/\u3053\u3068\u308A\u6587\u5B57\u3075\u3049\u3093\u3068\u8A66\u7528\u7248-OT.otf"
     m_ReadOnly: 0
@@ -28,6 +33,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d55a7abd369f112449dcf2ac29150594
     m_Address: Assets/MyAssets/Font/japanese_full.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb970d218f064044d945fdfa389b0742
+    m_Address: Assets/MyAssets/Font/cinecaption226.ttf
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
