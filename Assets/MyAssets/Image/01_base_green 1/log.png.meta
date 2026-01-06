@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d47746b83bdc43342ad84466b647a455
+guid: aab04f9ab519dc841852a60d01743318
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2173855995369307330
-    second: hari_2_0
+      213: -5034061168752090764
+    second: log_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -123,19 +123,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -152,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hari_2_0
+      name: log_0
       rect:
         serializedVersion: 2
-        x: 465
-        y: 1201
-        width: 1950
-        height: 2081
+        x: 0
+        y: 0
+        width: 146
+        height: 58
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e33c8236d79e4d1e0800000000000000
-      internalID: -2173855995369307330
+      spriteID: 471a1f2e90c632ab0800000000000000
+      internalID: -5034061168752090764
       vertices: []
       indices: 
       edges: []
@@ -187,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      hari_2_0: -2173855995369307330
+      log_0: -5034061168752090764
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
