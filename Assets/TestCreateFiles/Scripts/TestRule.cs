@@ -70,6 +70,7 @@ public class TestRule : GridPuzzleBase
     {
         base.Initialize(controller);
 
+
         GameObject originObj = GameObject.FindWithTag("GridOrigin");
 
         //オブジェクトプール
@@ -285,10 +286,13 @@ public class TestRule : GridPuzzleBase
     /// <returns></returns>
     public override bool CheckForClear()
     {
-
         // 消去すべきブロックの座標リスト
         List<Vector2Int> coordsToClear = new List<Vector2Int>();
         int linesClearedCount = 0;
+
+        // もやを消した際の倍率計算用
+        float damageMultiplier = 1.0f;
+        int baseDamagePerLine = 10; // 1ラインあたりの基礎ダメージ
 
         // ---行（横）のチェック ---
         for (int y = 0; y < gridHeight; y++)
@@ -296,7 +300,6 @@ public class TestRule : GridPuzzleBase
             bool isRowFull = true;
             for (int x = 0; x < gridWidth; x++)
             {
-                // intで判定 (0なら空いている)
                 if (gridInt[x, y] == 0)
                 {
                     isRowFull = false;
@@ -316,7 +319,6 @@ public class TestRule : GridPuzzleBase
             bool isColumnFull = true;
             for (int y = 0; y < gridHeight; y++)
             {
-                // intで判定
                 if (gridInt[x, y] == 0)
                 {
                     isColumnFull = false;
@@ -333,8 +335,11 @@ public class TestRule : GridPuzzleBase
         // ---消去実行 ---
         if (linesClearedCount > 0)
         {
-            clearedLine++;
-            controller.AddDamage(10);
+            // ここで固定ダメージを与えるのではなく、ブロックの中身を見てから計算するため
+            // controller.AddDamage(10); は削除または後方へ移動
+
+            // clearedLine++; // 変数clearedLineが定義されている場合はコメントアウトを外してください
+
             if (coordsToClear.Count > 0)
             {
                 Debug.Log("Clear!");
@@ -343,6 +348,16 @@ public class TestRule : GridPuzzleBase
                     // 既に処理済みならスキップ
                     if (gridInt[coord.x, coord.y] == 0) continue;
 
+                    // もやブロックかどうかの判定
+                    // GridPuzzleBase.FOG_BLOCK_ID は定義した定数(例:99)を使ってください
+                    if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
+                    {
+                        damageMultiplier += 0.5f; // 例: 1つにつき50%アップ
+
+                        // もやの寿命管理配列がある場合はリセットしておく
+                        if (fogLifeGrid != null) fogLifeGrid[coord.x, coord.y] = 0;
+                    }
+
                     //論理データをクリア
                     gridInt[coord.x, coord.y] = 0;
 
@@ -350,22 +365,20 @@ public class TestRule : GridPuzzleBase
                     GameObject blockObj = gridVisuals[coord.x, coord.y];
                     if (blockObj != null)
                     {
-                        // 親への通知
-                        BlockGroup parentGroup = blockObj.GetComponentInParent<BlockGroup>();
-                        //if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
+                        // 親への通知 (必要なら)
+                        // BlockGroup parentGroup = blockObj.GetComponentInParent<BlockGroup>();
+                        // if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
 
                         var p = blockObj.GetComponent<piece>();
                         if (p != null)
                         {
-                            p.Release();    
+                            p.Release();
                         }
                         else
                         {
                             blockObj.SetActive(false);
+                            Destroy(blockObj); // Poolを使っていないオブジェクトの場合のみDestroy
                         }
-
-
-                            Destroy(blockObj);
 
                         gridVisuals[coord.x, coord.y] = null;
                     }
@@ -375,13 +388,22 @@ public class TestRule : GridPuzzleBase
                         SetCellColor(cellObjects[coord.x, coord.y], 0);
                     }
                 }
-                return true;
             }
+
+            // 全てのブロックを確認した後で、倍率を適用してダメージを与える
+            // (基礎攻撃力 * ライン数) * (もや倍率)
+            int finalDamage = Mathf.FloorToInt((baseDamagePerLine * linesClearedCount) * damageMultiplier);
+            controller.AddDamage(finalDamage);
+
+            Debug.Log($"Damage: {finalDamage} (Multiplier: {damageMultiplier})");
+
+            return true;
         }
+
         return false;
     }
 
-    
+
 
     /// <summary>     
     /// ゲームオーバー処理
@@ -762,11 +784,34 @@ public class TestRule : GridPuzzleBase
             2 => Color.green,
             3 => Color.blue,
             4 => Color.yellow,
+            GridPuzzleBase.FOG_BLOCK_ID => new Color(0.5f,0,0.5f),
             _ => Color.black,
         };
 
     }
 
+    public void SpawnFog(int count, int lifeTurn)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            int tryCount = 0;
+            while(tryCount < 100)
+            {
+                int rx = UnityEngine.Random.Range(0, gridWidth);
+                int ry = UnityEngine.Random.Range(0, gridHeight);
+
+                if (gridInt[rx,ry] == 0)
+                {
+                    gridInt[rx, ry] = FOG_BLOCK_ID;
+                    fogLifeGrid[rx,ry] = lifeTurn;
+
+                    SetCellColor(cellObjects[rx, ry], FOG_BLOCK_ID);
+                    break;
+                }
+                tryCount++;
+            }
+        }
+    }
 
     /// <summary>
     /// 待機所にある対応するインデックスのブロックを回転
@@ -778,6 +823,29 @@ public class TestRule : GridPuzzleBase
         if(paletteGroups[index] == null) return;
 
         paletteGroups[index].transform.Rotate(0, 0, +90);
+    }
+
+    public void ProcessFogTurnChange()
+    {
+        for(int x = 0; x < gridWidth; x++)
+        {
+            for(int y = 0; y < gridHeight; y++)
+            {
+                if (gridInt[x,y] == FOG_BLOCK_ID)
+                {
+                    fogLifeGrid[x, y]--;
+
+                    if (fogLifeGrid[x,y] <= 0)
+                    {
+                        gridInt[x, y] = 0;
+
+                        controller.DamagePlayer(1);
+                        Debug.Log("もやが爆発した！プレイヤーにダメージ!");
+
+                    }
+                }
+            }
+        }
     }
 
     #endregion

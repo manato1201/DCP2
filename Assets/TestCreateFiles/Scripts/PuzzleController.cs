@@ -17,7 +17,7 @@ public class PuzzleController : MonoBehaviour
 
     private IPuzzleRule currentRule;
     [SerializeField]private float currentTimer;
-    [SerializeField] private int currentTurn;
+    [SerializeField] private int playerLife;
     [SerializeField] private int maxDamageCap = 500;
     private int currentTotalDamage = 0;
     private bool isTimerActive;
@@ -88,10 +88,9 @@ public class PuzzleController : MonoBehaviour
         Debug.Log("Game Started!");
     }
 
-    /// <summary>
-    /// Startで呼び出し
-    /// </summary>
-    /// 
+    
+
+
     /// <summary>
     /// Startで呼び出し
     /// </summary>
@@ -160,12 +159,12 @@ public class PuzzleController : MonoBehaviour
 
     public void OnTurnStart()
     {
-        currentTurn = currentRule.GetTurnLimit();
+        playerLife = currentRule.GetTurnLimit();
     }
 
     bool IsGameEnd()
     {
-        if(currentTurn == 0)
+        if(playerLife == 0)
         {
             return true;
         }
@@ -179,7 +178,7 @@ public class PuzzleController : MonoBehaviour
         //タイマーの設定
         float limit = currentRule.GetTimeLimit();
         OnTurnStart();
-        uiManager.SetHPUI(currentTurn);
+        uiManager.SetHPUI(playerLife);
 
         battleParent.SetActive(false);
         puzzleParent.SetActive(true);
@@ -268,8 +267,8 @@ public class PuzzleController : MonoBehaviour
     //戦闘からパズルに移行
     public void SwitchToPuzzleRule()
     {
-        currentTurn--;
-        uiManager.SetHPUI(currentTurn);
+        puzzleRule.ProcessFogTurnChange();
+        uiManager.SetHPUI(playerLife);
         ResetDamage();
 
         if (IsGameEnd())    //残りターン数が０ならば
@@ -285,6 +284,13 @@ public class PuzzleController : MonoBehaviour
             battleParent.SetActive(false);
 
         }
+    }
+
+    public void DamagePlayer(int damageAmount)
+    {
+        playerLife -= damageAmount;
+        if (playerLife < 0) playerLife = 0;
+        uiManager.SetHPUI(playerLife);
     }
 
     public void ResetDamage()
@@ -305,6 +311,12 @@ public class PuzzleController : MonoBehaviour
         uiManager.UpdateAttackGauge(currentTotalDamage, maxDamageCap);
 
     }
+
+    public void EnemyAttackSpawnFog(int count, int life)
+    {
+        puzzleRule.SpawnFog(count, life);
+    }
+
 }
 
 

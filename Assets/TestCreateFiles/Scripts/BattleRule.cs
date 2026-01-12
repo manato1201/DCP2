@@ -10,6 +10,8 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
     [SerializeField] private UnitStatus targetEnemy;
 
+    [SerializeField] private int fogCount = 1;
+    [SerializeField] private int fogLife = 3;
     // パズルからデータを受け取って初期化できるようにする
     public void SetBattleData(int damage)
     {
@@ -47,6 +49,10 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
         if (canceled) return;
 
+        
+        
+
+        controller.EnemyAttackSpawnFog(fogCount, fogLife);
 
         if (targetEnemy != null)
         {

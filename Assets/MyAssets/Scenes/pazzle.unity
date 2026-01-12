@@ -1242,7 +1242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: timeLimit
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: gridOrigin
