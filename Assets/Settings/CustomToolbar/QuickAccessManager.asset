@@ -13,29 +13,39 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: ClearEffects
-    scenePath: 
-  - displayName: DamageText
-    scenePath: 
-  - displayName: GridCell
-    scenePath: 
-  - displayName: ClearEffects
-    scenePath: 
-  - displayName: DamageText
-    scenePath: 
-  - displayName: GridCell
-    scenePath: 
-  - displayName: Group
-    scenePath: 
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: IconMaskParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: EffectTargets
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzleTest1
+    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: Pazzle
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: pazzleTest1
+    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: Pazzle
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity

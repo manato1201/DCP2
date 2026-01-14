@@ -6,7 +6,7 @@ public enum FormatCommentLineLen
 {
     // 例：用途に応じて増やしてOK（数字は1行の最大“文字数”）
     TodayGameTraining = 14,
-    MoreGameTraining = 16,
+    MoreGameTraining = 47,
 }
 
 public static class CommentFormatter
