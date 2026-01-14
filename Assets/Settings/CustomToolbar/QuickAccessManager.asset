@@ -13,43 +13,37 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Level3snake
+    scenePath: 
+  - displayName: Prefabs
+    scenePath: 
+  - displayName: Block
+    scenePath: 
+  - displayName: DamageText
+    scenePath: 
+  - displayName: GridCell
+    scenePath: 
+  - displayName: Group
+    scenePath: 
+  - displayName: TestRule
+    scenePath: 
+  - displayName: Level3snake
+    scenePath: 
+  - displayName: Level3+
+    scenePath: 
+  - displayName: Level2T
+    scenePath: 
+  - displayName: Level2O
+    scenePath: 
+  - displayName: Level2L
+    scenePath: 
+  - displayName: Level2I
+    scenePath: 
+  - displayName: Prefabs
+    scenePath: 
+  - displayName: Level1Squear
+    scenePath: 
   - displayName: TestRule
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SchoolYard
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Rules : Rule'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GM(Test)
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'GridOrigin : Transform'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Puzzle : Controller'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Global Light 2D
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzleTest1
-    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: BlockShape
-    scenePath: 
-  - displayName: BlockGroup
+  - displayName: Leve2T
     scenePath: 

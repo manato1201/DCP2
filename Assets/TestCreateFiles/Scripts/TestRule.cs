@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Playables;
 
 public class TestRule : GridPuzzleBase
@@ -15,7 +16,11 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private GameObject gridCellPrefab;
 
     [Header("Block Shape[設計図]")]
-    [SerializeField] private BlockShape[] availableShapes;
+    [SerializeField] private BlockShape[] level1Shapes;
+    [SerializeField] private BlockShape[] level2Shapes;
+    [SerializeField] private BlockShape[] level3Shapes;
+
+
 
     //ドラッグ操作用
     private BlockGroup draggedBlockGroup;        //現在ドラッグ中のブロック
@@ -40,7 +45,7 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private Transform[] paletteSpawnSlots;
 
     //各スロットに現在入っているブロックのインスタンスを保持する配列
-    private BlockGroup[] paletteGroups;
+    private BlockGroup[] paletteGroups; 
 
     //ブロックインスタンスからどのスロットか(index)を逆引きするための辞書
     private Dictionary<BlockGroup, int> paletteSlotMap;
@@ -231,6 +236,8 @@ public class TestRule : GridPuzzleBase
                 }
 
                 draggedBlockGroup.Release();
+
+                OnChainFinish();//バトルに移行
             }
             else
             {
@@ -258,6 +265,7 @@ public class TestRule : GridPuzzleBase
             // ドラッグ状態を解除
             draggedBlockGroup = null;
             draggedSlotIndex = -1;
+
         }
     }
     /// <summary>
@@ -434,8 +442,10 @@ public class TestRule : GridPuzzleBase
     /// </summary>
     public override void OnTimerEnded()
     {
-        Debug.Log("タイマーが終了しました。");
-        OnChainFinish();
+        //タイマーは廃止
+
+        //Debug.Log("タイマーが終了しました。");
+        //OnChainFinish();  
     }
 
 
@@ -677,11 +687,39 @@ public class TestRule : GridPuzzleBase
     /// 指定されたスロットに、ランダムな形のブロックを生成(補充)する
     /// </summary>
     /// <param name="slotIndex"></param>
+    /// <summary>
+    /// 指定されたスロットに、スロットに応じたレベルのブロックを生成(補充)する
+    /// </summary>
+    /// <param name="slotIndex"></param>
     private void SpawnRandomBlockInSlot(int slotIndex)
     {
-        //設計図がなければなにもしない
-        if (availableShapes.Length == 0) return;
+        // 1. スロット番号に応じて、使用する設計図リストを選択する
+        BlockShape[] targetShapes = null;
 
+
+
+
+        switch (slotIndex)
+        {
+            case 0:
+                targetShapes = level1Shapes;
+                break;
+            case 1:
+                targetShapes = level2Shapes;
+                break;
+            case 2:
+                targetShapes = level3Shapes;
+                break;
+            default:
+                // スロットが3つ以上ある場合のフォールバック（例：Level1を使う）
+                targetShapes = level1Shapes;
+                break;
+        }
+
+        // リストが空、またはnullの場合は処理を中断
+        if (targetShapes == null || targetShapes.Length == 0) return;
+
+        // ---------------------------------------------------------
         if (paletteGroups[slotIndex] != null)
         {
             paletteSlotMap.Remove(paletteGroups[slotIndex]);
@@ -689,10 +727,25 @@ public class TestRule : GridPuzzleBase
             paletteGroups[slotIndex] = null;
         }
 
-        BlockShape randomShape = availableShapes[Random.Range(0, availableShapes.Length)];
+        // 選択されたリストからランダムに取得
+        BlockShape randomShape = targetShapes[Random.Range(0, targetShapes.Length)];
 
+        // 1. 本来のスロット位置
         Vector3 spawnPos = paletteSpawnSlots[slotIndex].position;
+
+        // 2. ブロックを生成（一旦スロット位置に置く）
         BlockGroup newGroup = SpawnBlockAt(randomShape, spawnPos);
+
+        // 3. スケールを適用
+        newGroup.transform.localScale = Vector3.one * paletteBlockScale;
+
+        // 4. 重心補正を行う
+        //    形状の中心ズレ(Vector3) × セルサイズ × 表示スケール
+        Vector3 centerOffset = GetShapeCenter(randomShape);
+
+        //    現在の位置から、中心ズレ分だけ「引く」ことで、見た目の重心をスロット中央に合わせる
+        newGroup.transform.position -= centerOffset * this.cellSize * paletteBlockScale;
+
         newGroup.transform.localScale = Vector3.one * paletteBlockScale;
         int colorId = (int)randomShape.blockElement + 1;
         foreach (GameObject blocks in newGroup.childBlocks)
@@ -704,7 +757,6 @@ public class TestRule : GridPuzzleBase
         paletteGroups[slotIndex] = newGroup;
         paletteSlotMap[newGroup] = slotIndex;
     }
-
     /// <summary>
     /// ドラッグ中のブロックから影を作成する
     /// </summary>
@@ -839,13 +891,39 @@ public class TestRule : GridPuzzleBase
                     {
                         gridInt[x, y] = 0;
 
-                        controller.DamagePlayer(1);
-                        Debug.Log("もやが爆発した！プレイヤーにダメージ!");
+                        controller.IsGameEndTrue();
+                        Debug.Log("もやが爆発した！");
 
                     }
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 設計図の座標リストから、形状の中心（重心）を計算して返す
+    /// </summary>
+    private Vector3 GetShapeCenter(BlockShape shape)
+    {
+        // 最小値と最大値を見つける
+        float minX = float.MaxValue;
+        float maxX = float.MinValue;
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+
+        foreach (Vector2Int coord in shape.ShapeCoordinates)
+        {
+            if (coord.x < minX) minX = coord.x;
+            if (coord.x > maxX) maxX = coord.x;
+            if (coord.y < minY) minY = coord.y;
+            if (coord.y > maxY) maxY = coord.y;
+        }
+
+        // 中心点を計算 ( (min + max) / 2 )
+        float centerX = (minX + maxX) / 2f;
+        float centerY = (minY + maxY) / 2f;
+
+        return new Vector3(centerX, centerY, 0);
     }
 
     #endregion

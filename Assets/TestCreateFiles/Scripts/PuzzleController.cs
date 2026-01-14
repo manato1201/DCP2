@@ -17,11 +17,10 @@ public class PuzzleController : MonoBehaviour
 
     private IPuzzleRule currentRule;
     [SerializeField]private float currentTimer;
-    [SerializeField] private int playerLife;
     [SerializeField] private int maxDamageCap = 500;
     private int currentTotalDamage = 0;
     private bool isTimerActive;
-
+    private bool isGameEnd = false;
     public GameState currentState;
 
     [SerializeField] private BattleUIManager uiManager;
@@ -159,18 +158,11 @@ public class PuzzleController : MonoBehaviour
 
     public void OnTurnStart()
     {
-        playerLife = currentRule.GetTurnLimit();
+        isGameEnd = false;
     }
 
-    bool IsGameEnd()
-    {
-        if(playerLife == 0)
-        {
-            return true;
-        }
+    
 
-        return false;
-    }
 
     //ゲーム開始
     private void StartGame()
@@ -178,9 +170,8 @@ public class PuzzleController : MonoBehaviour
         //タイマーの設定
         float limit = currentRule.GetTimeLimit();
         OnTurnStart();
-        uiManager.SetHPUI(playerLife);
 
-        battleParent.SetActive(false);
+        battleParent.SetActive(true);
         puzzleParent.SetActive(true);
 
         if (limit > 0)
@@ -230,6 +221,11 @@ public class PuzzleController : MonoBehaviour
         currentRule.OnBlockLanded();
     }
 
+    public void IsGameEndTrue()
+    {
+        isGameEnd = true;
+    }
+
     /// <summary>
     /// ゲームオーバー
     /// </summary>
@@ -258,8 +254,6 @@ public class PuzzleController : MonoBehaviour
         currentRule.Initialize(this);
         isTimerActive = false;
         currentState = GameState.Battle;
-        puzzleParent.SetActive(false);
-        battleParent.SetActive(true);
 
         uiManager.ShowDamage(currentTotalDamage, targetEnemy.transform.position);
     }
@@ -268,10 +262,9 @@ public class PuzzleController : MonoBehaviour
     public void SwitchToPuzzleRule()
     {
         puzzleRule.ProcessFogTurnChange();
-        uiManager.SetHPUI(playerLife);
         ResetDamage();
 
-        if (IsGameEnd())    //残りターン数が０ならば
+        if (isGameEnd)    //残りターン数が０ならば
         {
             GameOver();
         }
@@ -280,18 +273,10 @@ public class PuzzleController : MonoBehaviour
             currentRule = puzzleRule;
             OnTimerRestart();
             currentState = GameState.Playing;
-            puzzleParent.SetActive(true);
-            battleParent.SetActive(false);
 
         }
     }
 
-    public void DamagePlayer(int damageAmount)
-    {
-        playerLife -= damageAmount;
-        if (playerLife < 0) playerLife = 0;
-        uiManager.SetHPUI(playerLife);
-    }
 
     public void ResetDamage()
     {
