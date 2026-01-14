@@ -14,6 +14,9 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
     [SerializeField] protected Transform gridOrigin;
     [SerializeField] protected Vector3 gizmoOffset;
 
+    public const int FOG_BLOCK_ID = 99;
+    protected int[,] fogLifeGrid;
+
     protected GameObject[,] gridVisuals;    //ブロックの管理
     protected int[,] gridInt;   //数値の管理
     protected GameObject[,] cellObjects;
@@ -27,6 +30,7 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
         //グリッドの初期化
         gridVisuals = new GameObject[gridWidth, gridHeight];
         gridInt = new int[gridWidth, gridHeight];
+        fogLifeGrid = new int[gridWidth, gridHeight];
         cellObjects = new GameObject[gridWidth, gridHeight];
 
     }
@@ -131,51 +135,74 @@ public abstract class GridPuzzleBase : MonoBehaviour,IPuzzleRule
         }
     }
 
-    
 
-//    /// <summary>
-//    /// デバッグ用：シーンビューにグリッドの内部データを描画
-//    /// </summary>
-//    protected virtual void OnDrawGizmos()
-//    {
-//        // gridIntがnullの場合は中止
-//        if (gridInt == null) return;
 
-//        // ★追加: ゲーム再生中（Application.isPlayingがtrue）は
-//        // シーン遷移時のエラーを防ぐために描画をスキップする
-//        if (Application.isPlaying) return;
-//        for (int x = 0; x < gridWidth; x++)
-//        {
-//            for (int y = 0; y < gridHeight; y++)
-//            {
-//                int value = gridInt[x, y];
-//                Vector3 pos = GridToWorld(x, y);
+    /// <summary>
+    /// デバッグ用：シーンビューにグリッドの内部データを描画
+    /// </summary>
+    /// <summary>
+    /// デバッグ用：シーンビューにグリッドの内部データを描画
+    /// </summary>
+    protected virtual void OnDrawGizmos()
+    {
+        // データがない、またはUnityエディタ外でのビルド時は実行しない
+#if !UNITY_EDITOR
+        return;
+#endif
+        // gridIntが初期化されていない場合は中止
+        if (gridInt == null) return;
 
-//                // ★修正箇所: 固定値(0.5fなど)ではなく、インスペクターの変数を足す
-//                Vector3 drawPos = pos + gizmoOffset;
+        // もやの寿命配列もnullチェック
+        bool showFogLife = (fogLifeGrid != null);
 
-//#if UNITY_EDITOR
-//                // 文字の表示
-//                GUIStyle style = new GUIStyle();
-//                style.normal.textColor = (value == 0) ? Color.gray : Color.white;
-//                style.fontSize = 20;
-//                style.fontStyle = FontStyle.Bold;
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                // グリッド座標からワールド座標へ変換
+                // ※GridToWorld関数がない場合は、以下の計算式を使ってください
+                // Vector3 pos = gridOrigin.position + new Vector3(x * cellSize, y * cellSize, 0);
+                Vector3 pos = GridToWorld(x, y);
 
-//                // 文字位置（文字は少し中央からずれることがあるので微調整用）
-//                style.alignment = TextAnchor.MiddleCenter;
+                // 位置調整（インスペクターのgizmoOffsetを加算）
+                Vector3 drawPos = pos + gizmoOffset;
 
-//                Handles.Label(drawPos, value.ToString(), style);
+                int id = gridInt[x, y];
 
-//#endif
+                // --- ここからエディタ専用描画処理 ---
+#if UNITY_EDITOR
+                GUIStyle style = new GUIStyle();
+                style.fontSize = 20;
+                style.fontStyle = FontStyle.Bold;
+                style.alignment = TextAnchor.MiddleCenter;
 
-//                // 枠線の表示
-//                if (value != 0)
-//                {
-//                    Gizmos.color = new Color(1, 0, 0, 0.5f);
-//                    Gizmos.DrawWireCube(drawPos, new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0.1f));
-//                }
-//            }
-//        }
-//    }
+                // IDによって色を変える
+                if (id == 0)
+                {
+                    style.normal.textColor = Color.gray; // 空きマス
+                }
+                else if (id == FOG_BLOCK_ID)
+                {
+                    style.normal.textColor = Color.magenta; // もやは紫
+                }
+                else
+                {
+                    style.normal.textColor = Color.white; // 通常ブロック
+                }
 
+                // 表示する文字
+                string labelText = id.ToString();
+
+                // もやの場合は、改行して「寿命」も表示する
+                if (id == FOG_BLOCK_ID && showFogLife)
+                {
+                    labelText += $"\n({fogLifeGrid[x, y]})";
+                }
+
+                // シーンビューに文字を描画
+                Handles.Label(drawPos, labelText, style);
+#endif
+            }
+        }
+    }
 }

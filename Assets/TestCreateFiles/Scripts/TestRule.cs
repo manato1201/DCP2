@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Playables;
 
 public class TestRule : GridPuzzleBase
@@ -15,7 +16,14 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private GameObject gridCellPrefab;
 
     [Header("Block Shape[設計図]")]
-    [SerializeField] private BlockShape[] availableShapes;
+    [SerializeField] private BlockShape[] level1Shapes;
+    [SerializeField] private BlockShape[] level2Shapes;
+    [SerializeField] private BlockShape[] level3Shapes;
+
+    [Header("Effect Settings")]
+    [SerializeField] private GameObject clearEffectPrefab; // 粒子のプレハブ
+    [SerializeField] private Transform effectTarget;       // 飛ばしたい先のGameObject
+    [SerializeField] private float effectDuration = 2f;  // 飛んでいく時間
 
     //ドラッグ操作用
     private BlockGroup draggedBlockGroup;        //現在ドラッグ中のブロック
@@ -40,7 +48,7 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private Transform[] paletteSpawnSlots;
 
     //各スロットに現在入っているブロックのインスタンスを保持する配列
-    private BlockGroup[] paletteGroups;
+    private BlockGroup[] paletteGroups; 
 
     //ブロックインスタンスからどのスロットか(index)を逆引きするための辞書
     private Dictionary<BlockGroup, int> paletteSlotMap;
@@ -69,6 +77,7 @@ public class TestRule : GridPuzzleBase
     public override void Initialize(PuzzleController controller)
     {
         base.Initialize(controller);
+
 
         GameObject originObj = GameObject.FindWithTag("GridOrigin");
 
@@ -230,6 +239,8 @@ public class TestRule : GridPuzzleBase
                 }
 
                 draggedBlockGroup.Release();
+
+                OnChainFinish();//バトルに移行
             }
             else
             {
@@ -257,6 +268,7 @@ public class TestRule : GridPuzzleBase
             // ドラッグ状態を解除
             draggedBlockGroup = null;
             draggedSlotIndex = -1;
+
         }
     }
     /// <summary>
@@ -285,10 +297,13 @@ public class TestRule : GridPuzzleBase
     /// <returns></returns>
     public override bool CheckForClear()
     {
-
         // 消去すべきブロックの座標リスト
         List<Vector2Int> coordsToClear = new List<Vector2Int>();
         int linesClearedCount = 0;
+
+        // もやを消した際の倍率計算用
+        float damageMultiplier = 1.0f;
+        int baseDamagePerLine = 10; // 1ラインあたりの基礎ダメージ
 
         // ---行（横）のチェック ---
         for (int y = 0; y < gridHeight; y++)
@@ -296,7 +311,6 @@ public class TestRule : GridPuzzleBase
             bool isRowFull = true;
             for (int x = 0; x < gridWidth; x++)
             {
-                // intで判定 (0なら空いている)
                 if (gridInt[x, y] == 0)
                 {
                     isRowFull = false;
@@ -316,7 +330,6 @@ public class TestRule : GridPuzzleBase
             bool isColumnFull = true;
             for (int y = 0; y < gridHeight; y++)
             {
-                // intで判定
                 if (gridInt[x, y] == 0)
                 {
                     isColumnFull = false;
@@ -333,8 +346,11 @@ public class TestRule : GridPuzzleBase
         // ---消去実行 ---
         if (linesClearedCount > 0)
         {
-            clearedLine++;
-            controller.AddDamage(10);
+            // ここで固定ダメージを与えるのではなく、ブロックの中身を見てから計算するため
+            // controller.AddDamage(10); は削除または後方へ移動
+
+            // clearedLine++; // 変数clearedLineが定義されている場合はコメントアウトを外してください
+
             if (coordsToClear.Count > 0)
             {
                 Debug.Log("Clear!");
@@ -343,6 +359,30 @@ public class TestRule : GridPuzzleBase
                     // 既に処理済みならスキップ
                     if (gridInt[coord.x, coord.y] == 0) continue;
 
+                    // --- ここでエフェクトを生成 ---
+                    if (clearEffectPrefab != null && effectTarget != null)
+                    {
+                        Vector3 spawnPos = GridToWorld(coord.x, coord.y);
+                        GameObject effectObj = Instantiate(clearEffectPrefab, spawnPos, Quaternion.identity);
+                        effectObj.SetActive(true);
+
+                        ClearEffect ce = effectObj.GetComponent<ClearEffect>();
+                        if (ce != null)
+                        {
+                            // 第二引数は移動スピード
+                            ce.Play(effectTarget, 10f);
+                        }
+                    }
+                    // もやブロックかどうかの判定
+                    // GridPuzzleBase.FOG_BLOCK_ID は定義した定数(例:99)を使ってください
+                    if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
+                    {
+                        damageMultiplier += 0.5f; // 例: 1つにつき50%アップ
+
+                        // もやの寿命管理配列がある場合はリセットしておく
+                        if (fogLifeGrid != null) fogLifeGrid[coord.x, coord.y] = 0;
+                    }
+
                     //論理データをクリア
                     gridInt[coord.x, coord.y] = 0;
 
@@ -350,22 +390,20 @@ public class TestRule : GridPuzzleBase
                     GameObject blockObj = gridVisuals[coord.x, coord.y];
                     if (blockObj != null)
                     {
-                        // 親への通知
-                        BlockGroup parentGroup = blockObj.GetComponentInParent<BlockGroup>();
-                        //if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
+                        // 親への通知 (必要なら)
+                        // BlockGroup parentGroup = blockObj.GetComponentInParent<BlockGroup>();
+                        // if (parentGroup != null) parentGroup.NotifyChildDestroyed(blockObj);
 
                         var p = blockObj.GetComponent<piece>();
                         if (p != null)
                         {
-                            p.Release();    
+                            p.Release();
                         }
                         else
                         {
                             blockObj.SetActive(false);
+                            Destroy(blockObj); // Poolを使っていないオブジェクトの場合のみDestroy
                         }
-
-
-                            Destroy(blockObj);
 
                         gridVisuals[coord.x, coord.y] = null;
                     }
@@ -375,13 +413,22 @@ public class TestRule : GridPuzzleBase
                         SetCellColor(cellObjects[coord.x, coord.y], 0);
                     }
                 }
-                return true;
             }
+
+            // 全てのブロックを確認した後で、倍率を適用してダメージを与える
+            // (基礎攻撃力 * ライン数) * (もや倍率)
+            int finalDamage = Mathf.FloorToInt((baseDamagePerLine * linesClearedCount) * damageMultiplier);
+            controller.AddDamage(finalDamage);
+
+            Debug.Log($"Damage: {finalDamage} (Multiplier: {damageMultiplier})");
+
+            return true;
         }
+
         return false;
     }
 
-    
+
 
     /// <summary>     
     /// ゲームオーバー処理
@@ -412,8 +459,10 @@ public class TestRule : GridPuzzleBase
     /// </summary>
     public override void OnTimerEnded()
     {
-        Debug.Log("タイマーが終了しました。");
-        OnChainFinish();
+        //タイマーは廃止
+
+        //Debug.Log("タイマーが終了しました。");
+        //OnChainFinish();  
     }
 
 
@@ -655,11 +704,39 @@ public class TestRule : GridPuzzleBase
     /// 指定されたスロットに、ランダムな形のブロックを生成(補充)する
     /// </summary>
     /// <param name="slotIndex"></param>
+    /// <summary>
+    /// 指定されたスロットに、スロットに応じたレベルのブロックを生成(補充)する
+    /// </summary>
+    /// <param name="slotIndex"></param>
     private void SpawnRandomBlockInSlot(int slotIndex)
     {
-        //設計図がなければなにもしない
-        if (availableShapes.Length == 0) return;
+        // 1. スロット番号に応じて、使用する設計図リストを選択する
+        BlockShape[] targetShapes = null;
 
+
+
+
+        switch (slotIndex)
+        {
+            case 0:
+                targetShapes = level1Shapes;
+                break;
+            case 1:
+                targetShapes = level2Shapes;
+                break;
+            case 2:
+                targetShapes = level3Shapes;
+                break;
+            default:
+                // スロットが3つ以上ある場合のフォールバック（例：Level1を使う）
+                targetShapes = level1Shapes;
+                break;
+        }
+
+        // リストが空、またはnullの場合は処理を中断
+        if (targetShapes == null || targetShapes.Length == 0) return;
+
+        // ---------------------------------------------------------
         if (paletteGroups[slotIndex] != null)
         {
             paletteSlotMap.Remove(paletteGroups[slotIndex]);
@@ -667,10 +744,25 @@ public class TestRule : GridPuzzleBase
             paletteGroups[slotIndex] = null;
         }
 
-        BlockShape randomShape = availableShapes[Random.Range(0, availableShapes.Length)];
+        // 選択されたリストからランダムに取得
+        BlockShape randomShape = targetShapes[Random.Range(0, targetShapes.Length)];
 
+        // 1. 本来のスロット位置
         Vector3 spawnPos = paletteSpawnSlots[slotIndex].position;
+
+        // 2. ブロックを生成（一旦スロット位置に置く）
         BlockGroup newGroup = SpawnBlockAt(randomShape, spawnPos);
+
+        // 3. スケールを適用
+        newGroup.transform.localScale = Vector3.one * paletteBlockScale;
+
+        // 4. 重心補正を行う
+        //    形状の中心ズレ(Vector3) × セルサイズ × 表示スケール
+        Vector3 centerOffset = GetShapeCenter(randomShape);
+
+        //    現在の位置から、中心ズレ分だけ「引く」ことで、見た目の重心をスロット中央に合わせる
+        newGroup.transform.position -= centerOffset * this.cellSize * paletteBlockScale;
+
         newGroup.transform.localScale = Vector3.one * paletteBlockScale;
         int colorId = (int)randomShape.blockElement + 1;
         foreach (GameObject blocks in newGroup.childBlocks)
@@ -682,7 +774,6 @@ public class TestRule : GridPuzzleBase
         paletteGroups[slotIndex] = newGroup;
         paletteSlotMap[newGroup] = slotIndex;
     }
-
     /// <summary>
     /// ドラッグ中のブロックから影を作成する
     /// </summary>
@@ -762,11 +853,34 @@ public class TestRule : GridPuzzleBase
             2 => Color.green,
             3 => Color.blue,
             4 => Color.yellow,
+            GridPuzzleBase.FOG_BLOCK_ID => new Color(0.5f,0,0.5f),
             _ => Color.black,
         };
 
     }
 
+    public void SpawnFog(int count, int lifeTurn)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            int tryCount = 0;
+            while(tryCount < 100)
+            {
+                int rx = UnityEngine.Random.Range(0, gridWidth);
+                int ry = UnityEngine.Random.Range(0, gridHeight);
+
+                if (gridInt[rx,ry] == 0)
+                {
+                    gridInt[rx, ry] = FOG_BLOCK_ID;
+                    fogLifeGrid[rx,ry] = lifeTurn;
+
+                    SetCellColor(cellObjects[rx, ry], FOG_BLOCK_ID);
+                    break;
+                }
+                tryCount++;
+            }
+        }
+    }
 
     /// <summary>
     /// 待機所にある対応するインデックスのブロックを回転
@@ -778,6 +892,55 @@ public class TestRule : GridPuzzleBase
         if(paletteGroups[index] == null) return;
 
         paletteGroups[index].transform.Rotate(0, 0, +90);
+    }
+
+    public void ProcessFogTurnChange()
+    {
+        for(int x = 0; x < gridWidth; x++)
+        {
+            for(int y = 0; y < gridHeight; y++)
+            {
+                if (gridInt[x,y] == FOG_BLOCK_ID)
+                {
+                    fogLifeGrid[x, y]--;
+
+                    if (fogLifeGrid[x,y] <= 0)
+                    {
+                        gridInt[x, y] = 0;
+
+                        controller.IsGameEndTrue();
+                        Debug.Log("もやが爆発した！");
+
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 設計図の座標リストから、形状の中心（重心）を計算して返す
+    /// </summary>
+    private Vector3 GetShapeCenter(BlockShape shape)
+    {
+        // 最小値と最大値を見つける
+        float minX = float.MaxValue;
+        float maxX = float.MinValue;
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+
+        foreach (Vector2Int coord in shape.ShapeCoordinates)
+        {
+            if (coord.x < minX) minX = coord.x;
+            if (coord.x > maxX) maxX = coord.x;
+            if (coord.y < minY) minY = coord.y;
+            if (coord.y > maxY) maxY = coord.y;
+        }
+
+        // 中心点を計算 ( (min + max) / 2 )
+        float centerX = (minX + maxX) / 2f;
+        float centerY = (minY + maxY) / 2f;
+
+        return new Vector3(centerX, centerY, 0);
     }
 
     #endregion
