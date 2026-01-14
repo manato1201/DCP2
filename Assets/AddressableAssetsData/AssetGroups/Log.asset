@@ -31,6 +31,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbc3c279c3e711440834e09784b81554
+    m_Address: Assets/MyAssets/Resources/StoryCue.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d60f41275bb7aea4bbca5e81b26cfdb4
     m_Address: Assets/MyAssets/Resources/DOTweenSettings.asset
     m_ReadOnly: 0
@@ -41,8 +46,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eac74598abe837745a9c40cf31f3d4dc
-    m_Address: Assets/MyAssets/Resources/EnemyLog.csv
+  - m_GUID: df7b33265827bee4fb78315b6bfa5bd1
+    m_Address: Assets/MyAssets/Resources/Image Address Catalog.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
