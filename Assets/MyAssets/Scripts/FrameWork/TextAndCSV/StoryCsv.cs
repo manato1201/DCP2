@@ -16,6 +16,8 @@ public sealed class StoryLine
     public string speaker;       // "H" 等（無ければ空）
     public string text;          // 本文
     public string[] extra;       // 任意の追加列（SE名など）
+    public string commentNo;     // 例: "CHAP1-3"（元CSVのCommentNo）
+    public string ruby;          // RubyComment（空可）
 }
 
 public static class StoryCsv
@@ -69,47 +71,48 @@ public static class StoryCsv
         while ((line = reader.ReadLine()) != null)
         {
             if (string.IsNullOrWhiteSpace(line)) continue;
-            // シンプルCSV分割（カンマ+ダブルクォート対応が必要ならCSVパーサを導入してください）
+
             var cols = SplitCsvLine(line);
-            if (!headerSkipped)
-            {
-                headerSkipped = true;
-                continue; // ヘッダ行スキップ
-            }
-            if (cols.Count < 3) continue;
+            if (!headerSkipped) { headerSkipped = true; continue; } // ヘッダ飛ばし
+
+            // 期待: No, CommentNo, Char, Comment, RubyComment
+            if (cols.Count < 4) continue; // Comment までは必須
 
             // No
             int.TryParse(cols[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out var no);
 
-            // CommentNo -> chap/index/speaker
-            var (chap, index, spk) = ParseCommentNo(cols[1]);
+            // CommentNo -> chap/index
+            var commentNo = cols[1]?.Trim() ?? string.Empty;
+            var (chap, index, _) = ParseCommentNo(commentNo);
 
-            // Comment（本文）
-            var body = cols[2]?.Trim() ?? string.Empty;
+            // Char(話者)
+            var speaker = cols[2]?.Trim() ?? string.Empty;
 
-            var extra = cols.Count > 3 ? cols.Skip(3).ToArray() : Array.Empty<string>();
+            // Comment(本文)
+            var body = cols[3]?.Trim() ?? string.Empty;
+
+            // RubyComment（任意）
+            var ruby = (cols.Count >= 5 ? cols[4] : string.Empty)?.Trim() ?? string.Empty;
+
+            var extra = cols.Count > 5 ? cols.Skip(5).ToArray() : Array.Empty<string>();
 
             if (string.IsNullOrEmpty(chap) || index <= 0 || string.IsNullOrEmpty(body)) continue;
 
-            var item = new StoryLine
-            {
+            var item = new StoryLine {
                 no = no,
                 chap = chap,
                 index = index,
-                speaker = spk,
+                speaker = speaker,
                 text = body,
-                extra = extra
+                extra = extra,
+                commentNo = commentNo,
+                ruby = ruby
             };
 
-            if (!ByChap.TryGetValue(chap, out var list))
-            {
-                list = new List<StoryLine>();
-                ByChap.Add(chap, list);
-            }
+            if (!ByChap.TryGetValue(chap, out var list)) { list = new List<StoryLine>(); ByChap.Add(chap, list); }
             list.Add(item);
         }
 
-        // インデックス昇順ソート
         foreach (var kv in ByChap) kv.Value.Sort((a, b) => a.index.CompareTo(b.index));
     }
 
