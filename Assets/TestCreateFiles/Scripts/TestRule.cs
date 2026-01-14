@@ -20,7 +20,10 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private BlockShape[] level2Shapes;
     [SerializeField] private BlockShape[] level3Shapes;
 
-
+    [Header("Effect Settings")]
+    [SerializeField] private GameObject clearEffectPrefab; // 粒子のプレハブ
+    [SerializeField] private Transform effectTarget;       // 飛ばしたい先のGameObject
+    [SerializeField] private float effectDuration = 2f;  // 飛んでいく時間
 
     //ドラッグ操作用
     private BlockGroup draggedBlockGroup;        //現在ドラッグ中のブロック
@@ -356,6 +359,20 @@ public class TestRule : GridPuzzleBase
                     // 既に処理済みならスキップ
                     if (gridInt[coord.x, coord.y] == 0) continue;
 
+                    // --- ここでエフェクトを生成 ---
+                    if (clearEffectPrefab != null && effectTarget != null)
+                    {
+                        Vector3 spawnPos = GridToWorld(coord.x, coord.y);
+                        GameObject effectObj = Instantiate(clearEffectPrefab, spawnPos, Quaternion.identity);
+                        effectObj.SetActive(true);
+
+                        ClearEffect ce = effectObj.GetComponent<ClearEffect>();
+                        if (ce != null)
+                        {
+                            // 第二引数は移動スピード
+                            ce.Play(effectTarget, 10f);
+                        }
+                    }
                     // もやブロックかどうかの判定
                     // GridPuzzleBase.FOG_BLOCK_ID は定義した定数(例:99)を使ってください
                     if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)

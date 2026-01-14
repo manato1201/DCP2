@@ -13,33 +13,13 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SchoolYard
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Panel
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: CountDownText
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleParrent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Level3snake 1
+  - displayName: ClearEffects
     scenePath: 
-  - displayName: Level3snake
+  - displayName: DamageText
     scenePath: 
-  - displayName: Prefabs
+  - displayName: GridCell
     scenePath: 
-  - displayName: Block
+  - displayName: ClearEffects
     scenePath: 
   - displayName: DamageText
     scenePath: 
@@ -47,25 +27,15 @@ MonoBehaviour:
     scenePath: 
   - displayName: Group
     scenePath: 
-  - displayName: TestRule
-    scenePath: 
-  - displayName: Level3snake
-    scenePath: 
-  - displayName: Level3+
-    scenePath: 
-  - displayName: Level2T
-    scenePath: 
-  - displayName: Level2O
-    scenePath: 
-  - displayName: Level2L
-    scenePath: 
-  - displayName: Level2I
-    scenePath: 
-  - displayName: Prefabs
-    scenePath: 
-  - displayName: Level1Squear
-    scenePath: 
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: IconMaskParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: EffectTargets
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: TestRule
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Leve2T
-    scenePath: 
