@@ -418,6 +418,7 @@ MonoBehaviour:
   targetEnemy: {fileID: 933555676}
   fogCount: 1
   fogLife: 6
+  enemyAnimation: {fileID: 933555679}
 --- !u!4 &173260226
 Transform:
   m_ObjectHideFlags: 0
@@ -1315,6 +1316,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 957434469}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
+      propertyPath: enemyAnimation
+      value: 
+      objectReference: {fileID: 933555679}
+    - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: gridCellParent
       value: 
       objectReference: {fileID: 81366764}
@@ -1326,6 +1331,10 @@ PrefabInstance:
       propertyPath: shadowOffset.y
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
+      propertyPath: popupTextPrefab
+      value: 
+      objectReference: {fileID: 2031748421042986347, guid: d2825859493a5bb478397feb66af53dc, type: 3}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: clearEffectPrefab
       value: 
@@ -1673,6 +1682,7 @@ GameObject:
   - component: {fileID: 933555678}
   - component: {fileID: 933555677}
   - component: {fileID: 933555676}
+  - component: {fileID: 933555679}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1794,6 +1804,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1515863059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &933555679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933555675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f55393fc4f69584ba9899cfbeff410a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpHeight: 1.5
+  duration: 0.5
+  numberOfSpins: 1
+  shakeDuration: 0.4
+  baseShakeStrength: 0.05
+  maxShakeStrength: 1
 --- !u!1 &957434468
 GameObject:
   m_ObjectHideFlags: 0

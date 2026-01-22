@@ -12,6 +12,9 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
     [SerializeField] private int fogCount = 1;
     [SerializeField] private int fogLife = 3;
+
+    [Header("Enemy Settings")]
+    [SerializeField] private EnemyAnimation enemyAnimation;
     // パズルからデータを受け取って初期化できるようにする
     public void SetBattleData(int damage)
     {
@@ -29,7 +32,19 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         this.targetEnemy = target;
     }
 
+    // 敵の攻撃処理（例：ProcessFogTurnChange や EnemyTurn の中）
+    public async UniTask ProcessEnemyAttack()
+    {
+        Debug.Log("敵の攻撃開始！");
 
+        // ★ここでアニメーション再生＆待機
+        if (enemyAnimation != null)
+        {
+            await enemyAnimation.PlayAttackMotion();
+        }
+
+        Debug.Log("攻撃終了");
+    }
     public void OnUpdate()
     {
         // アニメーション待ちや、戦闘終了判定を行う
@@ -51,7 +66,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
 
 
-
+        await ProcessEnemyAttack();
         await controller.EnemyAttackSpawnFog(fogCount, fogLife);
 
         if (targetEnemy != null)

@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // 必須
+using TMPro;
 using Cysharp.Threading.Tasks;
 
 public class MoveTextDisplay : MonoBehaviour
@@ -9,30 +9,36 @@ public class MoveTextDisplay : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float disappearTime = 1f;
 
-    // 初期化
-    public void Setup(int textAmount)
+    // 文字列と色を受け取るように変更
+    public void Setup(string text, Color color)
     {
-        moverText.text = textAmount.ToString();
-        AnimatePopup().Forget();
+        moverText.text = text;
+        moverText.color = color; // 初期色をセット
+        AnimatePopup(color).Forget(); // アニメーションに渡す
     }
 
-    private async UniTaskVoid AnimatePopup()
+    // 既存のint用（もし使っているなら修正、使っていなければ削除可）
+    public void Setup(int textAmount)
+    {
+        Setup(textAmount.ToString(), Color.white);
+    }
+
+    private async UniTaskVoid AnimatePopup(Color startColor)
     {
         float timer = 0f;
         Vector3 startPos = transform.position;
-        Color originalColor = moverText.color;
+        // startColor を基準にする
 
         while (timer < disappearTime)
         {
             timer += Time.deltaTime;
             float progress = timer / disappearTime;
 
-            // 上に移動
             transform.position = startPos + new Vector3(0, moveSpeed * progress, 0);
 
-            // フェードアウト
             float alpha = Mathf.Lerp(1f, 0f, progress);
-            moverText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            // 受け取った色をベースに透明度だけ変える
+            moverText.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
 
             await UniTask.Yield();
         }

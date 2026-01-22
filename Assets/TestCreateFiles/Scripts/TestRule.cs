@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -36,6 +37,7 @@ public class TestRule : GridPuzzleBase
     [Header("Fog Attack Settings")]
     [SerializeField] private GameObject fogProjectilePrefab; // 飛んでくるパーティクルのPrefab
     [SerializeField] private float flightDuration = 0.5f;    // 飛ぶのにかかる時間
+
     //ドラッグ操作用
     private BlockGroup draggedBlockGroup;        //現在ドラッグ中のブロック
     private BlockGroup shadowGroup;
@@ -54,6 +56,8 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private Transform gridCellParent;
     [SerializeField] private Transform blocksParent;
 
+    [Header("Enemy Settings")]
+    [SerializeField] private EnemyAnimation enemyAnimation;
 
     //パレットの設置座標
     [Header("Pallete Settings")]
@@ -88,7 +92,9 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private float paletteBlockScale = 0.6f; // 例: 60%のサイズにする
 
     private List<ClearEffect> activeEffects = new List<ClearEffect>();  //ClearEffectのリスト
-    private bool isBlockChainedThisTurn = false;    //そのターンでブロックがつながったか
+    [SerializeField] private bool isBlockChainedThisTurn = false;    //そのターンでブロックがつながったか
+    [Header("Text Effect")]
+    [SerializeField] private GameObject popupTextPrefab;
     #region インターフェース
     public override void Initialize(PuzzleController controller)
     {
@@ -149,14 +155,6 @@ public class TestRule : GridPuzzleBase
     public override void OnUpdate()
     {
         //Updateで呼び出す処理を作る場合、ここに追加する
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            TriggerAttack(effectTarget2);
-        }
     }
 
     /// <summary>
@@ -331,7 +329,6 @@ public class TestRule : GridPuzzleBase
         List<Vector2Int> coordsToClear = new List<Vector2Int>();
         int linesClearedCount = 0;
 
-        
 
         // もやを消した際の倍率計算用
         float damageMultiplier = 1.0f;
@@ -378,10 +375,8 @@ public class TestRule : GridPuzzleBase
         // ---消去実行 ---
         if (linesClearedCount > 0)
         {
-            // ここで固定ダメージを与えるのではなく、ブロックの中身を見てから計算するため
-            // controller.AddDamage(10); は削除または後方へ移動
 
-            // clearedLine++; // 変数clearedLineが定義されている場合はコメントアウトを外してください
+            List<PopupRequest> popupRequests = new List<PopupRequest>();
 
             if (coordsToClear.Count > 0)
             {
@@ -391,27 +386,47 @@ public class TestRule : GridPuzzleBase
                     // 既に処理済みならスキップ
                     if (gridInt[coord.x, coord.y] == 0) continue;
 
+                    string popupMessage = "";
                     Color effectColor = Color.white;
 
                     if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
                     {
-                        // もやの色（例：紫）
+                        popupMessage = "大アップ";
                         effectColor = Color.white;
                     }
                     else
                     {
                         // レベルに応じた色（お好みの色に調整してください）
                         int level = gridLevels[coord.x, coord.y];
-                        effectColor = level switch
+                        switch (level)
                         {
-                            1 => Color.green,   // レベル1は白
-                            2 => Color.yellow,  // レベル2は黄色
-                            3 => Color.red,    // レベル3は水色
-                            _ => Color.white
-                        };
+                            case 1:
+                                popupMessage = ""; // レベル1は表示なし
+                                effectColor = Color.white;
+                                break;
+                            case 2:
+                                popupMessage = "小アップ";
+                                effectColor = Color.yellow;
+                                break;
+                            case 3:
+                                popupMessage = "中アップ";
+                                effectColor = Color.cyan;
+                                break;
+                            default:
+                                effectColor = Color.white;
+                                break;
+                        }
                     }
 
-                    // --- ここでエフェクトを生成 ---
+                    // --- 2. リストに追加 (位置をターゲットAの下に固定) ---
+                    if (!string.IsNullOrEmpty(popupMessage) && effectTarget != null)
+                    {
+                        Vector3 spawnPos = effectTarget.position + new Vector3(0, -1.5f, 0);
+                        spawnPos.z = -5f;
+
+                        // 第三引数に effectColor を追加
+                        popupRequests.Add(new PopupRequest(spawnPos, popupMessage, effectColor));
+                    }                    // --- ここでエフェクトを生成 ---
                     if (clearEffectPrefab != null && effectTarget != null)
                     {
                         Vector3 spawnPos = GridToWorld(coord.x, coord.y);
@@ -477,7 +492,7 @@ public class TestRule : GridPuzzleBase
                     }
 
                     if (cellObjects[coord.x, coord.y] != null)
-                    {
+                    {   
                         SetCellColor(cellObjects[coord.x, coord.y], 0);
                     }
                 }
@@ -486,10 +501,10 @@ public class TestRule : GridPuzzleBase
             // 全てのブロックを確認した後で、倍率を適用してダメージを与える
             // (基礎攻撃力 * ライン数) * (もや倍率)
             int finalDamage = Mathf.FloorToInt((baseDamagePerLine * linesClearedCount) * damageMultiplier);
-            controller.AddDamage(finalDamage);
+            //controller.AddDamage(finalDamage);
 
             Debug.Log($"Damage: {finalDamage} (Multiplier: {damageMultiplier})");
-
+            ProcessClearSequence(popupRequests, effectTarget2, finalDamage).Forget();
             return true;
         }
 
@@ -497,21 +512,17 @@ public class TestRule : GridPuzzleBase
     }
 
 
-    public void TriggerAttack(Transform enemyTransform)
+    // 引数に int damage を追加
+    public void TriggerAttack(Transform enemyTransform, int damage)
     {
-        // 1. 今回発射するエフェクトの総数を取得
         int totalEffects = activeEffects.Count;
+        int finishedCount = 0;
 
-        // エフェクトが1つもない場合は、即座に処理を進める（安全策）
         if (totalEffects == 0)
         {
-            OnEffectHitEnemy();
+            OnEffectHitEnemy(damage); // ここにも渡す
             return;
         }
-
-        // 2. 着弾済みカウンターを用意
-        // (この変数は、以下のループ内の全てのコールバック関数から共有されます)
-        int finishedCount = 0;
 
         foreach (var effect in activeEffects)
         {
@@ -519,30 +530,38 @@ public class TestRule : GridPuzzleBase
             {
                 effect.LaunchToTargetB(enemyTransform, () =>
                 {
-                    // --- ここはエフェクトが1個着弾するたびに呼ばれます ---
-
-                    finishedCount++; // カウントアップ
-
-                    // 3. 「全てのエフェクト」が着弾し終わったかチェック
-                    // 最後の1個が着弾したタイミングでのみ実行する
+                    finishedCount++;
                     if (finishedCount >= totalEffects)
                     {
-                        OnEffectHitEnemy();
+                        OnEffectHitEnemy(damage); // 全弾命中時に渡す
                     }
                 });
             }
         }
-
-        // 次のターンのためにリストを空にする
         activeEffects.Clear();
     }
 
-    // 着弾時に実行される関数（これで1回だけ呼ばれるようになります）
-    private void OnEffectHitEnemy()
+    // 引数でダメージを受け取る
+    private void OnEffectHitEnemy(int damage)
     {
-        Debug.Log("全エフェクト着弾完了。ターンを進めます。");
-        ChangeGameStep();
-        isBlockChainedThisTurn = false;
+        // 非同期処理を呼ぶため、FireAndForget形式でラップして実行
+        HandleEnemyHitSequence(damage).Forget();
+    }
+    private async UniTaskVoid HandleEnemyHitSequence(int damage)
+    {
+        // 1. ダメージをコントローラーに反映（HP減少など）
+        controller.AddDamage(damage);
+
+        // 2. 敵のシェイクアニメーション再生（待機する）
+        if (enemyAnimation != null)
+        {
+            await enemyAnimation.PlayDamageShake(damage);
+        }
+
+        // 3. アニメーションが終わったらターン経過等の処理へ
+        ChangeGameStep(); // もしここでターンを経過させるなら
+
+        Debug.Log("ダメージ演出終了。ターン処理へ。");
     }
 
     /// <summary>     
@@ -855,7 +874,7 @@ public class TestRule : GridPuzzleBase
         }
 
         // 選択されたリストからランダムに取得
-        BlockShape randomShape = targetShapes[Random.Range(0, targetShapes.Length)];
+        BlockShape randomShape = targetShapes[UnityEngine.Random.Range(0, targetShapes.Length)];
 
         // 1. 本来のスロット位置
         Vector3 spawnPos = paletteSpawnSlots[slotIndex].position;
@@ -1008,8 +1027,8 @@ public class TestRule : GridPuzzleBase
             int tryCount = 0;
             while (tryCount < 100)
             {
-                int rx = Random.Range(0, gridWidth);
-                int ry = Random.Range(0, gridHeight);
+                int rx = UnityEngine.Random.Range(0, gridWidth);
+                int ry = UnityEngine.Random.Range(0, gridHeight);
 
                 // まだ空きマス、かつ予約済みでない場所を探す
                 // (アニメーション中に重複して選ばれないように一時的なチェックが必要ですが、簡易的に0チェックのみにします)
@@ -1144,7 +1163,51 @@ public class TestRule : GridPuzzleBase
         return new Vector3(centerX, centerY, 0);
     }
 
-    #endregion
 
+    /// <summary>
+    /// テキストを順番に出し、最後に攻撃を行うシーケンス
+    /// </summary>
+    private async UniTaskVoid ProcessClearSequence(List<PopupRequest> requests, Transform attackTarget, int damage)
+    {
+        float interval = 0.7f;
+
+        foreach (var req in requests)
+        {
+            if (popupTextPrefab != null)
+            {
+                GameObject textObj = Instantiate(popupTextPrefab, req.Position, Quaternion.identity);
+                var moveText = textObj.GetComponent<MoveTextDisplay>();
+                if (moveText != null)
+                {
+                    // メッセージと一緒に色も渡す
+                    moveText.Setup(req.Message, req.TextColor);
+                }
+            }
+
+            await UniTask.Delay(TimeSpan.FromSeconds(interval));
+        }
+        // 全部のテキストが出終わった後、エフェクトが十分回るのを見せるための待機時間
+        // テキストが少なかった場合でも最低限待つ時間を確保するため、必要なら調整してください
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        isBlockChainedThisTurn = false;
+        // 最後に攻撃発射！
+        TriggerAttack(attackTarget, damage);
+    }
+
+    #endregion
+    private class PopupRequest
+    {
+        public Vector3 Position;
+        public string Message;
+        public Color TextColor; // 色情報を追加
+
+        public PopupRequest(Vector3 pos, string msg, Color color)
+        {
+            Position = pos;
+            Message = msg;
+            TextColor = color;
+        }
+    }
 
 }
+
