@@ -49,10 +49,10 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
         if (canceled) return;
 
-        
-        
 
-        controller.EnemyAttackSpawnFog(fogCount, fogLife);
+
+
+        await controller.EnemyAttackSpawnFog(fogCount, fogLife);
 
         if (targetEnemy != null)
         {

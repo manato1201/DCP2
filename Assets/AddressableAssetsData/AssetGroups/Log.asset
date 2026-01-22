@@ -23,8 +23,7 @@ MonoBehaviour:
   - m_GUID: 7b695e5aee43717489dc5a89a93c4541
     m_Address: Assets/MyAssets/Resources/CommuLog.csv
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - CommuLog
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a84dd1f24630104448abf1e964367045
     m_Address: Assets/MyAssets/Resources/Scene Transit Data.asset

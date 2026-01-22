@@ -2,17 +2,17 @@ using UnityEngine;
 using TMPro; // 必須
 using Cysharp.Threading.Tasks;
 
-public class DamgaeDisplay : MonoBehaviour
+public class MoveTextDisplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro damageText;
+    [SerializeField] private TextMeshPro moverText;
 
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float disappearTime = 1f;
 
     // 初期化
-    public void Setup(int damageAmount)
+    public void Setup(int textAmount)
     {
-        damageText.text = damageAmount.ToString();
+        moverText.text = textAmount.ToString();
         AnimatePopup().Forget();
     }
 
@@ -20,7 +20,7 @@ public class DamgaeDisplay : MonoBehaviour
     {
         float timer = 0f;
         Vector3 startPos = transform.position;
-        Color originalColor = damageText.color;
+        Color originalColor = moverText.color;
 
         while (timer < disappearTime)
         {
@@ -32,7 +32,7 @@ public class DamgaeDisplay : MonoBehaviour
 
             // フェードアウト
             float alpha = Mathf.Lerp(1f, 0f, progress);
-            damageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            moverText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
 
             await UniTask.Yield();
         }

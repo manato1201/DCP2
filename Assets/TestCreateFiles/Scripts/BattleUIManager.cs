@@ -29,7 +29,7 @@ public class BattleUIManager: MonoBehaviour
         // 少し上にずらすなどの調整
         popupObj.transform.position += new Vector3(0, 1f, 0);
 
-        DamgaeDisplay popup = popupObj.GetComponent<DamgaeDisplay>();
+        MoveTextDisplay popup = popupObj.GetComponent<MoveTextDisplay>();
         if (popup != null)
         {
             popup.Setup(damage);

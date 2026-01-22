@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,11 +21,21 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private BlockShape[] level2Shapes;
     [SerializeField] private BlockShape[] level3Shapes;
 
+    [Header("Damage Multipliers")]
+    [SerializeField] private float level1Multipliers = 1.0f;
+    [SerializeField] private float level2Multipliers = 1.2f;
+    [SerializeField] private float level3Multipliers = 1.4f;
+
+
     [Header("Effect Settings")]
     [SerializeField] private GameObject clearEffectPrefab; // 粒子のプレハブ
     [SerializeField] private Transform effectTarget;       // 飛ばしたい先のGameObject
+    [SerializeField] private Transform effectTarget2;
     [SerializeField] private float effectDuration = 2f;  // 飛んでいく時間
 
+    [Header("Fog Attack Settings")]
+    [SerializeField] private GameObject fogProjectilePrefab; // 飛んでくるパーティクルのPrefab
+    [SerializeField] private float flightDuration = 0.5f;    // 飛ぶのにかかる時間
     //ドラッグ操作用
     private BlockGroup draggedBlockGroup;        //現在ドラッグ中のブロック
     private BlockGroup shadowGroup;
@@ -42,6 +53,7 @@ public class TestRule : GridPuzzleBase
     //オブジェクト親を設定するためのTransform
     [SerializeField] private Transform gridCellParent;
     [SerializeField] private Transform blocksParent;
+
 
     //パレットの設置座標
     [Header("Pallete Settings")]
@@ -69,15 +81,20 @@ public class TestRule : GridPuzzleBase
     //消去ライン数
     private int clearedLine = 0;
 
+    //各グリッドに配置されているブロックのレベル
+    private int[,] gridLevels;
 
     [Header("Palette Settings")]
     [SerializeField] private float paletteBlockScale = 0.6f; // 例: 60%のサイズにする
 
+    private List<ClearEffect> activeEffects = new List<ClearEffect>();  //ClearEffectのリスト
+    private bool isBlockChainedThisTurn = false;    //そのターンでブロックがつながったか
     #region インターフェース
     public override void Initialize(PuzzleController controller)
     {
         base.Initialize(controller);
 
+        gridLevels = new int[gridWidth, gridHeight];
 
         GameObject originObj = GameObject.FindWithTag("GridOrigin");
 
@@ -134,6 +151,13 @@ public class TestRule : GridPuzzleBase
         //Updateで呼び出す処理を作る場合、ここに追加する
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            TriggerAttack(effectTarget2);
+        }
+    }
 
     /// <summary>
     /// 毎フレームの入力処理
@@ -143,6 +167,8 @@ public class TestRule : GridPuzzleBase
         // ---マウスダウン (ブロックを掴む) ---
         if (Input.GetMouseButtonDown(0))
         {
+            if (isBlockChainedThisTurn) return; //攻撃演出中は無効
+
             //常にリセット
             draggedSlotIndex = -1;
 
@@ -235,12 +261,15 @@ public class TestRule : GridPuzzleBase
                     // そのスロットに新しいブロックを補充する
                     SpawnRandomBlockInSlot(draggedSlotIndex);
 
-
+                    //そのターンにブロックがつながっていなかったら
+                    if (!isBlockChainedThisTurn)
+                    {
+                        //敵の行動へ移行
+                        ChangeGameStep();
+                    }
                 }
+                    draggedBlockGroup.Release();
 
-                draggedBlockGroup.Release();
-
-                OnChainFinish();//バトルに移行
             }
             else
             {
@@ -281,6 +310,7 @@ public class TestRule : GridPuzzleBase
         //ブロック配置時、消去チェックやゲームオーバー処理を行う
         if (CheckForClear())
         {
+            isBlockChainedThisTurn = true;
             Debug.Log("ライン消去");
         }
 
@@ -300,6 +330,8 @@ public class TestRule : GridPuzzleBase
         // 消去すべきブロックの座標リスト
         List<Vector2Int> coordsToClear = new List<Vector2Int>();
         int linesClearedCount = 0;
+
+        
 
         // もやを消した際の倍率計算用
         float damageMultiplier = 1.0f;
@@ -359,6 +391,26 @@ public class TestRule : GridPuzzleBase
                     // 既に処理済みならスキップ
                     if (gridInt[coord.x, coord.y] == 0) continue;
 
+                    Color effectColor = Color.white;
+
+                    if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
+                    {
+                        // もやの色（例：紫）
+                        effectColor = Color.white;
+                    }
+                    else
+                    {
+                        // レベルに応じた色（お好みの色に調整してください）
+                        int level = gridLevels[coord.x, coord.y];
+                        effectColor = level switch
+                        {
+                            1 => Color.green,   // レベル1は白
+                            2 => Color.yellow,  // レベル2は黄色
+                            3 => Color.red,    // レベル3は水色
+                            _ => Color.white
+                        };
+                    }
+
                     // --- ここでエフェクトを生成 ---
                     if (clearEffectPrefab != null && effectTarget != null)
                     {
@@ -369,8 +421,8 @@ public class TestRule : GridPuzzleBase
                         ClearEffect ce = effectObj.GetComponent<ClearEffect>();
                         if (ce != null)
                         {
-                            // 第二引数は移動スピード
-                            ce.Play(effectTarget, 10f);
+                            ce.Play(effectTarget, 10f, effectColor);
+                            activeEffects.Add(ce); // リストに追加
                         }
                     }
                     // もやブロックかどうかの判定
@@ -382,10 +434,26 @@ public class TestRule : GridPuzzleBase
                         // もやの寿命管理配列がある場合はリセットしておく
                         if (fogLifeGrid != null) fogLifeGrid[coord.x, coord.y] = 0;
                     }
+                    else
+                    {
+                        int level = gridLevels[coord.x, coord.y];
+                        switch (level)
+                        {
+                            case 1:
+                                damageMultiplier += level1Multipliers;
+                                break;
+                            case 2:
+                                damageMultiplier += level2Multipliers;
+                                break;
+                            case 3:
+                                damageMultiplier += level3Multipliers;
+                                break;
+                        }
+                    }
 
                     //論理データをクリア
                     gridInt[coord.x, coord.y] = 0;
-
+                    gridLevels[coord.x, coord.y] = 0;
                     //表示オブジェクトを処理
                     GameObject blockObj = gridVisuals[coord.x, coord.y];
                     if (blockObj != null)
@@ -429,6 +497,53 @@ public class TestRule : GridPuzzleBase
     }
 
 
+    public void TriggerAttack(Transform enemyTransform)
+    {
+        // 1. 今回発射するエフェクトの総数を取得
+        int totalEffects = activeEffects.Count;
+
+        // エフェクトが1つもない場合は、即座に処理を進める（安全策）
+        if (totalEffects == 0)
+        {
+            OnEffectHitEnemy();
+            return;
+        }
+
+        // 2. 着弾済みカウンターを用意
+        // (この変数は、以下のループ内の全てのコールバック関数から共有されます)
+        int finishedCount = 0;
+
+        foreach (var effect in activeEffects)
+        {
+            if (effect != null)
+            {
+                effect.LaunchToTargetB(enemyTransform, () =>
+                {
+                    // --- ここはエフェクトが1個着弾するたびに呼ばれます ---
+
+                    finishedCount++; // カウントアップ
+
+                    // 3. 「全てのエフェクト」が着弾し終わったかチェック
+                    // 最後の1個が着弾したタイミングでのみ実行する
+                    if (finishedCount >= totalEffects)
+                    {
+                        OnEffectHitEnemy();
+                    }
+                });
+            }
+        }
+
+        // 次のターンのためにリストを空にする
+        activeEffects.Clear();
+    }
+
+    // 着弾時に実行される関数（これで1回だけ呼ばれるようになります）
+    private void OnEffectHitEnemy()
+    {
+        Debug.Log("全エフェクト着弾完了。ターンを進めます。");
+        ChangeGameStep();
+        isBlockChainedThisTurn = false;
+    }
 
     /// <summary>     
     /// ゲームオーバー処理
@@ -475,13 +590,7 @@ public class TestRule : GridPuzzleBase
         controller.SwitchToBattleRule();
     }
 
-    /// <summary>
-    /// パズルシーンの終了時に呼び出す
-    /// </summary>
-    public void OnChainFinish()
-    {
-        ChangeGameStep();
-    }
+
 
     /// <summary>
     /// プールから出したブロックを初期状態(新品)に戻す
@@ -645,7 +754,7 @@ public class TestRule : GridPuzzleBase
 
                 Debug.Log("ID" + blockId);
                 gridInt[targetCoord.x, targetCoord.y] = blockId;
-
+                gridLevels[targetCoord.x,targetCoord.y] = group.blockLevel;
                 //背景セルの色を変更する
                 if (cellObjects[targetCoord.x, targetCoord.y] != null)
                 {
@@ -678,6 +787,7 @@ public class TestRule : GridPuzzleBase
 
                 if (currentObj != null && currentObj.transform.IsChildOf(group.transform))
                 {
+                    gridLevels[targetCoord.x, targetCoord.y] = 0;
                     gridInt[targetCoord.x, targetCoord.y] = 0;
                     gridVisuals[targetCoord.x, targetCoord.y] = null;
                 }
@@ -701,10 +811,6 @@ public class TestRule : GridPuzzleBase
     }
 
     /// <summary>
-    /// 指定されたスロットに、ランダムな形のブロックを生成(補充)する
-    /// </summary>
-    /// <param name="slotIndex"></param>
-    /// <summary>
     /// 指定されたスロットに、スロットに応じたレベルのブロックを生成(補充)する
     /// </summary>
     /// <param name="slotIndex"></param>
@@ -713,22 +819,26 @@ public class TestRule : GridPuzzleBase
         // 1. スロット番号に応じて、使用する設計図リストを選択する
         BlockShape[] targetShapes = null;
 
-
+        int targetLevel = 1;
 
 
         switch (slotIndex)
         {
             case 0:
                 targetShapes = level1Shapes;
+                targetLevel = 1;
                 break;
             case 1:
+                targetLevel = 2;
                 targetShapes = level2Shapes;
                 break;
             case 2:
+                targetLevel = 3;
                 targetShapes = level3Shapes;
                 break;
             default:
                 // スロットが3つ以上ある場合のフォールバック（例：Level1を使う）
+                targetLevel = 1;
                 targetShapes = level1Shapes;
                 break;
         }
@@ -753,6 +863,8 @@ public class TestRule : GridPuzzleBase
         // 2. ブロックを生成（一旦スロット位置に置く）
         BlockGroup newGroup = SpawnBlockAt(randomShape, spawnPos);
 
+        newGroup.blockLevel = targetLevel;
+
         // 3. スケールを適用
         newGroup.transform.localScale = Vector3.one * paletteBlockScale;
 
@@ -774,6 +886,7 @@ public class TestRule : GridPuzzleBase
         paletteGroups[slotIndex] = newGroup;
         paletteSlotMap[newGroup] = slotIndex;
     }
+
     /// <summary>
     /// ドラッグ中のブロックから影を作成する
     /// </summary>
@@ -880,6 +993,94 @@ public class TestRule : GridPuzzleBase
                 tryCount++;
             }
         }
+    }
+
+
+    /// <summary>
+    /// 敵の位置から「もや」を飛ばし、着弾後にグリッドを書き換える
+    /// </summary>
+    public async UniTask SpawnFogWithAnimation(int count, int lifeTurn, Vector3 startWorldPos)
+    {
+        List<UniTask> flightTasks = new List<UniTask>();
+
+        for (int i = 0; i < count; i++)
+        {
+            int tryCount = 0;
+            while (tryCount < 100)
+            {
+                int rx = Random.Range(0, gridWidth);
+                int ry = Random.Range(0, gridHeight);
+
+                // まだ空きマス、かつ予約済みでない場所を探す
+                // (アニメーション中に重複して選ばれないように一時的なチェックが必要ですが、簡易的に0チェックのみにします)
+                if (gridInt[rx, ry] == 0)
+                {
+                    // 重複を防ぐため、先にIDだけ埋めておく（「予約」状態）
+                    // ※これをしないと、アニメーション中に次のループが同じマスを選んでしまう可能性があります
+                    gridInt[rx, ry] = FOG_BLOCK_ID;
+
+                    // まだ色は変えず、寿命だけセットしておく
+                    fogLifeGrid[rx, ry] = lifeTurn;
+
+                    // 1個分の「飛んでいく処理」を開始し、タスクリストに追加
+                    flightTasks.Add(FlyAndSpawnFog(rx, ry, startWorldPos));
+
+                    break;
+                }
+                tryCount++;
+            }
+        }
+
+        // 全てのもやが着弾するのを待つ
+        await UniTask.WhenAll(flightTasks);
+    }
+
+    /// <summary>
+    /// 個別のパーティクル生成〜移動〜着弾処理
+    /// </summary>
+    private async UniTask FlyAndSpawnFog(int x, int y, Vector3 startPos)
+    {
+        // 1. 目標地点（グリッドのワールド座標）を計算
+        // GridToWorldはGridPuzzleBaseにある想定ですが、gizmoOffsetが含まれていない場合は調整してください
+        Vector3 targetPos = GridToWorld(x, y);
+        // 念のためZ軸などを調整（必要であれば）
+        targetPos.z = 0;
+        startPos.z = 0;
+
+        // 2. パーティクル生成
+        GameObject projectile = null;
+        if (fogProjectilePrefab != null)
+        {
+            projectile = Instantiate(fogProjectilePrefab, startPos, Quaternion.identity);
+        }
+
+        // 3. 移動アニメーション（Lerp）
+        float timer = 0f;
+        while (timer < flightDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / flightDuration;
+
+            // イージングを入れたい場合は t = t * t * (3f - 2f * t); などを使用
+            if (projectile != null)
+            {
+                projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+            }
+
+            await UniTask.Yield(); // 1フレーム待つ
+        }
+
+        // 4. 着弾後の処理
+        if (projectile != null)
+        {
+            Destroy(projectile); // パーティクルを消す（パーティクル自体に自動消滅がついているなら不要）
+
+            // もし着弾エフェクトがあるならここでInstantiate
+        }
+
+        // 5. グリッドの色を更新（ここで初めて見た目が「もや」になる）
+        // ※IDはループ内で既にセット済み
+        SetCellColor(cellObjects[x, y], FOG_BLOCK_ID);
     }
 
     /// <summary>

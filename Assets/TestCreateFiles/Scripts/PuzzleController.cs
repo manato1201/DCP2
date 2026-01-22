@@ -1,9 +1,11 @@
 using Cysharp.Threading.Tasks;
+using System.Transactions;
 using TMPro;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static SceneTransitData;
 public class PuzzleController : MonoBehaviour
 {
     //現在使用するゲームルール
@@ -14,6 +16,7 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] private GameObject puzzleParent;
     [SerializeField] private GameObject battleParent;
+    [SerializeField] private GameObject tutorialObject;
 
     private IPuzzleRule currentRule;
     [SerializeField]private float currentTimer;
@@ -34,6 +37,14 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private GameObject mainParentObject;
 
+    [Header("Enemy Attack Settings")]
+    [SerializeField] private Transform enemyAttackOrigin; // 敵の口元など、パーティクル発生源
+
+
+    [Header("SceneTransition")]
+    [SerializeField] private SceneTransitData data;
+    [SerializeField] private SceneTransitionManager sceneTransitionManager;
+    [SerializeField] private SceneAddressCatalog catalog;
     //---ボタン参照---
 
     /// <summary>
@@ -87,8 +98,6 @@ public class PuzzleController : MonoBehaviour
         Debug.Log("Game Started!");
     }
 
-    
-
 
     /// <summary>
     /// Startで呼び出し
@@ -110,8 +119,10 @@ public class PuzzleController : MonoBehaviour
     /// <summary>
     /// Updateで呼び出し
     /// </summary>
-    public void OnControllerUpdate()
+     public void OnControllerUpdate()
     {
+
+
         if (currentState != GameState.Playing) return;
         if (currentRule == null) return;
 
@@ -240,8 +251,12 @@ public class PuzzleController : MonoBehaviour
     {
         isGameClear = true;
 
+        data.payload.chap = "Chap2";    //チャプターを移行
+
         await UniTask.Delay(5000);
-        SceneManager.LoadScene("Clear");
+        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.BookUI), data.payload);
+
+
     }
 
 
@@ -297,11 +312,24 @@ public class PuzzleController : MonoBehaviour
 
     }
 
-    public void EnemyAttackSpawnFog(int count, int life)
+    public async UniTask EnemyAttackSpawnFog(int count, int lifeTurn)
     {
-        puzzleRule.SpawnFog(count, life);
-    }
+        if (puzzleRule == null) return;
 
+        // 発生源が設定されていなければ、とりあえず敵のTargetの位置を使う等の安全策
+        Vector3 startPos = Vector3.zero;
+        if (enemyAttackOrigin != null)
+        {
+            startPos = enemyAttackOrigin.position;
+        }
+        else if (targetEnemy != null)
+        {
+            startPos = targetEnemy.transform.position;
+        }
+
+        // TestRuleのアニメーション付き生成を呼び出し、完了を待つ
+        await puzzleRule.SpawnFogWithAnimation(count, lifeTurn, startPos);
+    }
 }
 
 
