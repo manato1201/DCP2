@@ -28,7 +28,7 @@ public class MoveTextDisplay : MonoBehaviour
         float timer = 0f;
         Vector3 startPos = transform.position;
         // startColor を基準にする
-
+        var ct = this.GetCancellationTokenOnDestroy(); // キャンセルトークン取得
         while (timer < disappearTime)
         {
             timer += Time.deltaTime;
@@ -40,7 +40,7 @@ public class MoveTextDisplay : MonoBehaviour
             // 受け取った色をベースに透明度だけ変える
             moverText.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
 
-            await UniTask.Yield();
+            await UniTask.Yield(PlayerLoopTiming.Update, ct);
         }
 
         Destroy(gameObject);

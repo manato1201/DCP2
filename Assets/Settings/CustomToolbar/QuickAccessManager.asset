@@ -13,19 +13,11 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: TestRule
+  - displayName: number
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Puzzle : Controller'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SchoolYard
+  - displayName: GridCell(Clone)
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
@@ -34,4 +26,26 @@ MonoBehaviour:
   - displayName: PuzzleParrent
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: PaletteBox
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TransitionImage
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: number
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: GridCell(Clone)
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: PuzzleObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: PuzzleParrent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: PaletteBox
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TransitionImage
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: number
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: GridCell(Clone)
     scenePath: Assets/MyAssets/Scenes/pazzle.unity

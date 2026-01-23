@@ -24,8 +24,16 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
     public void Initialize(PuzzleController controller)
     {
         this.controller = controller;
-        Debug.Log($"戦闘開始！ ダメージ: {damageToDeal}");
-        AttackSequence();
+
+        if (targetEnemy.isHPExistYet()) //HPが残っていたら
+        {
+            Debug.Log($"戦闘開始！ ダメージ: {damageToDeal}");
+            AttackSequence();
+        }
+        else　　//HPが無かったら
+        {
+            Debug.Log("戦闘終了");
+        }
     }
     public void SetTarget(UnitStatus target)
     {
@@ -65,15 +73,10 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         if (canceled) return;
 
 
-
         await ProcessEnemyAttack();
         await controller.EnemyAttackSpawnFog(fogCount, fogLife);
 
-        if (targetEnemy != null)
-        {
-            targetEnemy.TakeDamage(damageToDeal);
-        }
-        canceled = await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy())
+        canceled = await UniTask.Delay(0, cancellationToken: this.GetCancellationTokenOnDestroy())
                                 .SuppressCancellationThrow();
 
         if (canceled) return;

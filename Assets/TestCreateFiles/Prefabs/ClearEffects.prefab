@@ -4905,5 +4905,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  orbitRadius: 1
+  orbitRadius: 1.5
   arrivalThreshold: 0.1

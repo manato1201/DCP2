@@ -22,7 +22,9 @@ public class ClearEffect : MonoBehaviour
 
     private Action onHitCallback;
     private bool hasHitTriggered = false; // 二重呼び出し防止フラグ
-    public void Play(Transform targetA, float speed, Color color)
+                                          // 引数に float size を追加
+                                          // sizeMultiplier (倍率) として引数を受け取る
+    public void Play(Transform targetA, float speed, Color color, float sizeMultiplier)
     {
         this.targetA = targetA;
         this.speed = speed;
@@ -31,11 +33,17 @@ public class ClearEffect : MonoBehaviour
         var main = partSystem.main;
         main.startColor = color;
 
+        // --- サイズ変更処理 ---
+        // 現在設定されている定数値を読み取り、倍率を掛けて再設定する
+        // main.startSize.constant は、Inspectorで「Constant」設定時の値です
+        float originalSize = main.startSize.constant;
+        main.startSize = originalSize * sizeMultiplier;
+        // ----------------------
+
         int maxParticles = partSystem.main.maxParticles;
         particles = new ParticleSystem.Particle[maxParticles];
         individualTargets = new Vector3[maxParticles];
 
-        // 初期目的地をセット
         for (int i = 0; i < maxParticles; i++)
         {
             individualTargets[i] = GetRandomPointOnCircle(targetA.position);
@@ -127,6 +135,7 @@ public class ClearEffect : MonoBehaviour
         // 全て消えたらオブジェクトを破棄
         if (numParticlesAlive == 0 && currentState == EffectState.MovingToB)
         {
+            partSystem.Stop();
             Destroy(gameObject);
         }
     }

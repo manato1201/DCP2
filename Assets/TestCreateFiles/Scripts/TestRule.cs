@@ -58,6 +58,8 @@ public class TestRule : GridPuzzleBase
 
     [Header("Enemy Settings")]
     [SerializeField] private EnemyAnimation enemyAnimation;
+    [SerializeField] private UnitStatus targetEnemy;
+
 
     //パレットの設置座標
     [Header("Pallete Settings")]
@@ -74,6 +76,11 @@ public class TestRule : GridPuzzleBase
 
     //制限ターン数
     [SerializeField] private int limitTurn = 3;
+
+    [Header("Fog UI")]
+    [SerializeField] private GameObject fogTurnTextPrefab; // 作成したプレハブをセット
+    private GameObject[,] fogTextGrid; // テキストのインスタンスを管理する配列
+
 
     [Header("Pool Settings")]
     [SerializeField] private PrefabFactory groupFactory;
@@ -109,6 +116,8 @@ public class TestRule : GridPuzzleBase
         piecePool = new ObjectPool<piece>(pieceFactory, initial: 20, max: 50);
         groupPool.Prewarm();
         piecePool.Prewarm();
+
+        InitializeFogTextGrid();
 
         if (originObj != null)
         {
@@ -163,6 +172,26 @@ public class TestRule : GridPuzzleBase
     public override void HandleInput()
     {
         // ---マウスダウン (ブロックを掴む) ---
+        if (Input.GetMouseButtonDown(1))
+        {
+            // ドラッグ中はパレット操作を受け付けないようにする（必要に応じて）
+            if (draggedBlockGroup != null) return;
+
+            Vector3 worldMousePos = GetMouseWorldPosition();
+            RaycastHit2D hit = Physics2D.Raycast(worldMousePos, Vector2.zero);
+
+            if (hit.collider != null && hit.collider.CompareTag("Block"))
+            {
+                BlockGroup hitGroup = hit.collider.GetComponentInParent<BlockGroup>();
+
+                // パレットにあるブロックか確認し、スロット番号を特定して回転させる
+                if (hitGroup != null && hitGroup.isPaletteBlock && paletteSlotMap.ContainsKey(hitGroup))
+                {
+                    int slotIndex = paletteSlotMap[hitGroup];
+                    TryRotatePaletteBlock(slotIndex);
+                }
+            }
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (isBlockChainedThisTurn) return; //攻撃演出中は無効
@@ -220,17 +249,6 @@ public class TestRule : GridPuzzleBase
                 }
             }
 
-            // 回転
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            {
-                draggedBlockGroup.transform.Rotate(0, 0, -90);
-
-            }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            {
-                draggedBlockGroup.transform.Rotate(0, 0, 90);
-
-            }
         }
 
         // ---マウスアップ (ドロップ) ---
@@ -388,7 +406,7 @@ public class TestRule : GridPuzzleBase
 
                     string popupMessage = "";
                     Color effectColor = Color.white;
-
+                    float pertizleSize = 1.0f;
                     if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
                     {
                         popupMessage = "大アップ";
@@ -403,17 +421,21 @@ public class TestRule : GridPuzzleBase
                             case 1:
                                 popupMessage = ""; // レベル1は表示なし
                                 effectColor = Color.white;
+                                pertizleSize = 1.0f;
                                 break;
                             case 2:
                                 popupMessage = "小アップ";
                                 effectColor = Color.yellow;
+                                pertizleSize = 1.5f;
                                 break;
                             case 3:
                                 popupMessage = "中アップ";
                                 effectColor = Color.cyan;
+                                pertizleSize = 2.0f;
                                 break;
                             default:
                                 effectColor = Color.white;
+                                pertizleSize = 1.0f;
                                 break;
                         }
                     }
@@ -426,7 +448,9 @@ public class TestRule : GridPuzzleBase
 
                         // 第三引数に effectColor を追加
                         popupRequests.Add(new PopupRequest(spawnPos, popupMessage, effectColor));
-                    }                    // --- ここでエフェクトを生成 ---
+                    }
+
+                    // --- ここでエフェクトを生成 ---
                     if (clearEffectPrefab != null && effectTarget != null)
                     {
                         Vector3 spawnPos = GridToWorld(coord.x, coord.y);
@@ -436,10 +460,11 @@ public class TestRule : GridPuzzleBase
                         ClearEffect ce = effectObj.GetComponent<ClearEffect>();
                         if (ce != null)
                         {
-                            ce.Play(effectTarget, 10f, effectColor);
+                            ce.Play(effectTarget, 10f, effectColor, pertizleSize);
                             activeEffects.Add(ce); // リストに追加
                         }
                     }
+
                     // もやブロックかどうかの判定
                     // GridPuzzleBase.FOG_BLOCK_ID は定義した定数(例:99)を使ってください
                     if (gridInt[coord.x, coord.y] == GridPuzzleBase.FOG_BLOCK_ID)
@@ -448,6 +473,7 @@ public class TestRule : GridPuzzleBase
 
                         // もやの寿命管理配列がある場合はリセットしておく
                         if (fogLifeGrid != null) fogLifeGrid[coord.x, coord.y] = 0;
+                        RemoveFogText(coord.x, coord.y);
                     }
                     else
                     {
@@ -551,6 +577,7 @@ public class TestRule : GridPuzzleBase
     {
         // 1. ダメージをコントローラーに反映（HP減少など）
         controller.AddDamage(damage);
+
 
         // 2. 敵のシェイクアニメーション再生（待機する）
         if (enemyAnimation != null)
@@ -882,6 +909,7 @@ public class TestRule : GridPuzzleBase
         // 2. ブロックを生成（一旦スロット位置に置く）
         BlockGroup newGroup = SpawnBlockAt(randomShape, spawnPos);
 
+        newGroup.transform.rotation = Quaternion.identity;
         newGroup.blockLevel = targetLevel;
 
         // 3. スケールを適用
@@ -1042,8 +1070,7 @@ public class TestRule : GridPuzzleBase
                     fogLifeGrid[rx, ry] = lifeTurn;
 
                     // 1個分の「飛んでいく処理」を開始し、タスクリストに追加
-                    flightTasks.Add(FlyAndSpawnFog(rx, ry, startWorldPos));
-
+                    flightTasks.Add(FlyAndSpawnFog(rx, ry, startWorldPos, lifeTurn));
                     break;
                 }
                 tryCount++;
@@ -1054,92 +1081,127 @@ public class TestRule : GridPuzzleBase
         await UniTask.WhenAll(flightTasks);
     }
 
-    /// <summary>
-    /// 個別のパーティクル生成〜移動〜着弾処理
-    /// </summary>
-    private async UniTask FlyAndSpawnFog(int x, int y, Vector3 startPos)
+    private async UniTask FlyAndSpawnFog(int x, int y, Vector3 startPos, int lifeTurn)
     {
-        // 1. 目標地点（グリッドのワールド座標）を計算
-        // GridToWorldはGridPuzzleBaseにある想定ですが、gizmoOffsetが含まれていない場合は調整してください
         Vector3 targetPos = GridToWorld(x, y);
-        // 念のためZ軸などを調整（必要であれば）
-        targetPos.z = 0;
-        startPos.z = 0;
 
-        // 2. パーティクル生成
-        GameObject projectile = null;
+        // --- 1. 飛んでいく演出 ---
         if (fogProjectilePrefab != null)
         {
-            projectile = Instantiate(fogProjectilePrefab, startPos, Quaternion.identity);
-        }
-
-        // 3. 移動アニメーション（Lerp）
-        float timer = 0f;
-        while (timer < flightDuration)
-        {
-            timer += Time.deltaTime;
-            float t = timer / flightDuration;
-
-            // イージングを入れたい場合は t = t * t * (3f - 2f * t); などを使用
-            if (projectile != null)
+            GameObject proj = Instantiate(fogProjectilePrefab, startPos, Quaternion.identity);
+            float duration = 0.5f;
+            float timer = 0f;
+            while (timer < duration)
             {
-                projectile.transform.position = Vector3.Lerp(startPos, targetPos, t);
+                timer += Time.deltaTime;
+                proj.transform.position = Vector3.Lerp(startPos, targetPos, timer / duration);
+                await UniTask.Yield(this.GetCancellationTokenOnDestroy());
             }
-
-            await UniTask.Yield(); // 1フレーム待つ
+            Destroy(proj);
         }
 
-        // 4. 着弾後の処理
-        if (projectile != null)
-        {
-            Destroy(projectile); // パーティクルを消す（パーティクル自体に自動消滅がついているなら不要）
+        // --- 2. データ確定 ---
+        gridInt[x, y] = FOG_BLOCK_ID;
+        fogLifeGrid[x, y] = lifeTurn;
 
-            // もし着弾エフェクトがあるならここでInstantiate
-        }
+        // --- 3. 色の変更 (修正済み) ---
+        // x,y を Vector2Int にまとめて渡します
+        SetGridCellColor(new Vector2Int(x, y), new Color(0.5f, 0f, 0.5f));
 
-        // 5. グリッドの色を更新（ここで初めて見た目が「もや」になる）
-        // ※IDはループ内で既にセット済み
-        SetCellColor(cellObjects[x, y], FOG_BLOCK_ID);
+        // --- 4. 文字表示 ---
+        UpdateFogText(x, y, lifeTurn);
     }
+
 
     /// <summary>
     /// 待機所にある対応するインデックスのブロックを回転
     /// </summary>
     /// <param name="index"></param>
+    // TestRule.cs
+
     public override void TryRotatePaletteBlock(int index)
     {
         if (index < 0 || index >= paletteGroups.Length) return;
-        if(paletteGroups[index] == null) return;
+        BlockGroup group = paletteGroups[index];
+        if (group == null) return;
 
-        paletteGroups[index].transform.Rotate(0, 0, +90);
+        // 1. 回転させる
+        group.transform.Rotate(0, 0, 90);
+
+        // 2. パレットのスロット位置に戻すための補正計算
+        // 回転によって重心位置がずれるため、再度センタリング計算を行う
+
+        // スロットの基準位置を取得
+        Vector3 slotPos = paletteSpawnSlots[index].position;
+
+        // 現在の形状（回転後）の中心ズレを計算
+        // ※ GetShapeCenterは設計図(local)基準なので、回転後のローカル座標を考慮する必要がありますが、
+        //   簡易的に「見た目のズレ」を修正するため、現在位置を再設定します。
+
+        // 一旦スケールと回転を考慮して再配置
+        // (SpawnRandomBlockInSlotで行っている重心補正と同じロジックを回転後にも適用する)
+
+        // 回転後の形状座標を取得
+        List<Vector2Int> rotatedCoords = GetRotatedShapeCoordinates(group);
+
+        // 回転後の座標リストから中心(min/max)を算出
+        float minX = float.MaxValue, maxX = float.MinValue;
+        float minY = float.MaxValue, maxY = float.MinValue;
+
+        foreach (Vector2Int coord in rotatedCoords)
+        {
+            if (coord.x < minX) minX = coord.x;
+            if (coord.x > maxX) maxX = coord.x;
+            if (coord.y < minY) minY = coord.y;
+            if (coord.y > maxY) maxY = coord.y;
+        }
+
+        float centerX = (minX + maxX) / 2f;
+        float centerY = (minY + maxY) / 2f;
+
+        Vector3 centerOffset = new Vector3(centerX, centerY, 0);
+
+        // 新しい位置 = スロット位置 - (回転後の重心ズレ * セルサイズ * スケール)
+        group.transform.position = slotPos - (centerOffset * this.cellSize * paletteBlockScale);
     }
-
     public void ProcessFogTurnChange()
     {
-        for(int x = 0; x < gridWidth; x++)
+        for (int x = 0; x < gridWidth; x++)
         {
-            for(int y = 0; y < gridHeight; y++)
+            for (int y = 0; y < gridHeight; y++)
             {
-                if (gridInt[x,y] == FOG_BLOCK_ID)
+                if (gridInt[x, y] == FOG_BLOCK_ID)
                 {
                     fogLifeGrid[x, y]--;
 
-                    if (fogLifeGrid[x,y] <= 0)
+                    // --- 追加: テキストの更新処理 ---
+                    if (fogLifeGrid[x, y] > 0)
                     {
-                        gridInt[x, y] = 0;
+                        // 【修正】ここが空だったため、UpdateFogText を呼び出します
+                        UpdateFogText(x, y, fogLifeGrid[x, y]);
+                    }
+                    else
+                    {
+                        // 爆発！ テキストを削除
+                        RemoveFogText(x, y);
 
+                        gridInt[x, y] = 0;
                         controller.IsGameEndTrue();
                         Debug.Log("もやが爆発した！");
-
                     }
+                }
+                else
+                {
+                    // もやじゃなくなった場所（何らかの理由で消えた等）のテキストは消しておく
+                    RemoveFogText(x, y);
                 }
             }
         }
     }
 
     /// <summary>
-    /// 設計図の座標リストから、形状の中心（重心）を計算して返す
-    /// </summary>
+         /// 設計図の座標リストから、形状の中心（重心）を計算して返す
+         /// </summary>
     private Vector3 GetShapeCenter(BlockShape shape)
     {
         // 最小値と最大値を見つける
@@ -1194,6 +1256,56 @@ public class TestRule : GridPuzzleBase
         TriggerAttack(attackTarget, damage);
     }
 
+    // 初期化メソッド（Start、または Initialize メソッド内に追加してください）
+    private void InitializeFogTextGrid()
+    {
+        // gridWidth, gridHeight が確定した後に呼び出す必要があります
+        if (fogTextGrid == null)
+        {
+            fogTextGrid = new GameObject[gridWidth, gridHeight];
+        }
+    }
+
+    /// <summary>
+    /// 指定座標のもやの残りターン表示を更新（なければ生成）する
+    /// </summary>
+    public void UpdateFogText(int x, int y, int turns)
+    {
+        // 1. まずブロック(gridVisuals)があるか確認
+        GameObject targetObj = gridVisuals[x, y];
+
+        // 2. もしブロックがなければ、背景タイル(cellObjects)をもやの対象にする（仕様に合わせて選んでください）
+        if (targetObj == null)
+        {
+            targetObj = cellObjects[x, y];
+        }
+
+        if (targetObj == null) return;
+
+        piece p = targetObj.GetComponent<piece>();
+        if (p != null)
+        {
+            p.SetFogDisplay(turns, true);
+        }
+        else
+        {
+            // デバッグログ：そもそもpieceスクリプトが見つかっているか？
+            Debug.LogError($"{x},{y} のオブジェクト {targetObj.name} に piece.cs が付いていません！");
+        }
+    }
+
+    // もやが消えた時の処理
+    private void RemoveFogText(int x, int y)
+    {
+        GameObject blockObj = gridVisuals[x, y];
+        if (blockObj == null) return;
+
+        piece p = blockObj.GetComponent<piece>();
+        if (p != null)
+        {
+            p.SetFogDisplay(0, false); // 非表示にする
+        }
+    }
     #endregion
     private class PopupRequest
     {

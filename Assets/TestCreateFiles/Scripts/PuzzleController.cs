@@ -59,21 +59,36 @@ public class PuzzleController : MonoBehaviour
     }
 
 
+
     private async UniTaskVoid StartGameSequence()
     {
         // 1. 準備状態にする（この間は操作不能にする）
-        // もしGameStateに "Preparing" がなければ追加するか、Pause扱いにしておく
         currentState = GameState.Paused;
 
-        // カウントダウンUIを表示、盤面はまだ隠しておく（必要なら）
+        // --- 【変更点】チュートリアル表示とクリック待ち処理 ---
+        if (tutorialObject != null)
+        {
+            // チュートリアルを表示
+            tutorialObject.SetActive(true);
+
+
+            // ユーザーがクリック（タップ）するまで待機
+            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0), cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            // クリックされたらチュートリアルを非表示にする
+            tutorialObject.SetActive(false);
+        }
+        // ---------------------------------------------------
+
+        // カウントダウンUIを表示
         if (countdownPanel != null) countdownPanel.SetActive(true);
+        // 盤面はまだ隠しておく（チュートリアル中に見えていた場合はここで隠される）
         if (mainParentObject != null) mainParentObject.SetActive(false);
 
-        // 2. カウントダウン処理 (3 -> 2 -> 1 -> GO)
-        int count = 3;
+        int count = 1;
         while (count > 0)
         {
-            if (countdownText != null) countdownText.text = count.ToString();
+            if (countdownText != null) countdownText.text = "Ready?";
 
             // 1秒待機 (キャンセル対応付き)
             await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -97,7 +112,6 @@ public class PuzzleController : MonoBehaviour
         StartGame();
         Debug.Log("Game Started!");
     }
-
 
     /// <summary>
     /// Startで呼び出し
@@ -308,7 +322,7 @@ public class PuzzleController : MonoBehaviour
             currentTotalDamage = maxDamageCap;
         }
 
-        uiManager.UpdateAttackGauge(currentTotalDamage, maxDamageCap);
+        if (targetEnemy != null) targetEnemy.TakeDamage(damage);
 
     }
 
@@ -327,8 +341,11 @@ public class PuzzleController : MonoBehaviour
             startPos = targetEnemy.transform.position;
         }
 
+
         // TestRuleのアニメーション付き生成を呼び出し、完了を待つ
         await puzzleRule.SpawnFogWithAnimation(count, lifeTurn, startPos);
+
+
     }
 }
 

@@ -1,42 +1,42 @@
 using UnityEngine;
-using TMPro; // TextMeshPro‚ğg‚¤‚½‚ß‚É•K—vI
+using TMPro; // TextMeshProã‚’ä½¿ã†ãŸã‚ã«å¿…è¦ï¼
 using System.Collections.Generic;
 
 using Shape;
 
 
-    public class Piece : MonoBehaviour
+    public class LegacyPiece : MonoBehaviour
     {
         //==============================================
-        //’S“–Ò:¬‹{ƒ
-        //‹@”\:ƒs[ƒX‚Ì¶¬/‰ñ“]‚ÌŠÇ—
+        //æ‹…å½“è€…:å°å®®ç´”
+        //æ©Ÿèƒ½:ãƒ”ãƒ¼ã‚¹ã®ç”Ÿæˆ/å›è»¢ã®ç®¡ç†
         //==============================================
 
 
         [Header("ScriptableObject:ShapeData")]
         [SerializeField]private ShapeData shapeData;
-        [Header("ƒuƒƒbƒN‚P‚Â‚ÌƒvƒŒƒtƒ@ƒu(‚±‚ê‚ğ1‚Â‚ÌlŠpŒ`‚Æ‚µ‚ÄŒ`‚ğŒ`¬‚·‚é)")]
-        [SerializeField]private GameObject cellPrefab; // ƒuƒƒbƒN1‚Â•ª‚ÌƒvƒŒƒnƒu
+        [Header("ãƒ–ãƒ­ãƒƒã‚¯ï¼‘ã¤ã®ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–(ã“ã‚Œã‚’1ã¤ã®å››è§’å½¢ã¨ã—ã¦å½¢ã‚’å½¢æˆã™ã‚‹)")]
+        [SerializeField]private GameObject cellPrefab; // ãƒ–ãƒ­ãƒƒã‚¯1ã¤åˆ†ã®ãƒ—ãƒ¬ãƒãƒ–
 
-        [Header("ƒZƒ‹‚ÌƒTƒCƒY")]
+        [Header("ã‚»ãƒ«ã®ã‚µã‚¤ã‚º")]
         [SerializeField] private Vector2 CellSize = new Vector2(1.0f, 1.0f);
 
-        [Header("ƒeƒLƒXƒgİ’è")]
-        [SerializeField] private TextMeshPro textPrefab; // TextMeshPro‚ÌƒvƒŒƒnƒu‚ğ‚±‚±‚Éİ’è
+        [Header("ãƒ†ã‚­ã‚¹ãƒˆè¨­å®š")]
+        [SerializeField] private TextMeshPro textPrefab; // TextMeshProã®ãƒ—ãƒ¬ãƒãƒ–ã‚’ã“ã“ã«è¨­å®š
 
-        // Œ»İ‚Ìƒs[ƒX‚Ìó‘Ô‚ğ•Û‚·‚éƒŠƒXƒg
+        // ç¾åœ¨ã®ãƒ”ãƒ¼ã‚¹ã®çŠ¶æ…‹ã‚’ä¿æŒã™ã‚‹ãƒªã‚¹ãƒˆ
         private List<Vector2Int> currentCellPositions;
         private List<Vector2Int> currentTextPositions;
 
         private void Start()
         {
-            // ShapeData‚©‚çŒ»İ‚Ìó‘Ô‚Öƒf[ƒ^‚ğƒRƒs[‚µ‚Ä‰Šú‰»
+            // ShapeDataã‹ã‚‰ç¾åœ¨ã®çŠ¶æ…‹ã¸ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦åˆæœŸåŒ–
             currentCellPositions = new List<Vector2Int>(shapeData.Cells);
             currentTextPositions = new List<Vector2Int>(shapeData.TextPos);
 
 
             GenerateCells();
-            GenerateTexts(); // ƒeƒLƒXƒg‚ğ¶¬‚·‚éˆ—‚ğŒÄ‚Ño‚·
+            GenerateTexts(); // ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹å‡¦ç†ã‚’å‘¼ã³å‡ºã™
         }
 
     private void Update()
@@ -50,31 +50,31 @@ using Shape;
 
 
 
-    // ‰ñ“]ˆ—‚Ì–{‘Ì
+    // å›è»¢å‡¦ç†ã®æœ¬ä½“
     public void Rotate(bool clockwise)
     {
-        // 1. ŠeÀ•WƒŠƒXƒg‚ğ‰ñ“]‚³‚¹‚é
-        // ƒZƒ‹‚Ì‰ñ“]
+        // 1. å„åº§æ¨™ãƒªã‚¹ãƒˆã‚’å›è»¢ã•ã›ã‚‹
+        // ã‚»ãƒ«ã®å›è»¢
         for (int i = 0; i < currentCellPositions.Count; i++)
         {
             Vector2Int pos = currentCellPositions[i];
             currentCellPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
         }
 
-        // ƒeƒLƒXƒgˆÊ’u‚Ì‰ñ“]
+        // ãƒ†ã‚­ã‚¹ãƒˆä½ç½®ã®å›è»¢
         for (int i = 0; i < currentTextPositions.Count; i++)
         {
             Vector2Int pos = currentTextPositions[i];
             currentTextPositions[i] = clockwise ? new Vector2Int(pos.y, -pos.x) : new Vector2Int(-pos.y, pos.x);
         }
 
-        // 2. Ä•`‰æ‚·‚é
+        // 2. å†æç”»ã™ã‚‹
         RedrawPiece();
     }
 
 
 
-    // ƒuƒƒbƒN‚ÌƒZƒ‹‚ğ¶¬‚·‚éˆ—
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚»ãƒ«ã‚’ç”Ÿæˆã™ã‚‹å‡¦ç†
     private void GenerateCells()
         {
             if (shapeData == null) return;
@@ -85,14 +85,14 @@ using Shape;
                 Instantiate(cellPrefab, transform.position + worldPosition, Quaternion.identity, this.transform);
             }
         }
-        // •¶š‚ğ¶¬‚·‚éˆ—
+        // æ–‡å­—ã‚’ç”Ÿæˆã™ã‚‹å‡¦ç†
         private void GenerateTexts()
         {
             if (shapeData == null || textPrefab == null || shapeData.BlockChar.Count != currentTextPositions.Count)
             {
                 if (shapeData.BlockChar.Count != currentTextPositions.Count)
                 {
-                    Debug.LogError("ShapeData“à‚Ì•¶šƒŠƒXƒg‚ÆÀ•WƒŠƒXƒg‚Ì”‚ªˆê’v‚µ‚Ü‚¹‚ñI");
+                    Debug.LogError("ShapeDataå†…ã®æ–‡å­—ãƒªã‚¹ãƒˆã¨åº§æ¨™ãƒªã‚¹ãƒˆã®æ•°ãŒä¸€è‡´ã—ã¾ã›ã‚“ï¼");
                 }
                 return;
             }
@@ -113,16 +113,16 @@ using Shape;
         }
     }
 
-        // ƒs[ƒX‚ğÄ•`‰æ‚·‚éˆ—
+        // ãƒ”ãƒ¼ã‚¹ã‚’å†æç”»ã™ã‚‹å‡¦ç†
         private void RedrawPiece()
         {
-            // Šù‘¶‚ÌƒZƒ‹‚ÆƒeƒLƒXƒg‚ğ‚·‚×‚Äíœ
+            // æ—¢å­˜ã®ã‚»ãƒ«ã¨ãƒ†ã‚­ã‚¹ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤
             foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);
             }
 
-            // V‚µ‚¢À•W‚ÅÄ¶¬
+            // æ–°ã—ã„åº§æ¨™ã§å†ç”Ÿæˆ
             GenerateCells();
             GenerateTexts();
         }
