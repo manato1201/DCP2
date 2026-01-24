@@ -9,6 +9,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
     private int damageToDeal; // パズルから引き継いだダメージ量
 
     [SerializeField] private UnitStatus targetEnemy;
+    [SerializeField] private EnemyDeathEffect enemyDeath;
 
     [SerializeField] private int fogCount = 1;
     [SerializeField] private int fogLife = 3;
@@ -21,7 +22,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         this.damageToDeal = damage;
     }
 
-    public void Initialize(PuzzleController controller)
+    async public void Initialize(PuzzleController controller)
     {
         this.controller = controller;
 
@@ -32,6 +33,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         }
         else　　//HPが無かったら
         {
+            await enemyDeath.PlayDeathEffectAsync();
             Debug.Log("戦闘終了");
         }
     }

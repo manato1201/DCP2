@@ -411,6 +411,8 @@ public class TestRule : GridPuzzleBase
                     {
                         popupMessage = "大アップ";
                         effectColor = Color.white;
+
+                        RemoveFogText(coord.x,coord.y);
                     }
                     else
                     {
@@ -473,7 +475,6 @@ public class TestRule : GridPuzzleBase
 
                         // もやの寿命管理配列がある場合はリセットしておく
                         if (fogLifeGrid != null) fogLifeGrid[coord.x, coord.y] = 0;
-                        RemoveFogText(coord.x, coord.y);
                     }
                     else
                     {
@@ -491,7 +492,7 @@ public class TestRule : GridPuzzleBase
                                 break;
                         }
                     }
-
+                    RemoveFogText(coord.x, coord.y);
                     //論理データをクリア
                     gridInt[coord.x, coord.y] = 0;
                     gridLevels[coord.x, coord.y] = 0;
@@ -1297,15 +1298,25 @@ public class TestRule : GridPuzzleBase
     // もやが消えた時の処理
     private void RemoveFogText(int x, int y)
     {
-        GameObject blockObj = gridVisuals[x, y];
-        if (blockObj == null) return;
-
-        piece p = blockObj.GetComponent<piece>();
-        if (p != null)
+        // 1. 動くブロック (gridVisuals) のテキストを消す
+        if (gridVisuals[x, y] != null)
         {
-            p.SetFogDisplay(0, false); // 非表示にする
+            if (gridVisuals[x, y].TryGetComponent<piece>(out var p))
+            {
+                p.SetFogDisplay(0, false);
+            }
+        }
+
+        // 2. 背景グリッド (cellObjects) のテキストを消す ★ここが重要
+        if (cellObjects != null && cellObjects[x, y] != null)
+        {
+            if (cellObjects[x, y].TryGetComponent<piece>(out var p))
+            {
+                p.SetFogDisplay(0, false);
+            }
         }
     }
+
     #endregion
     private class PopupRequest
     {

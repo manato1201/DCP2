@@ -13,39 +13,25 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: number
+  - displayName: BattleRule
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GridCell(Clone)
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
+  - displayName: Enemy
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: PuzzleObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleParrent
+  - displayName: TestRule
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PaletteBox
+  - displayName: Effect
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TransitionImage
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: number
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GridCell(Clone)
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
+  - displayName: Panel
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: PuzzleObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleParrent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PaletteBox
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TransitionImage
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: number
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GridCell(Clone)
+  - displayName: ClearEffects
+    scenePath: 
+  - displayName: DamageText
+    scenePath: 
+  - displayName: FogText
+    scenePath: 
+  - displayName: Enemy
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
