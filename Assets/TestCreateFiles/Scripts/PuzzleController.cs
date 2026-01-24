@@ -46,9 +46,12 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private SceneTransitionManager sceneTransitionManager;
     [SerializeField] private SceneAddressCatalog catalog;
 
-    [Header("clear settings")]
+    [Header("Game Effect settings")]
     [SerializeField] private EnemyDeathEffect enemyDeath;
     [SerializeField] private ClearProduction clearProduction;
+
+    [SerializeField] private ClearProduction overProduction;
+    
 
     [Header("chapter settings")]
     [SerializeField] private SetChapterImages chapterImages;
@@ -270,9 +273,7 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     async public void GameOver()
     {
-        await UniTask.Delay(5000);
-        SceneManager.LoadScene("Over");
-        
+        await overProduction.PlayFullAnimationAsync();        
     }
 
     async public void GameClear()

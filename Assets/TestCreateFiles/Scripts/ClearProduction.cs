@@ -7,11 +7,15 @@ using TMPro;
 
 public class ClearProduction : MonoBehaviour
 {
+    [Header("State Settings")]
+    public bool isGameOver = false;
+
     [Header("Components")]
     [SerializeField] private Image _bannerImage;
+    [SerializeField] private Image _backgroundImage; // 新しく追加：背景パネルなど
     [SerializeField] private TextMeshProUGUI _clearText;
 
-    [Header("Fill Settings")]
+    [Header("Fill/Fade Settings")]
     [SerializeField] private float _fillDuration = 0.8f;
 
     [Header("Shine Settings")]
@@ -34,14 +38,8 @@ public class ClearProduction : MonoBehaviour
             _clearText.gameObject.SetActive(false);
         }
 
-        if (_bannerImage != null)
-        {
-            // 最初に透明にするか、Fillを0にする設定
-            _bannerImage.fillAmount = 0f;
-        }
+        ResetEffect(); // 初期状態をセット
     }
-
-
 
     public async UniTask PlayFullAnimationAsync()
     {
@@ -51,13 +49,16 @@ public class ClearProduction : MonoBehaviour
 
         try
         {
-            // 1. 帯のFill（塗りつぶし）演出
-            await FillBannerAsync(_fillDuration, linkedToken.Token);
+            // 1. 帯のFill ＋ 背景のフェード（ゲームオーバー時のみ）を同時に実行
+            await UniTask.WhenAll(
+                FillBannerAsync(_fillDuration, linkedToken.Token),
+                FadeBackgroundAsync(_fillDuration, linkedToken.Token)
+            );
 
-            // 2. 帯の色の明滅（キラキラ）開始
+            // 2. 帯の色の明滅
             StartShiningLoop(linkedToken.Token).Forget();
 
-            // 3. 文字のポップアップ登場
+            // 3. 文字のポップアップ
             await AnimateTextScaleAsync(linkedToken.Token);
         }
         catch (OperationCanceledException) { }
@@ -67,10 +68,10 @@ public class ClearProduction : MonoBehaviour
         }
     }
 
+    // 既存のFill演出（そのまま）
     private async UniTask FillBannerAsync(float duration, CancellationToken ct)
     {
         if (_bannerImage == null) return;
-
         _bannerImage.fillAmount = 0f;
 
         float elapsed = 0f;
@@ -80,8 +81,24 @@ public class ClearProduction : MonoBehaviour
             _bannerImage.fillAmount = Mathf.Clamp01(elapsed / duration);
             await UniTask.Yield(PlayerLoopTiming.Update, ct);
         }
-
         _bannerImage.fillAmount = 1f;
+    }
+
+    // 背景のフェードイン処理
+    private async UniTask FadeBackgroundAsync(float duration, CancellationToken ct)
+    {
+        if (_backgroundImage == null || !isGameOver) return;
+
+        _backgroundImage.gameObject.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsed / duration);
+            SetImageAlpha(_backgroundImage, alpha);
+            await UniTask.Yield(PlayerLoopTiming.Update, ct);
+        }
+        SetImageAlpha(_backgroundImage, 1f);
     }
 
     private async UniTask AnimateTextScaleAsync(CancellationToken ct)
@@ -95,7 +112,6 @@ public class ClearProduction : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / _textScaleDuration;
-            // 弾むような動き（イージング）
             float curve = Mathf.Sin(t * Mathf.PI * 0.8f) * _overshootMultiplier;
             float finalT = Mathf.Lerp(curve, 1.0f, t);
 
@@ -107,46 +123,54 @@ public class ClearProduction : MonoBehaviour
 
     private async UniTaskVoid StartShiningLoop(CancellationToken ct)
     {
-        // _bannerImage 自体が null（未アサイン）なら即終了
         if (_bannerImage == null) return;
 
         try
         {
-            // キャンセルリクエストがなく、かつ Image が破壊されていない間ループ
             while (!ct.IsCancellationRequested && _bannerImage != null)
             {
                 float t = (Mathf.Sin(Time.time * _shineSpeed) + 1f) / 2f;
-
-                // 書き換え直前にもう一度チェック（UnityのObjectとしての生存確認）
-                if (_bannerImage == null) break;
-
                 _bannerImage.color = Color.Lerp(_baseColor, _flashColor, t);
-
                 await UniTask.Yield(PlayerLoopTiming.Update, ct);
             }
         }
-        catch (OperationCanceledException)
-        {
-            // キャンセル時は静かに終了
-        }
+        catch (OperationCanceledException) { }
     }
+
     private void ResetEffect()
     {
         _cts?.Cancel();
         _cts?.Dispose();
         _cts = null;
 
+        // バナーのリセット
         if (_bannerImage != null)
         {
             _bannerImage.fillAmount = 0f;
             _bannerImage.color = _baseColor;
         }
 
+        // 背景のリセット
+        if (_backgroundImage != null)
+        {
+            SetImageAlpha(_backgroundImage, 0f);
+            _backgroundImage.gameObject.SetActive(false);
+        }
+
+        // テキストのリセット
         if (_clearText != null)
         {
             _clearText.gameObject.SetActive(false);
             _clearText.transform.localScale = _originalTextScale;
         }
+    }
+
+    private void SetImageAlpha(Image image, float alpha)
+    {
+        if (image == null) return;
+        Color c = image.color;
+        c.a = alpha;
+        image.color = c;
     }
 
     private void OnDestroy() => ResetEffect();
