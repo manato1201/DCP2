@@ -13,39 +13,29 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: pazzleTest1
-    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: Pazzle
-    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: pazzleTest1
-    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: Pazzle
-    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: TestRule
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'Rules : Rule'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'Puzzle : Controller'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Scene Address Catalog
+    scenePath: 
+  - displayName: 'GridOrigin : Transform'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: GM(Test)
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'Rules : Rule'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: PuzzleObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: BattleObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TutorialObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity

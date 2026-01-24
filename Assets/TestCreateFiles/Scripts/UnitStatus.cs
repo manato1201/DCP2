@@ -17,6 +17,20 @@ public class UnitStatus : MonoBehaviour
         UpdateHPView();
     }
 
+    public float GetHP()
+    {
+        return currentHP;
+    }
+
+    public bool isHPExistYet()
+    {
+        if(currentHP > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void TakeDamage(int damage)
     {
         currentHP -= damage;

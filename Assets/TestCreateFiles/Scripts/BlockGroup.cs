@@ -6,6 +6,7 @@ public class BlockGroup : APooledObject
     public GameObject[] childBlocks; 
     public bool isPaletteBlock = false;
 
+    public int blockLevel = 1;  //ブロックのレベル
     // 内部で保持するピース（返却時に使う）
     private piece[] _cachedPieces;
 

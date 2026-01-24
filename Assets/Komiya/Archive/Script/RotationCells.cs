@@ -3,34 +3,34 @@ using UnityEngine;
 namespace Cell
 {
     //==========================================
-    //’S“–Ò:¬‹{ƒ
-    //‹@”\:ƒNƒŠƒbƒN‚µ‚½‚ÉƒuƒƒbƒN‚ğ‰ñ“]
+    //æ‹…å½“è€…:å°å®®ç´”
+    //æ©Ÿèƒ½:ã‚¯ãƒªãƒƒã‚¯ã—ãŸæ™‚ã«ãƒ–ãƒ­ãƒƒã‚¯ã‚’å›è»¢
     //==========================================
 
     public class RotationCells : MonoBehaviour
     {
-        Piece Piece_;
+        LegacyPiece Piece_;
         private Vector2 mouseDownPos;
         private bool isMouseDown = false;
 
-        // ƒhƒ‰ƒbƒO‚Æ‚İ‚È‚·Å¬ˆÚ“®‹——£i‚±‚Ì‹——£ˆÈã“®‚¢‚½‚çƒhƒ‰ƒbƒOj
+        // ãƒ‰ãƒ©ãƒƒã‚°ã¨ã¿ãªã™æœ€å°ç§»å‹•è·é›¢ï¼ˆã“ã®è·é›¢ä»¥ä¸Šå‹•ã„ãŸã‚‰ãƒ‰ãƒ©ãƒƒã‚°ï¼‰
         private float dragThreshold = 0.1f;
 
         private void Start()
         {
-            Piece_ = GetComponentInParent<Piece>();
+            Piece_ = GetComponentInParent<LegacyPiece>();
         }
 
         private void Update()
         {
-            // ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½uŠÔ‚ÌˆÊ’u‚ğ‹L˜^
+            // ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸç¬é–“ã®ä½ç½®ã‚’è¨˜éŒ²
             if (Input.GetMouseButtonDown(0))
             {
                 isMouseDown = true;
                 mouseDownPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
 
-            // ƒ}ƒEƒX‚ª—£‚³‚ê‚½‚Æ‚«AƒNƒŠƒbƒN‚©ƒhƒ‰ƒbƒO‚©‚ğ”»’f
+            // ãƒã‚¦ã‚¹ãŒé›¢ã•ã‚ŒãŸã¨ãã€ã‚¯ãƒªãƒƒã‚¯ã‹ãƒ‰ãƒ©ãƒƒã‚°ã‹ã‚’åˆ¤æ–­
             if (Input.GetMouseButtonUp(0) && isMouseDown)
             {
                 isMouseDown = false;
@@ -39,7 +39,7 @@ namespace Cell
 
                 if (distance < dragThreshold)
                 {
-                    // ƒNƒŠƒbƒN‚Æ”»’f
+                    // ã‚¯ãƒªãƒƒã‚¯ã¨åˆ¤æ–­
                     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
