@@ -13,25 +13,43 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: BattleRule
+  - displayName: TransitionImage
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Enemy
+  - displayName: ClearImage
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TutorialObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: BattleObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: PuzzleObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TestRule
+  - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Effect
+  - displayName: EventSystem
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Panel
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleObjects
+  - displayName: pazzle
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: ClearEffects
-    scenePath: 
-  - displayName: DamageText
-    scenePath: 
-  - displayName: FogText
-    scenePath: 
-  - displayName: Enemy
+  - displayName: MIssion
+    scenePath: Assets/MyAssets/Scenes/MIssion.unity
+  - displayName: pazzleTest1
+    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
+  - displayName: Select
+    scenePath: Assets/MyAssets/Scenes/Select.unity
+  - displayName: BookUI
+    scenePath: Assets/MyAssets/Scenes/BookUI.unity
+  - displayName: Result
+    scenePath: Assets/MyAssets/Scenes/Result.unity
+  - displayName: Title
+    scenePath: Assets/MyAssets/Scenes/Title.unity
+  - displayName: Story
+    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: 'Puzzle : Controller'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'GridOrigin : Transform'
     scenePath: Assets/MyAssets/Scenes/pazzle.unity

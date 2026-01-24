@@ -45,6 +45,10 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private SceneTransitData data;
     [SerializeField] private SceneTransitionManager sceneTransitionManager;
     [SerializeField] private SceneAddressCatalog catalog;
+
+    [Header("clear settings")]
+    [SerializeField] private EnemyDeathEffect enemyDeath;
+    [SerializeField] private ClearProduction clearProduction;
     //---ボタン参照---
 
     /// <summary>
@@ -265,9 +269,13 @@ public class PuzzleController : MonoBehaviour
     {
         isGameClear = true;
 
-        data.payload.chap = "Chap2";    //チャプターを移行
+        data.payload.chap = "CHAP1";    //チャプターを移行
 
-        await UniTask.Delay(5000);
+        await enemyDeath.PlayDeathEffectAsync();
+        await UniTask.Delay(3000);
+        await clearProduction.PlayFullAnimationAsync();
+
+        await UniTask.Delay(3000);
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.BookUI), data.payload);
 
 
