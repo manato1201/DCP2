@@ -25,7 +25,7 @@ public class PuzzleController : MonoBehaviour
     private bool isTimerActive;
     private bool isGameEnd = false;
     public GameState currentState;
-
+    
     [SerializeField] private BattleUIManager uiManager;
     [SerializeField] private UnitStatus targetEnemy;
     [SerializeField] private bool isGameClear = false;
@@ -49,6 +49,9 @@ public class PuzzleController : MonoBehaviour
     [Header("clear settings")]
     [SerializeField] private EnemyDeathEffect enemyDeath;
     [SerializeField] private ClearProduction clearProduction;
+
+    [Header("chapter settings")]
+    [SerializeField] private SetChapterImages chapterImages;
     //---ボタン参照---
 
     /// <summary>
@@ -122,6 +125,8 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     public void OnControllerStart()
     {
+        chapterImages.SetImagesForChapter("CHAP2");
+
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
         if (currentRule == null)
@@ -276,9 +281,9 @@ public class PuzzleController : MonoBehaviour
         await clearProduction.PlayFullAnimationAsync();
 
         await UniTask.Delay(3000);
-        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.BookUI), data.payload);
+        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
 
-
+        
     }
 
 

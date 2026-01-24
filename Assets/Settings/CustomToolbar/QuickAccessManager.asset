@@ -13,43 +13,43 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: TransitionImage
+  - displayName: 'Puzzle : Controller'
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: ClearImage
+  - displayName: ChapterImageSetter
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TutorialObjects
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: SchoolYard
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: EnemyWorldPosition
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Enemy
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: HP
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: BattleObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleObjects
+  - displayName: TutorialObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
+  - displayName: GameObject
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: EventSystem
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Panel
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: pazzle
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MIssion
-    scenePath: Assets/MyAssets/Scenes/MIssion.unity
-  - displayName: pazzleTest1
-    scenePath: Assets/MyAssets/Scenes/pazzleTest1.unity
-  - displayName: Select
-    scenePath: Assets/MyAssets/Scenes/Select.unity
-  - displayName: BookUI
-    scenePath: Assets/MyAssets/Scenes/BookUI.unity
-  - displayName: Result
-    scenePath: Assets/MyAssets/Scenes/Result.unity
-  - displayName: Title
-    scenePath: Assets/MyAssets/Scenes/Title.unity
-  - displayName: Story
-    scenePath: Assets/MyAssets/Scenes/Story.unity
+  - displayName: Scene Address Catalog
+    scenePath: 
   - displayName: 'Puzzle : Controller'
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: 'GridOrigin : Transform'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: GM(Test)
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'Rules : Rule'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TestRule
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: BattleRule
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: SchoolYard
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: Canvas
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
