@@ -125,7 +125,12 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     public void OnControllerStart()
     {
-        chapterImages.SetImagesForChapter("CHAP2");
+
+        string nowChap = data.payload.chap;
+
+        if (nowChap == "") nowChap = "CHAP1";
+
+        chapterImages.SetImagesForChapter(nowChap);
 
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
@@ -275,6 +280,7 @@ public class PuzzleController : MonoBehaviour
         isGameClear = true;
 
         data.payload.chap = "CHAP1";    //チャプターを移行
+
 
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);

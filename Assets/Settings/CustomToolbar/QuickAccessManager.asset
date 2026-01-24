@@ -13,43 +13,29 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
+  - displayName: TestRule
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: 'Rules : Rule'
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: MainParent
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: 'Puzzle : Controller'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: ChapterImageSetter
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Manager
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SchoolYard
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: EnemyWorldPosition
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Enemy
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: HP
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TutorialObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GameObject
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Scene Address Catalog
     scenePath: 
-  - displayName: 'Puzzle : Controller'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: 'GridOrigin : Transform'
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: GM(Test)
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: 'Rules : Rule'
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: SchoolYard
+  - displayName: MainParent
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
   - displayName: Canvas
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: PuzzleObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: BattleObjects
+    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: TutorialObjects
     scenePath: Assets/MyAssets/Scenes/pazzle.unity
