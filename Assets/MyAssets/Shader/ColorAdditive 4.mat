@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ColorAdditive 1
+  m_Name: ColorAdditive 4
   m_Shader: {fileID: 4800000, guid: f4bac2a1332384d43893db8d80e10889, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -59,7 +59,7 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _Gray: 0
-    - _OverallAlpha: 1
+    - _OverallAlpha: 0
     - _Use0: 1
     - _Use1: 0
     - _Use2: 0
@@ -68,7 +68,7 @@ Material:
     - _UseGrayscale: 0
     - _ZWrite: 0
     m_Colors:
-    - _AddColor: {r: 0, g: 0, b: 0, a: 0}
+    - _AddColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _MulColor: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

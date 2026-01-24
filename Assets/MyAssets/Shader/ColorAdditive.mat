@@ -65,8 +65,10 @@ Material:
     - _Use2: 0
     - _Use3: 0
     - _UseGray: 0
+    - _UseGrayscale: 0
     - _ZWrite: 0
     m_Colors:
+    - _AddColor: {r: 0, g: 0, b: 0, a: 0.4627451}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _MulColor: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
