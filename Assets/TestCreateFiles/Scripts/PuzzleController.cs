@@ -273,7 +273,9 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     async public void GameOver()
     {
-        await overProduction.PlayFullAnimationAsync();        
+        await overProduction.PlayFullAnimationAsync();
+        await UniTask.Delay(3000);
+        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), data.payload);
     }
 
     async public void GameClear()
@@ -313,9 +315,9 @@ public class PuzzleController : MonoBehaviour
         puzzleRule.ProcessFogTurnChange();
         ResetDamage();
 
-        if (isGameEnd)    //残りターン数が０ならば
+        if (isGameEnd)    //ゲームエンドがtrueならば
         {
-            GameOver();
+            //GameOver();
         }
         else
         {

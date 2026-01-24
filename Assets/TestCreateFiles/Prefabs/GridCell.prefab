@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogText: {fileID: 784450746498926097}
+  _fogParticlePrefab: {fileID: 2565542028624060130, guid: 42ebeb494cb1e9240bcd1e9e05e3366a, type: 3}
+  _effectDuration: 3
 --- !u!1 &7178503291419599486
 GameObject:
   m_ObjectHideFlags: 0

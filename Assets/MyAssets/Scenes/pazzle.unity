@@ -417,7 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 933555676}
   fogCount: 1
-  fogLife: 1
+  fogLife: 6
   enemyAnimation: {fileID: 933555679}
 --- !u!4 &173260226
 Transform:
@@ -1487,7 +1487,7 @@ PrefabInstance:
       objectReference: {fileID: 2031748421042986347, guid: 554da6349f674fc439b03c33621ddf28, type: 3}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level1Multipliers
-      value: 10000000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level2Multipliers

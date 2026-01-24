@@ -98,7 +98,7 @@ public class ClearProduction : MonoBehaviour
             SetImageAlpha(_backgroundImage, alpha);
             await UniTask.Yield(PlayerLoopTiming.Update, ct);
         }
-        SetImageAlpha(_backgroundImage, 1f);
+        SetImageAlpha(_backgroundImage, 0.5f);
     }
 
     private async UniTask AnimateTextScaleAsync(CancellationToken ct)
