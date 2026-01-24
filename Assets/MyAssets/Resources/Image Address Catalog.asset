@@ -12,84 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6b8f23815c0d048b687541390883bd, type: 3}
   m_Name: Image Address Catalog
   m_EditorClassIdentifier: 
-  Entries:
-  - Id: Bg_SchoolYard
-    Sprite:
-      m_AssetGUID: e82b88303f5c9b64999e48029dfc1295
-      m_SubObjectName: Bg_SchoolYard
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
-  - Id: Bg_Outdoors2
-    Sprite:
-      m_AssetGUID: 059a1a848dcb2934a97cd845108e32a5
-      m_SubObjectName: fa45dc2e685db022_0
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+  entries:
   - Id: player1
-    Sprite:
-      m_AssetGUID: cdb09cfa2b811554890d6bf3a2f134c9
-      m_SubObjectName: player1
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 21300000, guid: cdb09cfa2b811554890d6bf3a2f134c9, type: 3}
   - Id: player2
-    Sprite:
-      m_AssetGUID: ba88074b8a35a3047b64998c1a7051a6
-      m_SubObjectName: player2
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 21300000, guid: ba88074b8a35a3047b64998c1a7051a6, type: 3}
   - Id: player3
-    Sprite:
-      m_AssetGUID: 468526f4dca61244f9c9cd529be1d5a0
-      m_SubObjectName: player3
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 21300000, guid: 468526f4dca61244f9c9cd529be1d5a0, type: 3}
   - Id: player4
-    Sprite:
-      m_AssetGUID: 7d443ba0c5b828b4086518ba770e5856
-      m_SubObjectName: player4
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
-  - Id: char1
-    Sprite:
-      m_AssetGUID: c785b1f6cef32d9478aa44812ed33df8
-      m_SubObjectName: char1_0
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 21300000, guid: 7d443ba0c5b828b4086518ba770e5856, type: 3}
   - Id: hari_1
-    Sprite:
-      m_AssetGUID: 128405c2542e053419ef3dab431fa034
-      m_SubObjectName: hari_1_0
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 8811724656717289983, guid: 128405c2542e053419ef3dab431fa034, type: 3}
   - Id: hari_2
-    Sprite:
-      m_AssetGUID: d47746b83bdc43342ad84466b647a455
-      m_SubObjectName: hari_2_0
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: -2173855995369307330, guid: d47746b83bdc43342ad84466b647a455, type: 3}
   - Id: hari_3
-    Sprite:
-      m_AssetGUID: d9670c5d352a999408e98004d4d9a3b9
-      m_SubObjectName: hari3_0
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 1
+    Sprite: {fileID: 7442930404095328458, guid: d9670c5d352a999408e98004d4d9a3b9, type: 3}
+  - Id: dorobogitune
+    Sprite: {fileID: -8321760621169183638, guid: c981b485f52229b43ab2882de4927e17, type: 3}
+  - Id: Bg_Outdoors2
+    Sprite: {fileID: 6235067857853420115, guid: 9935a8e219f05fa4f936232e88744727, type: 3}
+  - Id: Bg_SchoolYard
+    Sprite: {fileID: 21300000, guid: e82b88303f5c9b64999e48029dfc1295, type: 3}

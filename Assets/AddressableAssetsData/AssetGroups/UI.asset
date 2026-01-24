@@ -230,6 +230,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3abe7ef0ce8d884f862e8586c67e020
+    m_Address: Assets/MyAssets/Image/hari_VAT.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ba1c65409b6b47a479f10f0cf5d6fa8e
     m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/save_c.png
     m_ReadOnly: 0
@@ -260,6 +265,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c981b485f52229b43ab2882de4927e17
+    m_Address: Assets/MyAssets/Image/dorobogitune.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb0eba8b190d71d45a5b8fe176ff6dab
     m_Address: Assets/MyAssets/Image/Board_1_Mass.png
     m_ReadOnly: 0
@@ -282,6 +292,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d47746b83bdc43342ad84466b647a455
     m_Address: Assets/MyAssets/Image/hari_2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6365d58fb8aaad4fa54b9c659dc53ad
+    m_Address: Assets/MyAssets/Image/doro_VAT.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
