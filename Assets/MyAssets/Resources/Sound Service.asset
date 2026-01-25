@@ -12,10 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0e78e38e043674e9bdb959fa58a1da, type: 3}
   m_Name: Sound Service
   m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
-  bgmGroup: {fileID: 0}
-  seGroup: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 9828d54458b323a4c97572a6ce4e0b17, type: 2}
+  bgmGroup: {fileID: 5001703521225352286, guid: 9828d54458b323a4c97572a6ce4e0b17, type: 2}
+  seGroup: {fileID: 8806912762762129516, guid: 9828d54458b323a4c97572a6ce4e0b17, type: 2}
   entries:
-  - key: 
-    clip: {fileID: 0}
+  - key: BGM_Title
+    clip: {fileID: 8300000, guid: 92607ec6cbb9b7346be438fa177e9e9a, type: 3}
     type: 0
+  - key: BGM_Enjoy
+    clip: {fileID: 8300000, guid: f24c95df5a2da6e4aa85fc82ce482cf0, type: 3}
+    type: 0
+  - key: BGM_Serious
+    clip: {fileID: 8300000, guid: b1e8f50adf720f9428a6ec169010cd54, type: 3}
+    type: 0
+  - key: BGM_Puzzie
+    clip: {fileID: 8300000, guid: a8eccfe76900e5f46a36bfbd63da325f, type: 3}
+    type: 0
+  - key: SE_Attack2
+    clip: {fileID: 8300000, guid: 65e016ceef76a4d499f7632ef05124dc, type: 3}
+    type: 1
+  - key: SE_Align
+    clip: {fileID: 8300000, guid: a244671f2c77e474ebd4233c42c6817c, type: 3}
+    type: 1
+  - key: SE_Clear
+    clip: {fileID: 8300000, guid: 331339dc55cd3524397ad2258f19b4cd, type: 3}
+    type: 1
+  - key: SE_Damage
+    clip: {fileID: 8300000, guid: 144e02f0ebfa6da4b94f0388e39b41df, type: 3}
+    type: 1
+  - key: SE_Defeat
+    clip: {fileID: 8300000, guid: b71a5f0c610927a4d9d0f38503390b18, type: 3}
+    type: 1
+  - key: SE_GageUp
+    clip: {fileID: 8300000, guid: c3c17dfc6b40cf34fb822bbc49dde7bf, type: 3}
+    type: 1
+  - key: SE_piece
+    clip: {fileID: 8300000, guid: 94383bba0eacfdd45aa57bcd82ca4e2b, type: 3}
+    type: 1
+  - key: SE_Start
+    clip: {fileID: 8300000, guid: fcb52e3899a300647a49ea32d0858c7b, type: 3}
+    type: 1
+  - key: SE_TextClick
+    clip: {fileID: 8300000, guid: 89beba0f034959147aad8a40500a499f, type: 3}
+    type: 1
+  - key: SE_TextClick
+    clip: {fileID: 8300000, guid: 89beba0f034959147aad8a40500a499f, type: 3}
+    type: 1
