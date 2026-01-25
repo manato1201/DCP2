@@ -17,7 +17,7 @@ public class SetChapterImages : MonoBehaviour
 
     public void SetImagesForChapter(string chapter = "CHAP1")
     {
-        if(chapter == "CHAP1")
+        if(chapter == "CHAP1" || chapter == "")
         {
             targetEnemy = enemyImages[0];
             targetGB = GB[0];

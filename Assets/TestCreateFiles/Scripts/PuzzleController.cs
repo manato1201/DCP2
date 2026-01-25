@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using static SceneTransitData;
 public class PuzzleController : MonoBehaviour
 {
+    [SerializeField] ChapterLeader chapt;
+
     //現在使用するゲームルール
     [SerializeField] private GameObject ruleObject; //パズルルール
 
@@ -152,12 +154,7 @@ public class PuzzleController : MonoBehaviour
     public void OnControllerStart()
     {
 
-        //string nowChap = data.payload.chap;
-        string nowChap = dbChap;
-
-        if (nowChap == "") nowChap = "CHAP2";
-
-        chapterImages.SetImagesForChapter(nowChap);
+        chapterImages.SetImagesForChapter(data.payload.chap);
 
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
@@ -306,15 +303,24 @@ public class PuzzleController : MonoBehaviour
     {
         isGameClear = true;
 
-        data.payload.chap = "CHAP2";    //チャプターを移行
 
+        switch (chapt.NowChapter)
+        {
+            case "CHAP1":
+                data.payload.chap = "CHAP2";
+                break;
+            case "CHAP2":
+                data.payload.chap = "CHAP3";
+                break;
+        }
 
+        
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);
         await clearProduction.PlayFullAnimationAsync();
-
+        Debug.Log(data.payload.chap);
         await UniTask.Delay(3000);
-        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
+        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story),data.payload);
 
 
     }
