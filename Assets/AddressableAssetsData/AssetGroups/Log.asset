@@ -26,6 +26,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - CommuLog
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9828d54458b323a4c97572a6ce4e0b17
+    m_Address: Assets/MyAssets/Resources/Master.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a84dd1f24630104448abf1e964367045
     m_Address: Assets/MyAssets/Resources/Scene Transit Data.asset
     m_ReadOnly: 0
