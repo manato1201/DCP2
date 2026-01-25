@@ -46,7 +46,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e2534ad6c90a1044f822d7252aff04ad
-    m_Address: Assets/MyAssets/Scenes/pazzle.unity
+    m_Address: Assets/MyAssets/Scenes/Pazzle.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

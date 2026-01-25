@@ -13,29 +13,25 @@ MonoBehaviour:
   m_Name: QuickAccessManager
   m_EditorClassIdentifier: 
   items:
-  - displayName: TestRule
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Rules : Rule'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Puzzle : Controller'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Scene Address Catalog
-    scenePath: 
-  - displayName: 'GridOrigin : Transform'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: GM(Test)
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: 'Rules : Rule'
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: MainParent
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: Canvas
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: PuzzleObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: BattleObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
-  - displayName: TutorialObjects
-    scenePath: Assets/MyAssets/Scenes/pazzle.unity
+  - displayName: CountDownText
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: GameOverImage
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: TransitionImage
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: ClearImage
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: GameOverBG
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: IconMaskParent
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: ChargePosition
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: EnemyWorldPosition
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: Manager
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: ChapterImageSetter
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
+  - displayName: BannerSlider
+    scenePath: Assets/MyAssets/Scenes/Pazzle.unity
