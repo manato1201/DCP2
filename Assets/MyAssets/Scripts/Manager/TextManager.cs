@@ -28,6 +28,7 @@ public sealed class TextManager : MonoBehaviour
     int _index = 0;
     bool _isTyping = false;
     bool _firstPlayed = false;
+    string _startChap;
 
     CancellationTokenSource _ctsScene;
     CancellationTokenSource _ctsLine;
@@ -43,17 +44,47 @@ public sealed class TextManager : MonoBehaviour
     {
         _ctsScene = new();
         if (transitionButton) transitionButton.gameObject.SetActive(false);
+        CharacterManager.OnGlowAutoAdvance += HandleGlowAutoAdvance;
+
+        // 起動時に一度だけ決定してキャッシュ
+        var chapFromSO = transit ? transit.payload.chap : null; // SceneTransitData はこの構造（chap等のフィールド）を持つSO :contentReference[oaicite:0]{index=0}
+        _startChap = !string.IsNullOrEmpty(chapFromSO) ? chapFromSO : defaultChap;
+
+#if UNITY_EDITOR
+        // 何を参照しているか可視化（別インスタンス事故の特定用）
+        var from = string.IsNullOrEmpty(chapFromSO) ? "default" : "transit";
+        Debug.Log($"[TextManager] startChap='{_startChap}' (source={from}) transitObj={(transit ? transit.name : "null")}");
+#if UNITY_EDITOR
+        try {
+            var path = UnityEditor.AssetDatabase.GetAssetPath(transit);
+            Debug.Log($"[TextManager] transit asset path: {path}");
+        } catch {}
+#endif
+#endif
+
+        if (transitionButton) transitionButton.gameObject.SetActive(false);
     }
     void OnEnable()  { if (textBoxButton) textBoxButton.onClick.AddListener(OnClickBox); }
     void OnDisable() { if (textBoxButton) textBoxButton.onClick.RemoveListener(OnClickBox); }
-    void OnDestroy() { _ctsLine?.Cancel(); _ctsScene?.Cancel(); }
+
+    void OnDestroy()
+    {
+        _ctsLine?.Cancel(); _ctsScene?.Cancel();
+        CharacterManager.OnGlowAutoAdvance -= HandleGlowAutoAdvance;
+    }
+    void HandleGlowAutoAdvance()
+    {
+        // タイピング中なら即時表示→次へ
+        if (_isTyping) { _ctsLine?.Cancel(); typing?.ForceComplete(); _isTyping = false; }
+        NextAsync().Forget();
+    }
 
     private async void Start()
     {
         // CSVロード（Addressables内で）
         await StoryCsv.EnsureLoadedAsync();
 
-        var chapKey = !string.IsNullOrEmpty(transit?.payload.chap) ? transit.payload.chap : defaultChap;
+        var chapKey = _startChap;
 
         _lines.Clear();
         var src = StoryCsv.GetLines(chapKey);  // IReadOnlyList<StoryCsv.StoryLine>
@@ -72,6 +103,22 @@ public sealed class TextManager : MonoBehaviour
         _currentChap = !string.IsNullOrEmpty(transit?.payload.chap) ? transit.payload.chap : defaultChap;
         // 先読み
         PrefetchNextChapters(_currentChap);
+    }
+
+    string ResolveStartChap()
+    {
+        // 1) transit優先
+        if (transit != null && !string.IsNullOrEmpty(transit.payload.chap))
+            return transit.payload.chap;
+
+        // 2) defaultChap
+        if (!string.IsNullOrEmpty(defaultChap))
+            return defaultChap;
+
+        // 3) 最終フォールバック（事故防止）
+        const string fallback = "CHAP1";
+        Debug.LogWarning("[TextManager] Both transit.chap and defaultChap are empty. Fallback to 'CHAP1'.");
+        return fallback;
     }
 
     private void OnClickBox()

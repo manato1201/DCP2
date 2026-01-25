@@ -11,7 +11,7 @@ public class PuzzleController : MonoBehaviour
     //現在使用するゲームルール
     [SerializeField] private GameObject ruleObject; //パズルルール
 
-    [SerializeField] private TestRule puzzleRule;   
+    [SerializeField] private TestRule puzzleRule;
     [SerializeField] private BattleRule battleRule;   //バトルルール
 
     [SerializeField] private GameObject puzzleParent;
@@ -25,7 +25,7 @@ public class PuzzleController : MonoBehaviour
     private bool isTimerActive;
     private bool isGameEnd = false;
     public GameState currentState;
-    
+
     [SerializeField] private BattleUIManager uiManager;
     [SerializeField] private UnitStatus targetEnemy;
     [SerializeField] private bool isGameClear = false;
@@ -64,7 +64,7 @@ public class PuzzleController : MonoBehaviour
     public void OnRotateButtonPressed(int index)
     {
         if (currentState != GameState.Playing) return;
-        
+
         currentRule.TryRotatePaletteBlock(index);
     }
 
@@ -203,12 +203,12 @@ public class PuzzleController : MonoBehaviour
         isGameEnd = false;
     }
 
-    
+
 
 
     //ゲーム開始
     private void StartGame()
-    {        
+    {
         //タイマーの設定
         float limit = currentRule.GetTimeLimit();
         OnTurnStart();
@@ -280,7 +280,7 @@ public class PuzzleController : MonoBehaviour
     {
         isGameClear = true;
 
-        data.payload.chap = "CHAP1";    //チャプターを移行
+        data.payload.chap = "CHAP2";    //チャプターを移行
 
 
         await enemyDeath.PlayDeathEffectAsync();
@@ -290,7 +290,7 @@ public class PuzzleController : MonoBehaviour
         await UniTask.Delay(3000);
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
 
-        
+
     }
 
 

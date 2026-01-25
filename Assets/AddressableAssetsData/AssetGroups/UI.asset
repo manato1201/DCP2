@@ -120,6 +120,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51de33feba98e8f4da492e7ffa0f676e
+    m_Address: Assets/MyAssets/Image/tutorial_4.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 541057625bd729749ab9bcf7db141023
     m_Address: Assets/MyAssets/Image/BookUI_Mark1.png
     m_ReadOnly: 0
@@ -145,6 +150,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66397bfc6583dbc4caaebfb24823e6f6
+    m_Address: Assets/MyAssets/Image/Title.mp4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67ab4b7a9d871f14dab62c31d27574d2
+    m_Address: Assets/MyAssets/Image/tutorial_5.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 68be7b37ac76c4d4dae0f6e06f526e1b
     m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/save_h.png
     m_ReadOnly: 0
@@ -160,6 +175,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71c168aa4fab68e419344056b9aa16ef
+    m_Address: Assets/MyAssets/Image/tutorial_1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78c944ebb50c698459946364c732e60c
     m_Address: Assets/MyAssets/Image/01_base_green 1/auto.png
     m_ReadOnly: 0
@@ -167,6 +187,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79cc067fd3b3aca47b096dbf050ed810
     m_Address: Assets/MyAssets/Image/CommentText.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79d5b8912a6beb74ea1fc374f715eccb
+    m_Address: Assets/MyAssets/Image/tutorial_6.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -275,6 +300,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb98c9c8292fdda41b1451b841a63f06
+    m_Address: Assets/MyAssets/Image/Cosmo.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc086e8defbdaa6459c22c14481a656c
     m_Address: Assets/MyAssets/Image/01_base_green 1/skip.png
     m_ReadOnly: 0
@@ -305,6 +335,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d91ad683881bb4540bf312374b825205
+    m_Address: Assets/MyAssets/Image/tutorial_3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9670c5d352a999408e98004d4d9a3b9
     m_Address: Assets/MyAssets/Image/hari3.png
     m_ReadOnly: 0
@@ -315,6 +350,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de40627a0bcd8624fa747030f9fa08b0
+    m_Address: Assets/MyAssets/Image/MyRoom1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0d39b59b763f2645a2c02e77c8f2282
+    m_Address: Assets/MyAssets/Image/MyRoom2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3609731284aba949be78659bb7a9587
     m_Address: Assets/MyAssets/Image/05_hov_clk_aqua/skip_c.png
     m_ReadOnly: 0
@@ -322,6 +367,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e82b88303f5c9b64999e48029dfc1295
     m_Address: Assets/MyAssets/Image/Bg_SchoolYard.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef77fa7452b8e2442b2b7016e9554594
+    m_Address: Assets/MyAssets/Image/Fantasy.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0260f412d96eb649a5be94ac4f308dd
+    m_Address: Assets/MyAssets/Image/tutorial_end.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f959504cb4321f245b07371881e0d67f
+    m_Address: Assets/MyAssets/Image/tutorial_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

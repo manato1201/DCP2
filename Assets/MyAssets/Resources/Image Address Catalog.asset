@@ -33,3 +33,11 @@ MonoBehaviour:
     Sprite: {fileID: 6235067857853420115, guid: 9935a8e219f05fa4f936232e88744727, type: 3}
   - Id: Bg_SchoolYard
     Sprite: {fileID: 21300000, guid: e82b88303f5c9b64999e48029dfc1295, type: 3}
+  - Id: MyRoom1
+    Sprite: {fileID: 8616267868451705621, guid: de40627a0bcd8624fa747030f9fa08b0, type: 3}
+  - Id: MyRoom2
+    Sprite: {fileID: -2801238985228314341, guid: e0d39b59b763f2645a2c02e77c8f2282, type: 3}
+  - Id: Fantasy
+    Sprite: {fileID: 4751973072151165927, guid: ef77fa7452b8e2442b2b7016e9554594, type: 3}
+  - Id: Cosmo
+    Sprite: {fileID: 5671039627864917906, guid: cb98c9c8292fdda41b1451b841a63f06, type: 3}

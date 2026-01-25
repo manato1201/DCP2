@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
+    m_Address: Assets/MyAssets/Scenes/Pazzle.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a9e23115d222ace48a4e762ffcf0be4b
     m_Address: Assets/MyAssets/Scenes/pazzleTest1.unity
     m_ReadOnly: 0
@@ -42,11 +47,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b92368a9825768c4c96dda6c8be97878
     m_Address: Assets/MyAssets/Scenes/MIssion.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e2534ad6c90a1044f822d7252aff04ad
-    m_Address: Assets/MyAssets/Scenes/pazzle.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
