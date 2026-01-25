@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NewTextTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}
   m_sharedMaterial: {fileID: 7862463157587234424, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}
@@ -432,6 +432,8 @@ MonoBehaviour:
   rightBaseMat: {fileID: 2100000, guid: 9498d0bce844236478ffd5c849df6ec5, type: 2}
   glowOverlay: {fileID: 747268234}
   glowBaseMat: {fileID: 2100000, guid: e778568d33999c444823aa8363f4245c, type: 2}
+  defaultFade: 0.3
+  glowAutoAdvanceDelay: 0.6
 --- !u!4 &677933565
 Transform:
   m_ObjectHideFlags: 0
@@ -907,8 +909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 502, y: -172}
-  m_SizeDelta: {x: 400, y: 1000}
+  m_AnchoredPosition: {x: 502, y: -10}
+  m_SizeDelta: {x: 400, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1043646608
 MonoBehaviour:
@@ -930,7 +932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1090217281897295437, guid: c785b1f6cef32d9478aa44812ed33df8, type: 3}
+  m_Sprite: {fileID: 8811724656717289983, guid: 128405c2542e053419ef3dab431fa034, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -986,7 +988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NewTextTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}
   m_sharedMaterial: {fileID: 7862463157587234424, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}
@@ -1502,7 +1504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36, y: 64}
+  m_AnchoredPosition: {x: 36, y: 74}
   m_SizeDelta: {x: 700, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1920006681
@@ -1525,7 +1527,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cdb09cfa2b811554890d6bf3a2f134c9, type: 3}
+  m_Sprite: {fileID: -8321760621169183638, guid: c981b485f52229b43ab2882de4927e17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1580,7 +1582,7 @@ MonoBehaviour:
   rubyLabel: {fileID: 1090276626}
   transit: {fileID: 11400000, guid: a84dd1f24630104448abf1e964367045, type: 2}
   defaultChap: CHAP1
-  firstLineDelay: 0.5
+  firstLineDelay: 0.4
   delayOnlyFirst: 1
 --- !u!114 &1986998596
 MonoBehaviour:
@@ -1676,7 +1678,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30A4\u30E9\u30A4\u30E9\u30CF\u30EA\u30CD\u30BA\u30DF\u3042"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}
   m_sharedMaterial: {fileID: 7862463157587234424, guid: a4e0a539c58de1a41b9af29d7e23ba2d, type: 2}

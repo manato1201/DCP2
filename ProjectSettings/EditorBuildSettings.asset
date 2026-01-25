@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/MyAssets/Scenes/Pazzle.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/MyAssets/Scenes/Title.unity
     guid: 67af363078fcbb34ea730c389b4304fe
@@ -18,12 +15,15 @@ EditorBuildSettings:
     path: Assets/MyAssets/Scenes/Story.unity
     guid: 549d763f31324d846a4a5f505f637128
   - enabled: 1
+    path: Assets/MyAssets/Scenes/Pazzle.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
     path: Assets/MyAssets/Scenes/BookUI.unity
     guid: f172796d807cb28408e0e208b7f4373f
-  - enabled: 1
+  - enabled: 0
     path: Assets/MyAssets/Scenes/pazzleTest1.unity
-    guid: e2534ad6c90a1044f822d7252aff04ad
-  - enabled: 1
+    guid: a9e23115d222ace48a4e762ffcf0be4b
+  - enabled: 0
     path: Assets/MyAssets/Scenes/MIssion.unity
     guid: b92368a9825768c4c96dda6c8be97878
   - enabled: 1

@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Audio_SE
   m_GUID: d10eae8dd4ecf4546b4ed74a4d04da03
   m_SerializeEntries:
+  - m_GUID: 144e02f0ebfa6da4b94f0388e39b41df
+    m_Address: Assets/MyAssets/Sound/SE/BMT_Kit_2_Bass_F#.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25f84af81c2a821448bb073047ceb178
+    m_Address: Assets/MyAssets/Sound/SE/BMT_Kit_1_Snare_1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b671d88366611644bd46f452e199852
     m_Address: Assets/MyAssets/Sound/SE/SE_Attack.mp3
     m_ReadOnly: 0
@@ -32,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b5324ad86d66bf4591b79a4e53f4aa6
     m_Address: Assets/MyAssets/Sound/SE/SE_BookPage.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65e016ceef76a4d499f7632ef05124dc
+    m_Address: Assets/MyAssets/Sound/SE/BMT_Kit_1_Snare_3.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

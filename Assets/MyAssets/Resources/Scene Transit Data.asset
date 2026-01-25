@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Scene Transit Data
   m_EditorClassIdentifier: 
   payload:
+    chap: 
     key: 
     intVal: 0
     floatVal: 0
