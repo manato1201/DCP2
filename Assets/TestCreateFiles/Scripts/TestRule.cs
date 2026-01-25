@@ -1165,44 +1165,63 @@ public class TestRule : GridPuzzleBase
         // 新しい位置 = スロット位置 - (回転後の重心ズレ * セルサイズ * スケール)
         group.transform.position = slotPos - (centerOffset * this.cellSize * paletteBlockScale);
     }
-    public void ProcessFogTurnChange()
+    // TestRule.cs 内のターン更新処理
+    async public void ProcessFogTurnChange()
     {
-        for (int x = 0; x < gridWidth; x++)
+        for (int y = 0; y < gridHeight; y++)
         {
-            for (int y = 0; y < gridHeight; y++)
+            for (int x = 0; x < gridWidth; x++)
             {
-                if (gridInt[x, y] == FOG_BLOCK_ID)
+                // もやブロック（ID: 99）をチェック
+                if (gridInt[x, y] == GridPuzzleBase.FOG_BLOCK_ID)
                 {
                     fogLifeGrid[x, y]--;
 
-                    // --- 追加: テキストの更新処理 ---
-                    if (fogLifeGrid[x, y] > 0)
+                    if (fogLifeGrid[x, y] <= 0)
                     {
-                        // 【修正】ここが空だったため、UpdateFogText を呼び出します
-                        UpdateFogText(x, y, fogLifeGrid[x, y]);
+                        //ゲーム終了トリガー
+                        //controller.IsGameEndTrue();
+                        // --- カウントが0になった瞬間の処理 ---
+                        await TriggerFogExpiration(x, y);
+                        // もや状態を解除（必要に応じて）
+                        gridInt[x, y] = 1; // 通常ブロックのIDに戻すなど
+                        RemoveFogText(x, y);
+
+
                     }
                     else
                     {
-                        // 爆発！ テキストを削除
-                        RemoveFogText(x, y);
-
-                        gridInt[x, y] = 0;
-                        controller.IsGameEndTrue();
-                        Debug.Log("もやが爆発した！");
+                        UpdateFogText(x, y, fogLifeGrid[x, y]);
                     }
-                }
-                else
-                {
-                    // もやじゃなくなった場所（何らかの理由で消えた等）のテキストは消しておく
-                    RemoveFogText(x, y);
                 }
             }
         }
     }
 
+    // 実際に関数を呼び出す補助メソッド
+    async private UniTask TriggerFogExpiration(int x, int y)
+    {
+        bool isFog = false;
+        // 1. 動くブロック (gridVisuals) をチェック
+        if (gridVisuals[x, y] != null && gridVisuals[x, y].TryGetComponent<piece>(out var p1))
+        {
+            await p1.OnFogExpired();
+            isFog = true;
+        }
+
+        // 2. 背景グリッド (cellObjects) も使い回しているならチェック
+        if (cellObjects[x, y] != null && cellObjects[x, y].TryGetComponent<piece>(out var p2))
+        {
+            await p2.OnFogExpired();
+            isFog = true;
+        }
+
+        if (isFog) controller.GameOver();
+    }
+
     /// <summary>
-         /// 設計図の座標リストから、形状の中心（重心）を計算して返す
-         /// </summary>
+    /// 設計図の座標リストから、形状の中心（重心）を計算して返す
+    /// </summary>
     private Vector3 GetShapeCenter(BlockShape shape)
     {
         // 最小値と最大値を見つける
