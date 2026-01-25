@@ -1,9 +1,7 @@
 using Cysharp.Threading.Tasks;
-using System.Transactions;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static SceneTransitData;
 public class PuzzleController : MonoBehaviour
@@ -11,7 +9,7 @@ public class PuzzleController : MonoBehaviour
     //現在使用するゲームルール
     [SerializeField] private GameObject ruleObject; //パズルルール
 
-    [SerializeField] private TestRule puzzleRule;   
+    [SerializeField] private TestRule puzzleRule;
     [SerializeField] private BattleRule battleRule;   //バトルルール
 
     [SerializeField] private GameObject puzzleParent;
@@ -19,13 +17,13 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private GameObject tutorialObject;
 
     private IPuzzleRule currentRule;
-    [SerializeField]private float currentTimer;
+    [SerializeField] private float currentTimer;
     [SerializeField] private int maxDamageCap = 500;
     private int currentTotalDamage = 0;
     private bool isTimerActive;
     private bool isGameEnd = false;
     public GameState currentState;
-    
+
     [SerializeField] private BattleUIManager uiManager;
     [SerializeField] private UnitStatus targetEnemy;
     [SerializeField] private bool isGameClear = false;
@@ -51,10 +49,17 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] private ClearProduction clearProduction;
 
     [SerializeField] private ClearProduction overProduction;
-    
+
 
     [Header("chapter settings")]
     [SerializeField] private SetChapterImages chapterImages;
+
+    [Header("banner settings")]
+    [SerializeField] BannerController bannerController;
+    private bool isGameStarted = false; // ゲーム開始シーケンスが一度走ったかどうかのフラグ
+
+    [SerializeField] private string dbChap;
+
     //---ボタン参照---
 
     /// <summary>
@@ -64,7 +69,7 @@ public class PuzzleController : MonoBehaviour
     public void OnRotateButtonPressed(int index)
     {
         if (currentState != GameState.Playing) return;
-        
+
         currentRule.TryRotatePaletteBlock(index);
     }
 
@@ -75,41 +80,59 @@ public class PuzzleController : MonoBehaviour
         // 1. 準備状態にする（この間は操作不能にする）
         currentState = GameState.Paused;
 
-        // --- 【変更点】チュートリアル表示とクリック待ち処理 ---
-        if (tutorialObject != null)
+        await UniTask.Delay(1000);
+
+        if (bannerController != null)
         {
-            // チュートリアルを表示
-            tutorialObject.SetActive(true);
+            bannerController.OpenBanner();
 
-
-            // ユーザーがクリック（タップ）するまで待機
-            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0), cancellationToken: this.GetCancellationTokenOnDestroy());
-
-            // クリックされたらチュートリアルを非表示にする
-            tutorialObject.SetActive(false);
+            await UniTask.WaitUntil(() => bannerController.IsClosed, cancellationToken: this.GetCancellationTokenOnDestroy());
         }
-        // ---------------------------------------------------
 
-        // カウントダウンUIを表示
+        await UniTask.Delay(1000);
+
         if (countdownPanel != null) countdownPanel.SetActive(true);
-        // 盤面はまだ隠しておく（チュートリアル中に見えていた場合はここで隠される）
         if (mainParentObject != null) mainParentObject.SetActive(false);
 
-        int count = 1;
-        while (count > 0)
+        if (countdownText != null)
         {
-            if (countdownText != null) countdownText.text = "Ready?";
+            // 1. 初期化：テキストをReadyにし、サイズを0にしておく
+            countdownText.text = "よーい";
+            countdownText.transform.localScale = Vector3.zero;
+            countdownText.transform.localRotation = Quaternion.identity;
 
-            // 1秒待機 (キャンセル対応付き)
-            await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
+            // DOTweenのシーケンス作成
+            Sequence seq = DOTween.Sequence();
 
-            count--;
+            // 2. 「Ready?」が弾けるように登場 (Scale 0 -> 1.2 -> 1.0)
+            seq.Append(countdownText.transform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
+            seq.Append(countdownText.transform.DOScale(1.0f, 0.1f));
+
+            // 3. 少し待機（Readyを見せる時間）
+            seq.AppendInterval(0.6f);
+
+            // 4. 回転しながら縮小（切り替えの準備）
+            // Y軸で一回転しながら小さくする
+            seq.Append(countdownText.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InBack));
+            seq.Join(countdownText.transform.DOScale(0f, 0.4f).SetEase(Ease.InBack));
+
+            // 5. 文字を「GO!」に切り替える
+            seq.AppendCallback(() => {
+                countdownText.text = "スタート!";
+                countdownText.color = Color.yellow; // GO!だけ色を変えるのも効果的です
+            });
+
+            // 6. 「GO!」が爆発するように登場
+            // 少し大きめの1.5倍まで弾けさせてから戻す
+            seq.Append(countdownText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutElastic));
+            seq.Append(countdownText.transform.DOScale(1.0f, 0.1f));
+
+            // 7. 最後まで再生されるのを待つ
+            seq.Play();
+            await seq.AsyncWaitForCompletion().AsUniTask();
+            // GO!を表示したまま少し余韻を残す
+            await UniTask.Delay(500, cancellationToken: this.GetCancellationTokenOnDestroy());
         }
-
-        // "GO!" 表示
-        if (countdownText != null) countdownText.text = "GO!";
-        await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
-
         // 3. ゲーム開始
         if (countdownPanel != null) countdownPanel.SetActive(false); // パネルを消す
         if (mainParentObject != null) mainParentObject.SetActive(true); // ★指定のオブジェクトを表示
@@ -129,9 +152,10 @@ public class PuzzleController : MonoBehaviour
     public void OnControllerStart()
     {
 
-        string nowChap = data.payload.chap;
+        //string nowChap = data.payload.chap;
+        string nowChap = dbChap;
 
-        if (nowChap == "") nowChap = "CHAP1";
+        if (nowChap == "") nowChap = "CHAP2";
 
         chapterImages.SetImagesForChapter(nowChap);
 
@@ -150,7 +174,7 @@ public class PuzzleController : MonoBehaviour
     /// <summary>
     /// Updateで呼び出し
     /// </summary>
-     public void OnControllerUpdate()
+    public void OnControllerUpdate()
     {
 
 
@@ -203,12 +227,12 @@ public class PuzzleController : MonoBehaviour
         isGameEnd = false;
     }
 
-    
+
 
 
     //ゲーム開始
     private void StartGame()
-    {        
+    {
         //タイマーの設定
         float limit = currentRule.GetTimeLimit();
         OnTurnStart();
@@ -244,7 +268,7 @@ public class PuzzleController : MonoBehaviour
             timerSlider.value = limit;
         }
 
-        if(targetEnemy != null)
+        if (targetEnemy != null)
         {
             targetEnemy.OnUIStart();
         }
@@ -292,7 +316,7 @@ public class PuzzleController : MonoBehaviour
         await UniTask.Delay(3000);
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
 
-        
+
     }
 
 
@@ -339,7 +363,7 @@ public class PuzzleController : MonoBehaviour
     {
         currentTotalDamage += damage;
 
-        if(currentTotalDamage > maxDamageCap)
+        if (currentTotalDamage > maxDamageCap)
         {
             currentTotalDamage = maxDamageCap;
         }
