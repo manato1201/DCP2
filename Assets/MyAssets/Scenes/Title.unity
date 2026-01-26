@@ -643,6 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324388023}
   - component: {fileID: 1324388022}
+  - component: {fileID: 1324388024}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -701,6 +702,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1324388024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324388021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0507bc49e7b4f0c4d8cbffa9dd9bb647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 1540826566}
+--- !u!114 &1540826566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5561752317579159075, guid: 06f3fd4e323acd847891e375375c43c7, type: 3}
+  m_PrefabInstance: {fileID: 6937484754163200049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58251e3341b31b44a21d21eac5ee775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2131694454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -713,6 +738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 1540826566}
     - target: {fileID: 7558889176382720155, guid: 1765396fec36a3b4f87e5e3466e292f4, type: 3}
       propertyPath: catalog
       value: 
@@ -850,9 +879,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2848131965588099523, guid: 06f3fd4e323acd847891e375375c43c7, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8824724834702159336, guid: 06f3fd4e323acd847891e375375c43c7, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117125300820148198, guid: 06f3fd4e323acd847891e375375c43c7, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

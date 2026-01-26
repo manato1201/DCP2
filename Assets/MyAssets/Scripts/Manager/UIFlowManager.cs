@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Sound;
 
 // 必要: SceneTransitionManager / TransitionEffectController / SceneTransitData / SceneAddressCatalog(SO)
 public sealed class UIFlowManager : MonoBehaviour
@@ -29,6 +30,8 @@ public sealed class UIFlowManager : MonoBehaviour
     [SerializeField] private AssetReferenceGameObject prefabRef; // 任意のプレハブ参照
     [SerializeField] private AssetReference sceneRef;
     [SerializeField] private Transform spawnRoot;
+
+    [SerializeField] SoundManager sound;
 
     CancellationTokenSource _cts;
 
@@ -108,9 +111,11 @@ public sealed class UIFlowManager : MonoBehaviour
     async UniTaskVoid StoryAsync()
     {
         if (transitionManager == null ) return;
+        sound.PlaySE("SE_Transition");
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { chap = "CHAP1"};
         SceneTransitBus.Set("CHAP1", "from", isFade:false);
+
 
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), payload);
         UnloadAsset();
@@ -130,7 +135,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "stage",  isFade = false };
-
+        sound.PlaySE("SE_Transition");
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Puzzle), payload);
         UnloadAsset();
     }
