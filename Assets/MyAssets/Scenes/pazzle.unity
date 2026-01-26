@@ -614,7 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 933555676}
   fogCount: 1
-  fogLife: 1
+  fogLife: 6
   enemyAnimation: {fileID: 933555679}
   soundManager: {fileID: 1859437032}
 --- !u!4 &173260226
@@ -2068,7 +2068,7 @@ PrefabInstance:
       objectReference: {fileID: 2031748421042986347, guid: 554da6349f674fc439b03c33621ddf28, type: 3}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level1Multipliers
-      value: 10000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level2Multipliers
@@ -2117,11 +2117,11 @@ PrefabInstance:
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level1Shapes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: ecf6dca8bafa8244bb35d48aa86f2c48, type: 2}
+      objectReference: {fileID: 11400000, guid: 9f368892466168e4d9c7acfbe1db9cf6, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level2Shapes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 9f368892466168e4d9c7acfbe1db9cf6, type: 2}
+      objectReference: {fileID: 11400000, guid: 565be394eedb7c7459d9e0a495d0e1ab, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level2Shapes.Array.data[1]'
       value: 

@@ -110,6 +110,7 @@ public class PuzzleController : MonoBehaviour
             Sequence seq = DOTween.Sequence();
 
             // 2. 「よーい」が登場
+            soundManager.PlaySE("SE_Ready");
             seq.Append(countdownText.transform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
             seq.Append(countdownText.transform.DOScale(1.0f, 0.1f));
 
@@ -300,9 +301,12 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     async public void GameOver()
     {
+        await soundManager.PlayBGMAsync("BGM_Over");
         await overProduction.PlayFullAnimationAsync();
         soundManager.PlaySE("SE_Defeat");
+
         await UniTask.Delay(3000);
+
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), data.payload);
     }
 
@@ -315,6 +319,7 @@ public class PuzzleController : MonoBehaviour
         soundManager.PlaySE("SE_GageUp");
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);
+        await soundManager.PlayBGMAsync("BGM_Clear");
         await clearProduction.PlayFullAnimationAsync();
         soundManager.PlaySE("SE_Clear");
         await UniTask.Delay(3000);

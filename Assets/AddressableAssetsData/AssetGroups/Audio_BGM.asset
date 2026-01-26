@@ -15,8 +15,18 @@ MonoBehaviour:
   m_GroupName: Audio_BGM
   m_GUID: d0530de03e7e58545aa88e39f08ba8ab
   m_SerializeEntries:
+  - m_GUID: 1297d27eb501c524aa8e75116e282fae
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Over.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32cd9fffe5482bb4bbffa338fa02d9e4
     m_Address: Assets/MyAssets/Sound/BGM/BGM_Select.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8012a1a2910339b49bcfbc3262b017c6
+    m_Address: Assets/MyAssets/Sound/BGM/BGM_Clear.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
