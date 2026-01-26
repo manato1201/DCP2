@@ -22,6 +22,7 @@ public sealed class UIFlowManager : MonoBehaviour
     [SerializeField] private Button btnBook;
     [SerializeField] private Button btnGame;
     [SerializeField] private Button btnResult;
+    [SerializeField] private GameObject RayCastTransition;
 
 
 
@@ -41,6 +42,7 @@ public sealed class UIFlowManager : MonoBehaviour
     void Awake()
     {
         _cts = new();
+        RayCastTransition.SetActive(false);
     }
 
     void OnEnable()
@@ -95,7 +97,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "from", isFade = false };
-
+        RayCastTransition.SetActive(true);
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), payload);
         UnloadAsset();
     }
@@ -114,8 +116,8 @@ public sealed class UIFlowManager : MonoBehaviour
         sound.PlaySE("SE_Transition");
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { chap = "CHAP1"};
+        RayCastTransition.SetActive(true);
         SceneTransitBus.Set("CHAP1", "from", isFade:false);
-
 
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), payload);
         UnloadAsset();
@@ -135,6 +137,7 @@ public sealed class UIFlowManager : MonoBehaviour
         if (transitionManager == null ) return;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "stage",  isFade = false };
+        RayCastTransition.SetActive(true);
         sound.PlaySE("SE_Transition");
         await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Puzzle), payload);
         UnloadAsset();

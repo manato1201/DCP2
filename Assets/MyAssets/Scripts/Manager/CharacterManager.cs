@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Sound; // あなたの SoundManager の namespace
+using Sound;
 
 public sealed class CharacterManager : MonoBehaviour
 {
@@ -16,32 +16,30 @@ public sealed class CharacterManager : MonoBehaviour
     [Header("Catalog (Sprite直参照)")]
     [SerializeField] private ImageAddressCatalog imageCatalog;
 
-    [Header("Base Materials (乗算/通常)")]
+    [Header("Base Materials")]
     [SerializeField] private Material bgBaseMat;
     [SerializeField] private Material leftBaseMat;
     [SerializeField] private Material centerBaseMat;
     [SerializeField] private Material rightBaseMat;
 
-    [Header("Glow Overlay (全体用1枚だけ)")]
-    [SerializeField] private Image glowOverlay;     // 画面全面 Image（RaycastTarget OFF 推奨）
-    [SerializeField] private Material glowBaseMat;  // Shaderに _UseGlow(float), _Glow(color)
+    [Header("Glow Overlay (全体1枚)")]
+    [SerializeField] private Image glowOverlay;    // 画面全面に被せるImage（RaycastTarget OFF推奨）
+    [SerializeField] private Material glowBaseMat;
 
     [Header("Timings")]
-    [SerializeField, Min(0f)] private float defaultFade = 0.3f;
+    [SerializeField, Min(0f)] private float defaultFade = 0.3f;     // CSVのFadeが0の時に使わない。>0ならそちら優先
     [SerializeField, Min(0f)] private float glowAutoAdvanceDelay = 0.6f;
 
-    [Header("Audio")]
-    [SerializeField] private SoundManager sound;
-
-    // 実体化マテリアル（共有汚染防止）
+    [SerializeField] SoundManager sound;
+    // 共有汚染防止のインスタンス化マテリアル
     Material _bgMat, _lMat, _cMat, _rMat, _glowMat;
 
-    // プロパティID
+    // Shader Property IDs（あなたのシェーダに合わせる）
     static readonly int ID_MulColor  = Shader.PropertyToID("_MulColor");
-    static readonly int ID_UseGlow   = Shader.PropertyToID("_UseGlow");
+    static readonly int ID_UseGlow   = Shader.PropertyToID("_OverallAlpha");
     static readonly int ID_GlowColor = Shader.PropertyToID("_Glow");
 
-    // カラー
+    // カラー定義
     static readonly Color COL_WHITE = Color.white;
     static readonly Color COL_BLACK = Color.black;
     static readonly Color COL_GRAY  = FromHex("#6A6A6A");
@@ -51,10 +49,11 @@ public sealed class CharacterManager : MonoBehaviour
     // クロスフェード用キャンセル
     CancellationTokenSource _xfBG, _xfL, _xfC, _xfR;
 
-    // クロスフェード用オーバーレイ
+    // 画像クロスフェード用オーバーレイ Image
     readonly Dictionary<Image, Image> _overlayMap = new();
 
     public static event System.Action OnGlowAutoAdvance;
+    private string BGMCash;
 
     void Awake()
     {
@@ -65,10 +64,10 @@ public sealed class CharacterManager : MonoBehaviour
         _cMat  = InstantiateIf(centerBaseMat);
         _rMat  = InstantiateIf(rightBaseMat);
 
-        if (bg && _bgMat) bg.material = _bgMat;
-        if (left && _lMat) left.material = _lMat;
-        if (center && _cMat) center.material = _cMat;
-        if (right && _rMat) right.material = _rMat;
+        if (_bgMat && bg)     bg.material     = _bgMat;
+        if (_lMat  && left)   left.material   = _lMat;
+        if (_cMat  && center) center.material = _cMat;
+        if (_rMat  && right)  right.material  = _rMat;
 
         _glowMat = InstantiateIf(glowBaseMat);
         if (glowOverlay)
@@ -104,27 +103,29 @@ public sealed class CharacterManager : MonoBehaviour
             return;
         }
 
-        float dur = row.Fade > 0f ? row.Fade : defaultFade;
+        // フェード時間（CSVが0なら即時）
+        float dur = (row.Fade > 0f) ? row.Fade : 0f;
 
+        // ===== 画像（空IDは透明扱い。enabledは触らない） =====
         BeginCrossFade(bg,     row.BgId,     dur, ref _xfBG);
         BeginCrossFade(left,   row.LeftId,   dur, ref _xfL);
         BeginCrossFade(center, row.CenterId, dur, ref _xfC);
         BeginCrossFade(right,  row.RightId,  dur, ref _xfR);
 
+        // ===== 乗算色（Gray / Black） =====
         BeginMulFade(_bgMat, PickMulColor(row.GrayBG, row.BlackBG), dur, ref _fadeBG);
         BeginMulFade(_lMat,  PickMulColor(row.GrayL,  row.BlackL),  dur, ref _fadeL);
         BeginMulFade(_cMat,  PickMulColor(row.GrayC,  row.BlackC),  dur, ref _fadeC);
         BeginMulFade(_rMat,  PickMulColor(row.GrayR,  row.BlackR),  dur, ref _fadeR);
 
-        BeginGlow(row.Glow == 1, dur, ref _fadeGlow);
+        // ===== Glow（Fadeの有無に関係なく）=====
+        BeginGlow(row.Glow == 1, (row.Fade > 0f ? row.Fade : defaultFade), ref _fadeGlow);
+        sound.PlaySE(row.SEId);
+        if (BGMCash != row.BGMId)sound.PlayBGMAsync(row.BGMId, loop:true).Forget();
+        BGMCash = row.BGMId;
+        Debug.Log($"[Sound] BGM try '{row.BGMId}' fade={row.Fade}");
+        await UniTask.Yield(); // フレーム分割
 
-        if (sound)
-        {
-            if (!string.IsNullOrWhiteSpace(row.BGMId))
-                await sound.CrossFadeBGMAsync(row.BGMId, 0.7f, loop: true);
-            if (!string.IsNullOrWhiteSpace(row.SEId))
-                sound.PlaySE(row.SEId, 1f, 0f, 1f);
-        }
     }
 
     //================= 画像クロスフェード =================
@@ -132,17 +133,14 @@ public sealed class CharacterManager : MonoBehaviour
     {
         if (!baseImg) return;
 
+        // 目的スプライト解決（無いなら null＝透明）
         Sprite next = null;
         if (!string.IsNullOrWhiteSpace(idOrEmpty))
         {
             if (imageCatalog != null && imageCatalog.TryGetSprite(idOrEmpty, out var sp) && sp)
-            {
                 next = sp;
-            }
             else
-            {
                 Debug.LogWarning($"[CharacterManager] Sprite not found in catalog: '{idOrEmpty}'");
-            }
         }
 
         slot?.Cancel();
@@ -153,21 +151,32 @@ public sealed class CharacterManager : MonoBehaviour
 
     async UniTask CrossFadeAsync(Image baseImg, Sprite nextOrNull, float duration, CancellationToken ct)
     {
-        var overlay = GetOrCreateOverlay(baseImg);
-
         var bCol = baseImg.color;
         float bAlpha0 = bCol.a;
 
-        // 透明へフェード
+        // 即時切替（Fade==0）
+        if (duration <= 0f)
+        {
+            if (nextOrNull == null)
+            {
+                baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, 0f); // 透明に
+                // spriteはそのままでも良いが、明示的に消したいなら下の1行を有効化
+                // baseImg.sprite = null;
+            }
+            else
+            {
+                baseImg.sprite = nextOrNull;
+                baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, 1f);
+            }
+            return;
+        }
+
+        // フェードあり
+        var overlay = GetOrCreateOverlay(baseImg);
+
         if (nextOrNull == null)
         {
-            overlay.enabled = false;
-            if (duration <= 0f)
-            {
-                baseImg.color = new Color(bCol.r, bCol.g, bCol.b, 0f);
-                return;
-            }
-
+            // 透明へクロスフェード（オーバーレイ不要）
             float t = 0f;
             while (t < duration)
             {
@@ -182,9 +191,10 @@ public sealed class CharacterManager : MonoBehaviour
         }
 
         // 画像あり：オーバーレイでクロスフェード
-        overlay.sprite = nextOrNull;
         overlay.enabled = true;
+        overlay.sprite  = nextOrNull;
 
+        // マテリアルの乗算/Glow状態をコピー
         if (baseImg.material)
         {
             if (!overlay.material) overlay.material = new Material(baseImg.material);
@@ -192,31 +202,22 @@ public sealed class CharacterManager : MonoBehaviour
         }
 
         var oCol = overlay.color;
-        const float o0 = 0f, o1 = 1f;
-
-        if (duration <= 0f)
-        {
-            overlay.color = new Color(oCol.r, oCol.g, oCol.b, 1f);
-            baseImg.sprite = nextOrNull;
-            baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, bAlpha0);
-            overlay.enabled = false;
-            return;
-        }
-
         float t2 = 0f;
         while (t2 < duration)
         {
             if (ct.IsCancellationRequested) return;
             t2 += Time.unscaledDeltaTime;
             float u = Mathf.Clamp01(t2 / duration);
-            overlay.color = new Color(oCol.r, oCol.g, oCol.b, Mathf.Lerp(o0, o1, u));
+            overlay.color = new Color(oCol.r, oCol.g, oCol.b, u);
             baseImg.color = new Color(bCol.r, bCol.g, bCol.b, Mathf.Lerp(bAlpha0, 0f, u));
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
 
+        // 完了：本体に確定、オーバーレイを消す
         baseImg.sprite = nextOrNull;
-        baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, bAlpha0);
+        baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, 1f);
         overlay.enabled = false;
+        overlay.color    = new Color(oCol.r, oCol.g, oCol.b, 0f);
     }
 
     Image GetOrCreateOverlay(Image baseImg)
@@ -241,7 +242,7 @@ public sealed class CharacterManager : MonoBehaviour
         return img;
     }
 
-    //================= 乗算色フェード =================
+    //================= 乗算色（Gray/Black） =================
     static Color PickMulColor(int grayFlag, int blackFlag)
         => (blackFlag == 1) ? COL_BLACK : (grayFlag == 1 ? COL_GRAY : COL_WHITE);
 
@@ -283,7 +284,6 @@ public sealed class CharacterManager : MonoBehaviour
         slot?.Cancel();
         slot = new CancellationTokenSource();
         var ct = slot.Token;
-
         _ = FadeGlowAsync(toOn, duration, ct);
     }
 
@@ -293,11 +293,11 @@ public sealed class CharacterManager : MonoBehaviour
 
         if (_glowMat)
         {
-            if (_glowMat.HasProperty(ID_GlowColor)) _glowMat.SetColor(ID_GlowColor, Color.white);
+            if (_glowMat.HasProperty(ID_GlowColor)) _glowMat.SetColor(ID_GlowColor, Color.white); // 全体白で加算
             if (_glowMat.HasProperty(ID_UseGlow))   _glowMat.SetFloat(ID_UseGlow, 1f);
         }
 
-        var c = glowOverlay.color;
+        var c  = glowOverlay.color;
         float a0 = c.a;
         float a1 = toOn ? 1f : 0f;
 
@@ -328,6 +328,7 @@ public sealed class CharacterManager : MonoBehaviour
         }
         else
         {
+            // Glow行（例：5, 33）はここで一定時間待って自動進行
             await UniTask.Delay((int)(glowAutoAdvanceDelay * 1000f), DelayType.UnscaledDeltaTime, PlayerLoopTiming.Update, ct);
             if (!ct.IsCancellationRequested) OnGlowAutoAdvance?.Invoke();
         }
