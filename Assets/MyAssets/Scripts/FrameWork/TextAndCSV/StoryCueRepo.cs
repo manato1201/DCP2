@@ -4,81 +4,82 @@ using UnityEngine;
 
 public static class StoryCueRepo
 {
-    // Resources/StoryCue.csv （※拡張子不要）
-    public const string ResourcesKeyWithoutExt = "StoryCue";
+    const string AddressKey = "Assets/MyAssets/Resources/StoryCue.csv";
 
-    static Dictionary<string, Row> _map; // key = CommentNo
+    static Dictionary<string, Row> _map;
 
     public struct Row
     {
         public string CommentNo;
-        public string BgId, LeftId, CenterId, RightId;
-        public int GrayBG, GrayL, GrayC, GrayR;
-        public int BlackBG, BlackL, BlackC, BlackR;
-        public int Glow;        // 0/1
-        public float Fade;      // 秒（>=0）
+        public string BgId, LeftId, CenterId, RightId; // 画像ID（空=透明へ）
+        public int GrayBG, GrayL, GrayC, GrayR;        // 0/1
+        public int BlackBG, BlackL, BlackC, BlackR;    // 0/1
+        public int Glow;                                // 0/1（全体）
+        public float Fade;                              // 秒（0/空=default）
+        public string BGMId;                            // 空=再生指示なし
+        public string SEId;                             // 空=再生指示なし
     }
-
-    public static bool IsReady => _map != null;
 
     public static bool TryGet(string commentNo, out Row row)
     {
-        if (_map != null && _map.TryGetValue(commentNo, out row)) return true;
-        row = default;
-        return false;
+        row = default; // ★ 先に代入しておく
+        return _map != null && _map.TryGetValue(commentNo, out row);
     }
 
     public static void EnsureLoaded()
     {
         if (_map != null) return;
 
-        var ta = Resources.Load<TextAsset>(ResourcesKeyWithoutExt);
+        var ta = UnityEngine.AddressableAssets.Addressables
+                    .LoadAssetAsync<TextAsset>(AddressKey)
+                    .WaitForCompletion();
         if (!ta)
         {
-            Debug.LogError($"[StoryCueRepo] Resources.Load 失敗: {ResourcesKeyWithoutExt}.csv が見つかりません。");
-            _map = new Dictionary<string, Row>(1);
+            Debug.LogError($"[StoryCueRepo] CSV not found: {AddressKey}");
+            _map = new Dictionary<string, Row>();
             return;
         }
 
-        _map = new Dictionary<string, Row>(128);
+        _map = new Dictionary<string, Row>(256);
 
-        // 期待ヘッダ：
-        // CommentNo,BgId,LeftId,CenterId,RightId,
-        // GrayBG,GrayL,GrayC,GrayR,BlackBG,BlackL,BlackC,BlackR,Glow,Fade
+        // 想定ヘッダ：
+        // CommentNo,BgId,LeftId,CenterId,RightId,GrayBG,GrayL,GrayC,GrayR,BlackBG,BlackL,BlackC,BlackR,Glow,Fade,BGMId,SEId
         var lines = ta.text.Split('\n');
         for (int i = 1; i < lines.Length; i++)
         {
-            var raw = lines[i];
-            if (string.IsNullOrWhiteSpace(raw)) continue;
-            var line = raw.TrimEnd('\r');
-
+            var line = lines[i].TrimEnd('\r');
+            if (string.IsNullOrWhiteSpace(line)) continue;
             var cols = line.Split(',');
-            // 足りない列は補完
-            string Get(int idx) => idx < cols.Length ? cols[idx].Trim() : string.Empty;
+            if (cols.Length < 15) continue;
 
             var r = new Row
             {
-                CommentNo = Get(0),
-                BgId      = Get(1),
-                LeftId    = Get(2),
-                CenterId  = Get(3),
-                RightId   = Get(4),
-                GrayBG    = Parse01(Get(5)),  GrayL  = Parse01(Get(6)),
-                GrayC     = Parse01(Get(7)),  GrayR  = Parse01(Get(8)),
-                BlackBG   = Parse01(Get(9)),  BlackL = Parse01(Get(10)),
-                BlackC    = Parse01(Get(11)), BlackR = Parse01(Get(12)),
-                Glow      = Parse01(Get(13)),
-                Fade      = ParseF(Get(14))
-            };
+                CommentNo = cols[0].Trim(),
+                BgId      = cols[1].Trim(),
+                LeftId    = cols[2].Trim(),
+                CenterId  = cols[3].Trim(),
+                RightId   = cols[4].Trim(),
+                GrayBG    = Parse01(cols[5]),
+                GrayL     = Parse01(cols[6]),
+                GrayC     = Parse01(cols[7]),
+                GrayR     = Parse01(cols[8]),
+                BlackBG   = Parse01(cols[9]),
+                BlackL    = Parse01(cols[10]),
+                BlackC    = Parse01(cols[11]),
+                BlackR    = Parse01(cols[12]),
+                BGMId     = cols.Length > 13 ? cols[13].Trim() : string.Empty,
+                SEId      = cols.Length > 14 ? cols[14].Trim() : string.Empty,
+                Glow      = Parse01(cols[15]),
+                Fade      = ParseF(cols[16]),
 
-            if (string.IsNullOrEmpty(r.CommentNo)) continue;
+            };
             if (!_map.ContainsKey(r.CommentNo)) _map.Add(r.CommentNo, r);
         }
 
         static int Parse01(string s)
-            => int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out var v) && v != 0 ? 1 : 0;
+            => int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out var v) ? (v != 0 ? 1 : 0) : 0;
 
         static float ParseF(string s)
-            => float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var f) ? Mathf.Max(0f, f) : 0f;
+            => float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ? Mathf.Max(0f, v) : 0f;
     }
 }
