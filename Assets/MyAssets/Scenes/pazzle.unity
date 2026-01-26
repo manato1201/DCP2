@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9117125300820148198, guid: 06f3fd4e323acd847891e375375c43c7, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: b71a5f0c610927a4d9d0f38503390b18, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -612,6 +616,7 @@ MonoBehaviour:
   fogCount: 1
   fogLife: 1
   enemyAnimation: {fileID: 933555679}
+  soundManager: {fileID: 1859437032}
 --- !u!4 &173260226
 Transform:
   m_ObjectHideFlags: 0

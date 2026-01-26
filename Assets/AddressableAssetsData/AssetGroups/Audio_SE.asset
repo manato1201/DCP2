@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Audio_SE
   m_GUID: d10eae8dd4ecf4546b4ed74a4d04da03
   m_SerializeEntries:
+  - m_GUID: 02993359bae41ae48a3e21e1a25ae977
+    m_Address: Assets/MyAssets/Sound/SE/SE_Jump.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 144e02f0ebfa6da4b94f0388e39b41df
     m_Address: Assets/MyAssets/Sound/SE/SE_Damage.wav
     m_ReadOnly: 0
@@ -77,6 +82,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a244671f2c77e474ebd4233c42c6817c
     m_Address: Assets/MyAssets/Sound/SE/SE_Align.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a33c2e722ba65c2489a46d4221685f9f
+    m_Address: Assets/MyAssets/Sound/SE/SE_FogSet.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -1075,6 +1075,7 @@ public class TestRule : GridPuzzleBase
                     // まだ色は変えず、寿命だけセットしておく
                     fogLifeGrid[rx, ry] = lifeTurn;
 
+
                     // 1個分の「飛んでいく処理」を開始し、タスクリストに追加
                     flightTasks.Add(FlyAndSpawnFog(rx, ry, startWorldPos, lifeTurn));
                     break;
@@ -1113,6 +1114,7 @@ public class TestRule : GridPuzzleBase
         // --- 3. 色の変更 (修正済み) ---
         // x,y を Vector2Int にまとめて渡します
         SetGridCellColor(new Vector2Int(x, y), new Color(0.5f, 0f, 0.5f));
+        soundManager.PlaySE("SE_FogSet");
 
         // --- 4. 文字表示 ---
         UpdateFogText(x, y, lifeTurn);
