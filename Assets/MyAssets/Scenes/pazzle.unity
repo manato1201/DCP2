@@ -614,7 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 933555676}
   fogCount: 1
-  fogLife: 1
+  fogLife: 6
   enemyAnimation: {fileID: 933555679}
   soundManager: {fileID: 1859437032}
 --- !u!4 &173260226
@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1721,7 +1721,7 @@ MonoBehaviour:
   battleParent: {fileID: 1515863058}
   tutorialObject: {fileID: 1419998998}
   currentTimer: 0
-  maxDamageCap: 50
+  maxDamageCap: 1000
   currentState: 0
   uiManager: {fileID: 1368052920}
   targetEnemy: {fileID: 933555676}
@@ -2068,7 +2068,7 @@ PrefabInstance:
       objectReference: {fileID: 2031748421042986347, guid: 554da6349f674fc439b03c33621ddf28, type: 3}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level1Multipliers
-      value: 10000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: level2Multipliers
@@ -2117,11 +2117,11 @@ PrefabInstance:
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level1Shapes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: ecf6dca8bafa8244bb35d48aa86f2c48, type: 2}
+      objectReference: {fileID: 11400000, guid: 9f368892466168e4d9c7acfbe1db9cf6, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level2Shapes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 9f368892466168e4d9c7acfbe1db9cf6, type: 2}
+      objectReference: {fileID: 11400000, guid: 565be394eedb7c7459d9e0a495d0e1ab, type: 2}
     - target: {fileID: 3961897296304060669, guid: 94d8b3efbad9aa64793677024a433113, type: 3}
       propertyPath: 'level2Shapes.Array.data[1]'
       value: 
@@ -2238,7 +2238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2640,10 +2640,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyImages:
   - {fileID: -2173855995369307330, guid: d47746b83bdc43342ad84466b647a455, type: 3}
-  - {fileID: 7442930404095328458, guid: d9670c5d352a999408e98004d4d9a3b9, type: 3}
+  - {fileID: -8321760621169183638, guid: c981b485f52229b43ab2882de4927e17, type: 3}
   GB:
   - {fileID: 5080387211609627155, guid: 059a1a848dcb2934a97cd845108e32a5, type: 3}
-  - {fileID: 5671039627864917906, guid: cb98c9c8292fdda41b1451b841a63f06, type: 3}
+  - {fileID: 4751973072151165927, guid: ef77fa7452b8e2442b2b7016e9554594, type: 3}
   objectGB: {fileID: 2076987506}
   objectEnemy: {fileID: 933555675}
 --- !u!4 &915458626
@@ -6163,7 +6163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.12755239, g: 1, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6424,7 +6424,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: e82b88303f5c9b64999e48029dfc1295, type: 3}
+  m_Sprite: {fileID: 6235067857853420115, guid: 9935a8e219f05fa4f936232e88744727, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 422dd9d3f7916ed489e05fd348771b6a
+    m_Address: Assets/MyAssets/Sound/SE/SE_Ready.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4683d1fa9542bd447b1f9855a6cf5381
     m_Address: Assets/MyAssets/Sound/SE/SE_Damage.mp3
     m_ReadOnly: 0
