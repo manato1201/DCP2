@@ -1,11 +1,14 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static SceneTransitData;
 public class PuzzleController : MonoBehaviour
 {
+    [SerializeField] ChapterLeader chapt;
+
     //現在使用するゲームルール
     [SerializeField] private GameObject ruleObject; //パズルルール
 
@@ -60,6 +63,7 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] private string dbChap;
 
+    [SerializeField] SoundManager soundManager;
     //---ボタン参照---
 
     /// <summary>
@@ -77,6 +81,8 @@ public class PuzzleController : MonoBehaviour
 
     private async UniTaskVoid StartGameSequence()
     {
+        //soundManager.PlayBGMAsync("BGM_Puzzie", loop: true).Forget();
+
         // 1. 準備状態にする（この間は操作不能にする）
         currentState = GameState.Paused;
 
@@ -96,41 +102,44 @@ public class PuzzleController : MonoBehaviour
 
         if (countdownText != null)
         {
-            // 1. 初期化：テキストをReadyにし、サイズを0にしておく
+            // 1. 初期化
             countdownText.text = "よーい";
             countdownText.transform.localScale = Vector3.zero;
             countdownText.transform.localRotation = Quaternion.identity;
 
-            // DOTweenのシーケンス作成
             Sequence seq = DOTween.Sequence();
 
-            // 2. 「Ready?」が弾けるように登場 (Scale 0 -> 1.2 -> 1.0)
+            // 2. 「よーい」が登場
+            soundManager.PlaySE("SE_Ready");
             seq.Append(countdownText.transform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
             seq.Append(countdownText.transform.DOScale(1.0f, 0.1f));
 
-            // 3. 少し待機（Readyを見せる時間）
+            // 3. 少し待機
             seq.AppendInterval(0.6f);
 
-            // 4. 回転しながら縮小（切り替えの準備）
-            // Y軸で一回転しながら小さくする
+            // 4. 回転しながら縮小
             seq.Append(countdownText.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InBack));
             seq.Join(countdownText.transform.DOScale(0f, 0.4f).SetEase(Ease.InBack));
 
-            // 5. 文字を「GO!」に切り替える
+            // --- ここで音を鳴らす！ ---
+            // 5. 文字を切り替えるタイミングでSEを再生
             seq.AppendCallback(() => {
                 countdownText.text = "スタート!";
-                countdownText.color = Color.yellow; // GO!だけ色を変えるのも効果的です
+                countdownText.color = Color.yellow;
+
+                // 回転が終わって「スタート!」が出る瞬間に音を鳴らす
+                soundManager.PlaySE("SE_Start");
             });
 
-            // 6. 「GO!」が爆発するように登場
-            // 少し大きめの1.5倍まで弾けさせてから戻す
+            // 6. 「スタート!」が登場
             seq.Append(countdownText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutElastic));
             seq.Append(countdownText.transform.DOScale(1.0f, 0.1f));
 
-            // 7. 最後まで再生されるのを待つ
+            // 全ての演出が終わるのを待機
             seq.Play();
             await seq.AsyncWaitForCompletion().AsUniTask();
-            // GO!を表示したまま少し余韻を残す
+
+            // 余韻
             await UniTask.Delay(500, cancellationToken: this.GetCancellationTokenOnDestroy());
         }
         // 3. ゲーム開始
@@ -151,13 +160,9 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     public void OnControllerStart()
     {
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
 
-        //string nowChap = data.payload.chap;
-        string nowChap = dbChap;
-
-        if (nowChap == "") nowChap = "CHAP2";
-
-        chapterImages.SetImagesForChapter(nowChap);
+        chapterImages.SetImagesForChapter(chapFromBus);
 
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
@@ -166,9 +171,8 @@ public class PuzzleController : MonoBehaviour
             Debug.LogError("ruleObjectにIPuzzleRuleが実装されていません！ :PuzzleController");
             return;
         }
-
+        soundManager.PlayBGMAsync("BGM_Puzzie",loop:true);
         ResetDamage();
-
         StartGameSequence().Forget();
     }
     /// <summary>
@@ -297,25 +301,43 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     async public void GameOver()
     {
+        await soundManager.PlayBGMAsync("BGM_Over");
         await overProduction.PlayFullAnimationAsync();
+        soundManager.PlaySE("SE_Defeat");
+
         await UniTask.Delay(3000);
+
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), data.payload);
     }
 
     async public void GameClear()
     {
+
         isGameClear = true;
 
-        data.payload.chap = "CHAP2";    //チャプターを移行
-
-
+        await UniTask.Delay(1);
+        soundManager.PlaySE("SE_GageUp");
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);
+        await soundManager.PlayBGMAsync("BGM_Clear");
         await clearProduction.PlayFullAnimationAsync();
-
+        soundManager.PlaySE("SE_Clear");
         await UniTask.Delay(3000);
-        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
 
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
+
+        Debug.Log(chapFromBus);
+        switch (chapFromBus)
+        {
+            case "CHAP1":
+                SceneTransitBus.Set("CHAP2");
+                await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story),data.payload);
+                break;
+            case "CHAP2":
+                SceneTransitBus.Set("CHAP3");
+                await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
+                break;
+        }
 
     }
 
