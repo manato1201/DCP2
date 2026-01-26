@@ -1721,7 +1721,7 @@ MonoBehaviour:
   battleParent: {fileID: 1515863058}
   tutorialObject: {fileID: 1419998998}
   currentTimer: 0
-  maxDamageCap: 50
+  maxDamageCap: 1000
   currentState: 0
   uiManager: {fileID: 1368052920}
   targetEnemy: {fileID: 933555676}
