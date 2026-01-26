@@ -1210,6 +1210,7 @@ public class TestRule : GridPuzzleBase
         // 1. 動くブロック (gridVisuals) をチェック
         if (gridVisuals[x, y] != null && gridVisuals[x, y].TryGetComponent<piece>(out var p1))
         {
+            soundManager.PlaySE("SE_FogBurst");
             await p1.OnFogExpired();
             isFog = true;
         }
@@ -1217,6 +1218,7 @@ public class TestRule : GridPuzzleBase
         // 2. 背景グリッド (cellObjects) も使い回しているならチェック
         if (cellObjects[x, y] != null && cellObjects[x, y].TryGetComponent<piece>(out var p2))
         {
+            soundManager.PlaySE("SE_FogBurst");
             await p2.OnFogExpired();
             isFog = true;
         }

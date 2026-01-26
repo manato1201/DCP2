@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2afd4640fa4236341afb2dc86bffa1e8
+    m_Address: Assets/MyAssets/Sound/SE/SE_FogBurst.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 331339dc55cd3524397ad2258f19b4cd
     m_Address: Assets/MyAssets/Sound/SE/SE_Clear.mp3
     m_ReadOnly: 0
