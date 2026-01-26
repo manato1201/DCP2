@@ -300,12 +300,14 @@ public class PuzzleController : MonoBehaviour
     async public void GameOver()
     {
         await overProduction.PlayFullAnimationAsync();
+        soundManager.PlaySE("SE_Defeat");
         await UniTask.Delay(3000);
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), data.payload);
     }
 
     async public void GameClear()
     {
+
         isGameClear = true;
 
 
@@ -318,11 +320,12 @@ public class PuzzleController : MonoBehaviour
                 data.payload.chap = "CHAP3";
                 break;
         }
-
-        
+        await UniTask.Delay(1);
+        soundManager.PlaySE("SE_GageUp");
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);
         await clearProduction.PlayFullAnimationAsync();
+        soundManager.PlaySE("SE_Clear");
         Debug.Log(data.payload.chap);
         await UniTask.Delay(3000);
         await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story),data.payload);

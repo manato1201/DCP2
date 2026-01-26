@@ -610,7 +610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 933555676}
   fogCount: 1
-  fogLife: 6
+  fogLife: 1
   enemyAnimation: {fileID: 933555679}
 --- !u!4 &173260226
 Transform:
