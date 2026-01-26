@@ -159,8 +159,9 @@ public class PuzzleController : MonoBehaviour
     /// </summary>
     public void OnControllerStart()
     {
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
 
-        chapterImages.SetImagesForChapter(data.payload.chap);
+        chapterImages.SetImagesForChapter(chapFromBus);
 
         currentRule = ruleObject.GetComponent<IPuzzleRule>();
 
@@ -169,7 +170,7 @@ public class PuzzleController : MonoBehaviour
             Debug.LogError("ruleObjectにIPuzzleRuleが実装されていません！ :PuzzleController");
             return;
         }
-
+        soundManager.PlayBGMAsync("BGM_Puzzie",loop:true);
         ResetDamage();
         StartGameSequence().Forget();
     }
@@ -310,26 +311,28 @@ public class PuzzleController : MonoBehaviour
 
         isGameClear = true;
 
-
-        switch (chapt.NowChapter)
-        {
-            case "CHAP1":
-                data.payload.chap = "CHAP2";
-                break;
-            case "CHAP2":
-                data.payload.chap = "CHAP3";
-                break;
-        }
         await UniTask.Delay(1);
         soundManager.PlaySE("SE_GageUp");
         await enemyDeath.PlayDeathEffectAsync();
         await UniTask.Delay(3000);
         await clearProduction.PlayFullAnimationAsync();
         soundManager.PlaySE("SE_Clear");
-        Debug.Log(data.payload.chap);
         await UniTask.Delay(3000);
-        await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story),data.payload);
 
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
+
+        Debug.Log(chapFromBus);
+        switch (chapFromBus)
+        {
+            case "CHAP1":
+                SceneTransitBus.Set("CHAP2");
+                await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story),data.payload);
+                break;
+            case "CHAP2":
+                SceneTransitBus.Set("CHAP3");
+                await sceneTransitionManager.LoadSceneAsync(catalog.Get(SceneId.Story), data.payload);
+                break;
+        }
 
     }
 
