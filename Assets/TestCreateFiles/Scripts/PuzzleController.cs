@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,6 +63,7 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] private string dbChap;
 
+    [SerializeField] SoundManager soundManager;
     //---ボタン参照---
 
     /// <summary>
@@ -79,6 +81,8 @@ public class PuzzleController : MonoBehaviour
 
     private async UniTaskVoid StartGameSequence()
     {
+        //soundManager.PlayBGMAsync("BGM_Puzzie", loop: true).Forget();
+
         // 1. 準備状態にする（この間は操作不能にする）
         currentState = GameState.Paused;
 

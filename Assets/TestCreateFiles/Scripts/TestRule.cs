@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Sound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,9 @@ public class TestRule : GridPuzzleBase
     [SerializeField] private bool isBlockChainedThisTurn = false;    //そのターンでブロックがつながったか
     [Header("Text Effect")]
     [SerializeField] private GameObject popupTextPrefab;
+
+    [SerializeField] SoundManager soundManager;
+
     #region インターフェース
     public override void Initialize(PuzzleController controller)
     {
@@ -322,7 +326,7 @@ public class TestRule : GridPuzzleBase
     public override void OnBlockLanded()
     {
         Debug.Log("ブロックが配置されました");
-
+        soundManager.PlaySE("SE_piece");
         //ブロック配置時、消去チェックやゲームオーバー処理を行う
         if (CheckForClear())
         {
@@ -561,6 +565,7 @@ public class TestRule : GridPuzzleBase
                     if (finishedCount >= totalEffects)
                     {
                         OnEffectHitEnemy(damage); // 全弾命中時に渡す
+                        soundManager.PlaySE("SE_Attack2");
                     }
                 });
             }
@@ -1252,11 +1257,11 @@ public class TestRule : GridPuzzleBase
     private async UniTaskVoid ProcessClearSequence(List<PopupRequest> requests, Transform attackTarget, int damage)
     {
         float interval = 0.7f;
-
         foreach (var req in requests)
         {
             if (popupTextPrefab != null)
             {
+                soundManager.PlaySE("SE_GageUp");
                 GameObject textObj = Instantiate(popupTextPrefab, req.Position, Quaternion.identity);
                 var moveText = textObj.GetComponent<MoveTextDisplay>();
                 if (moveText != null)
