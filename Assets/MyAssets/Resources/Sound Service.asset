@@ -55,6 +55,6 @@ MonoBehaviour:
   - key: SE_TextClick
     clip: {fileID: 8300000, guid: 89beba0f034959147aad8a40500a499f, type: 3}
     type: 1
-  - key: SE_TextClick
-    clip: {fileID: 8300000, guid: 89beba0f034959147aad8a40500a499f, type: 3}
+  - key: SE_Transition
+    clip: {fileID: 8300000, guid: 47d9a460964511a4a96195ce55e771c6, type: 3}
     type: 1

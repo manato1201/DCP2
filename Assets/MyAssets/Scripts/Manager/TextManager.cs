@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using Sound;
 
 public sealed class TextManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public sealed class TextManager : MonoBehaviour
     [SerializeField] private string defaultChap = "CHAP1";
     [SerializeField, Min(0f)] private float firstLineDelay = 0.3f; // 秒
     [SerializeField] private bool delayOnlyFirst = true;
+    [SerializeField] SoundManager sound;
 
     // 内部
     readonly List<StoryLine> _lines = new(); // StoryCsv 側で Char/Comment/RubyComment を持つ構造体にしておく
@@ -123,7 +125,7 @@ public sealed class TextManager : MonoBehaviour
             _isTyping = false;
             return;
         }
-
+        sound.PlaySE("SE_TextClick");
         NextAsync().Forget();
     }
 
