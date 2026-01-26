@@ -47,19 +47,24 @@ public sealed class TextManager : MonoBehaviour
         CharacterManager.OnGlowAutoAdvance += HandleGlowAutoAdvance;
 
         // 起動時に一度だけ決定してキャッシュ
-        var chapFromSO = transit ? transit.payload.chap : null; // SceneTransitData はこの構造（chap等のフィールド）を持つSO :contentReference[oaicite:0]{index=0}
-        _startChap = !string.IsNullOrEmpty(chapFromSO) ? chapFromSO : defaultChap;
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
+        var chapFromSO  = transit ? transit.payload.chap : null;   // ScriptableObject 側
+
+        _startChap = !string.IsNullOrEmpty(chapFromBus) ? chapFromBus
+            : !string.IsNullOrEmpty(chapFromSO)  ? chapFromSO
+            : !string.IsNullOrEmpty(defaultChap) ? defaultChap
+            : "CHAP1";
+
 
 #if UNITY_EDITOR
-        // 何を参照しているか可視化（別インスタンス事故の特定用）
-        var from = string.IsNullOrEmpty(chapFromSO) ? "default" : "transit";
+        var from = !string.IsNullOrEmpty(chapFromBus) ? "bus"
+            : !string.IsNullOrEmpty(chapFromSO)  ? "transit"
+            : "default";
         Debug.Log($"[TextManager] startChap='{_startChap}' (source={from}) transitObj={(transit ? transit.name : "null")}");
-#if UNITY_EDITOR
         try {
             var path = UnityEditor.AssetDatabase.GetAssetPath(transit);
             Debug.Log($"[TextManager] transit asset path: {path}");
         } catch {}
-#endif
 #endif
 
         if (transitionButton) transitionButton.gameObject.SetActive(false);
@@ -105,21 +110,7 @@ public sealed class TextManager : MonoBehaviour
         PrefetchNextChapters(_currentChap);
     }
 
-    string ResolveStartChap()
-    {
-        // 1) transit優先
-        if (transit != null && !string.IsNullOrEmpty(transit.payload.chap))
-            return transit.payload.chap;
 
-        // 2) defaultChap
-        if (!string.IsNullOrEmpty(defaultChap))
-            return defaultChap;
-
-        // 3) 最終フォールバック（事故防止）
-        const string fallback = "CHAP1";
-        Debug.LogWarning("[TextManager] Both transit.chap and defaultChap are empty. Fallback to 'CHAP1'.");
-        return fallback;
-    }
 
     private void OnClickBox()
     {

@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Sound; // あなたの SoundManager の namespace
 
 public sealed class CharacterManager : MonoBehaviour
 {
@@ -22,12 +23,15 @@ public sealed class CharacterManager : MonoBehaviour
     [SerializeField] private Material rightBaseMat;
 
     [Header("Glow Overlay (全体用1枚だけ)")]
-    [SerializeField] private Image glowOverlay;     // 画面全面Image（RaycastTarget OFF推奨）
-    [SerializeField] private Material glowBaseMat;  // Glow専用（_Glow:Color, _UseGlow:float を持つ）
+    [SerializeField] private Image glowOverlay;     // 画面全面 Image（RaycastTarget OFF 推奨）
+    [SerializeField] private Material glowBaseMat;  // Shaderに _UseGlow(float), _Glow(color)
 
     [Header("Timings")]
-    [SerializeField, Min(0f)] private float defaultFade = 0.3f;          // CSV Fadeが0/空ならこれ
-    [SerializeField, Min(0f)] private float glowAutoAdvanceDelay = 0.6f;  // Glow点灯中に自動前進させるまでの待機
+    [SerializeField, Min(0f)] private float defaultFade = 0.3f;
+    [SerializeField, Min(0f)] private float glowAutoAdvanceDelay = 0.6f;
+
+    [Header("Audio")]
+    [SerializeField] private SoundManager sound;
 
     // 実体化マテリアル（共有汚染防止）
     Material _bgMat, _lMat, _cMat, _rMat, _glowMat;
@@ -37,22 +41,25 @@ public sealed class CharacterManager : MonoBehaviour
     static readonly int ID_UseGlow   = Shader.PropertyToID("_UseGlow");
     static readonly int ID_GlowColor = Shader.PropertyToID("_Glow");
 
-    // フェード用キャンセル（色フェード）
+    // カラー
+    static readonly Color COL_WHITE = Color.white;
+    static readonly Color COL_BLACK = Color.black;
+    static readonly Color COL_GRAY  = FromHex("#6A6A6A");
+
+    // フェード用キャンセル
     CancellationTokenSource _fadeBG, _fadeL, _fadeC, _fadeR, _fadeGlow;
-    // クロスフェード用キャンセル（画像切替）
+    // クロスフェード用キャンセル
     CancellationTokenSource _xfBG, _xfL, _xfC, _xfR;
 
-    // オーバーレイImageを使ったクロスフェード用一時コンテナ
+    // クロスフェード用オーバーレイ
     readonly Dictionary<Image, Image> _overlayMap = new();
 
-    // 外部へ：Glow中に自動で次へ進めたい時に発火
     public static event System.Action OnGlowAutoAdvance;
 
     void Awake()
     {
-        StoryCueRepo.EnsureLoaded(); // CSVを同期初期化
+        StoryCueRepo.EnsureLoaded();
 
-        // 実体化
         _bgMat = InstantiateIf(bgBaseMat);
         _lMat  = InstantiateIf(leftBaseMat);
         _cMat  = InstantiateIf(centerBaseMat);
@@ -69,11 +76,12 @@ public sealed class CharacterManager : MonoBehaviour
             if (_glowMat) glowOverlay.material = _glowMat;
             var c = glowOverlay.color;
             glowOverlay.color = new Color(c.r, c.g, c.b, 0f);
+            glowOverlay.raycastTarget = false;
             glowOverlay.enabled = false;
         }
     }
 
-    void OnEnable()  { TextManager.OnCommentChanged += OnCommentChanged; }
+    void OnEnable()  => TextManager.OnCommentChanged += OnCommentChanged;
     void OnDisable()
     {
         TextManager.OnCommentChanged -= OnCommentChanged;
@@ -98,87 +106,116 @@ public sealed class CharacterManager : MonoBehaviour
 
         float dur = row.Fade > 0f ? row.Fade : defaultFade;
 
-        // 画像のクロスフェード
         BeginCrossFade(bg,     row.BgId,     dur, ref _xfBG);
         BeginCrossFade(left,   row.LeftId,   dur, ref _xfL);
         BeginCrossFade(center, row.CenterId, dur, ref _xfC);
         BeginCrossFade(right,  row.RightId,  dur, ref _xfR);
 
-        // 乗算色（Gray/Black）をフェード
         BeginMulFade(_bgMat, PickMulColor(row.GrayBG, row.BlackBG), dur, ref _fadeBG);
         BeginMulFade(_lMat,  PickMulColor(row.GrayL,  row.BlackL),  dur, ref _fadeL);
         BeginMulFade(_cMat,  PickMulColor(row.GrayC,  row.BlackC),  dur, ref _fadeC);
         BeginMulFade(_rMat,  PickMulColor(row.GrayR,  row.BlackR),  dur, ref _fadeR);
 
-        // Glow（全体）
         BeginGlow(row.Glow == 1, dur, ref _fadeGlow);
+
+        if (sound)
+        {
+            if (!string.IsNullOrWhiteSpace(row.BGMId))
+                await sound.CrossFadeBGMAsync(row.BGMId, 0.7f, loop: true);
+            if (!string.IsNullOrWhiteSpace(row.SEId))
+                sound.PlaySE(row.SEId, 1f, 0f, 1f);
+        }
     }
 
-    //======== 画像クロスフェード =========
-    void BeginCrossFade(Image baseImg, string id, float duration, ref CancellationTokenSource slot)
+    //================= 画像クロスフェード =================
+    void BeginCrossFade(Image baseImg, string idOrEmpty, float duration, ref CancellationTokenSource slot)
     {
         if (!baseImg) return;
 
-        // カタログからSprite取得
         Sprite next = null;
-        if (!string.IsNullOrWhiteSpace(id) && imageCatalog != null && imageCatalog.TryGetSprite(id, out var sp) && sp)
-            next = sp;
-
-        // 同一/未指定ならスキップ
-        if (next == null || next == baseImg.sprite)
-            return;
+        if (!string.IsNullOrWhiteSpace(idOrEmpty))
+        {
+            if (imageCatalog != null && imageCatalog.TryGetSprite(idOrEmpty, out var sp) && sp)
+            {
+                next = sp;
+            }
+            else
+            {
+                Debug.LogWarning($"[CharacterManager] Sprite not found in catalog: '{idOrEmpty}'");
+            }
+        }
 
         slot?.Cancel();
         slot = new CancellationTokenSource();
         var ct = slot.Token;
-
         _ = CrossFadeAsync(baseImg, next, duration, ct);
     }
 
-    async UniTaskVoid CrossFadeAsync(Image baseImg, Sprite next, float duration, CancellationToken ct)
+    async UniTask CrossFadeAsync(Image baseImg, Sprite nextOrNull, float duration, CancellationToken ct)
     {
         var overlay = GetOrCreateOverlay(baseImg);
 
-        // オーバーレイに新画像、アルファ0
-        overlay.sprite = next;
+        var bCol = baseImg.color;
+        float bAlpha0 = bCol.a;
+
+        // 透明へフェード
+        if (nextOrNull == null)
+        {
+            overlay.enabled = false;
+            if (duration <= 0f)
+            {
+                baseImg.color = new Color(bCol.r, bCol.g, bCol.b, 0f);
+                return;
+            }
+
+            float t = 0f;
+            while (t < duration)
+            {
+                if (ct.IsCancellationRequested) return;
+                t += Time.unscaledDeltaTime;
+                float u = Mathf.Clamp01(t / duration);
+                baseImg.color = new Color(bCol.r, bCol.g, bCol.b, Mathf.Lerp(bAlpha0, 0f, u));
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+            baseImg.color = new Color(bCol.r, bCol.g, bCol.b, 0f);
+            return;
+        }
+
+        // 画像あり：オーバーレイでクロスフェード
+        overlay.sprite = nextOrNull;
         overlay.enabled = true;
 
-        // 見た目整合（乗算/Glow）を複製
         if (baseImg.material)
         {
             if (!overlay.material) overlay.material = new Material(baseImg.material);
             CopyMulAndGlow(baseImg.material, overlay.material);
         }
 
-        var bCol = baseImg.color;
         var oCol = overlay.color;
-        float b0 = bCol.a;
-        const float o0 = 0f;
-        const float o1 = 1f;
+        const float o0 = 0f, o1 = 1f;
 
         if (duration <= 0f)
         {
             overlay.color = new Color(oCol.r, oCol.g, oCol.b, 1f);
-            baseImg.sprite = next;
-            baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, b0);
+            baseImg.sprite = nextOrNull;
+            baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, bAlpha0);
             overlay.enabled = false;
             return;
         }
 
-        float t = 0f;
-        while (t < duration)
+        float t2 = 0f;
+        while (t2 < duration)
         {
             if (ct.IsCancellationRequested) return;
-            t += Time.unscaledDeltaTime;
-            float u = Mathf.Clamp01(t / duration);
+            t2 += Time.unscaledDeltaTime;
+            float u = Mathf.Clamp01(t2 / duration);
             overlay.color = new Color(oCol.r, oCol.g, oCol.b, Mathf.Lerp(o0, o1, u));
-            baseImg.color = new Color(bCol.r, bCol.g, bCol.b, Mathf.Lerp(b0, 0f, u));
+            baseImg.color = new Color(bCol.r, bCol.g, bCol.b, Mathf.Lerp(bAlpha0, 0f, u));
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
 
-        // 完了
-        baseImg.sprite = next;
-        baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, b0);
+        baseImg.sprite = nextOrNull;
+        baseImg.color  = new Color(bCol.r, bCol.g, bCol.b, bAlpha0);
         overlay.enabled = false;
     }
 
@@ -204,11 +241,7 @@ public sealed class CharacterManager : MonoBehaviour
         return img;
     }
 
-    //======== 乗算色フェード =========
-    static readonly Color COL_WHITE = Color.white;
-    static readonly Color COL_BLACK = Color.black;
-    static readonly Color COL_GRAY  = FromHex("#6A6A6A");
-
+    //================= 乗算色フェード =================
     static Color PickMulColor(int grayFlag, int blackFlag)
         => (blackFlag == 1) ? COL_BLACK : (grayFlag == 1 ? COL_GRAY : COL_WHITE);
 
@@ -222,7 +255,7 @@ public sealed class CharacterManager : MonoBehaviour
         _ = FadeMulAsync(mat, to, duration, ct);
     }
 
-    async UniTaskVoid FadeMulAsync(Material mat, Color to, float duration, CancellationToken ct)
+    async UniTask FadeMulAsync(Material mat, Color to, float duration, CancellationToken ct)
     {
         var from = mat.GetColor(ID_MulColor);
         if (duration <= 0f) { mat.SetColor(ID_MulColor, to); return; }
@@ -238,10 +271,14 @@ public sealed class CharacterManager : MonoBehaviour
         mat.SetColor(ID_MulColor, to);
     }
 
-    //======== Glow（全体1枚のみ、白加算） =========
+    //================= Glow（全体） =================
     void BeginGlow(bool toOn, float duration, ref CancellationTokenSource slot)
     {
-        if (!glowOverlay) return;
+        if (!glowOverlay)
+        {
+            Debug.LogWarning("[CharacterManager] Glow overlay Image is not assigned.");
+            return;
+        }
 
         slot?.Cancel();
         slot = new CancellationTokenSource();
@@ -250,11 +287,10 @@ public sealed class CharacterManager : MonoBehaviour
         _ = FadeGlowAsync(toOn, duration, ct);
     }
 
-    async UniTaskVoid FadeGlowAsync(bool toOn, float duration, CancellationToken ct)
+    async UniTask FadeGlowAsync(bool toOn, float duration, CancellationToken ct)
     {
         if (!glowOverlay) return;
 
-        // マテリアル設定（白加算固定）
         if (_glowMat)
         {
             if (_glowMat.HasProperty(ID_GlowColor)) _glowMat.SetColor(ID_GlowColor, Color.white);
@@ -297,7 +333,7 @@ public sealed class CharacterManager : MonoBehaviour
         }
     }
 
-    //======== ヘルパ =========
+    //================= ヘルパ =================
     static Material InstantiateIf(Material src) => src ? new Material(src) : null;
     static void DestroyIf(Object o) { if (o) Destroy(o); }
     static Color FromHex(string s) { Color c; ColorUtility.TryParseHtmlString(s, out c); return c; }
