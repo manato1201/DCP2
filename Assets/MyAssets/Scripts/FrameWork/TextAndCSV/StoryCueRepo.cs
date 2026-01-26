@@ -1,56 +1,61 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public static class StoryCueRepo
 {
+    // アドレスはあなたの環境に合わせて
     const string AddressKey = "Assets/MyAssets/Resources/StoryCue.csv";
-
-    static Dictionary<string, Row> _map;
 
     public struct Row
     {
         public string CommentNo;
-        public string BgId, LeftId, CenterId, RightId; // 画像ID（空=透明へ）
-        public int GrayBG, GrayL, GrayC, GrayR;        // 0/1
-        public int BlackBG, BlackL, BlackC, BlackR;    // 0/1
-        public int Glow;                                // 0/1（全体）
-        public float Fade;                              // 秒（0/空=default）
-        public string BGMId;                            // 空=再生指示なし
-        public string SEId;                             // 空=再生指示なし
+        public string BgId, LeftId, CenterId, RightId;
+
+        // ← 5,6 列目に移動
+        public string BGMId;
+        public string SEId;
+
+        public int GrayBG, GrayL, GrayC, GrayR;
+        public int BlackBG, BlackL, BlackC, BlackR;
+        public int Glow;      // 0/1
+        public float Fade;    // 秒
     }
+
+    static Dictionary<string, Row> _map;
 
     public static bool TryGet(string commentNo, out Row row)
     {
-        row = default; // ★ 先に代入しておく
+        row = default; // 終了時に必ず割り当て
         return _map != null && _map.TryGetValue(commentNo, out row);
     }
 
-    public static void EnsureLoaded()
+    public static async UniTask EnsureLoadedAsync(CancellationToken ct)
     {
         if (_map != null) return;
 
-        var ta = UnityEngine.AddressableAssets.Addressables
-                    .LoadAssetAsync<TextAsset>(AddressKey)
-                    .WaitForCompletion();
-        if (!ta)
-        {
-            Debug.LogError($"[StoryCueRepo] CSV not found: {AddressKey}");
-            _map = new Dictionary<string, Row>();
-            return;
-        }
+        var ta = await Addressables.LoadAssetAsync<TextAsset>(AddressKey)
+                                   .Task.AsUniTask().AttachExternalCancellation(ct);
 
         _map = new Dictionary<string, Row>(256);
 
-        // 想定ヘッダ：
-        // CommentNo,BgId,LeftId,CenterId,RightId,GrayBG,GrayL,GrayC,GrayR,BlackBG,BlackL,BlackC,BlackR,Glow,Fade,BGMId,SEId
+        // ヘッダ順：
+        // 0:CommentNo,1:BgId,2:LeftId,3:CenterId,4:RightId,
+        // 5:BGMId,6:SEId,
+        // 7:GrayBG,8:GrayL,9:GrayC,10:GrayR,
+        // 11:BlackBG,12:BlackL,13:BlackC,14:BlackR,
+        // 15:Glow,16:Fade
         var lines = ta.text.Split('\n');
         for (int i = 1; i < lines.Length; i++)
         {
             var line = lines[i].TrimEnd('\r');
             if (string.IsNullOrWhiteSpace(line)) continue;
+
             var cols = line.Split(',');
-            if (cols.Length < 15) continue;
+            if (cols.Length < 17) continue;
 
             var r = new Row
             {
@@ -59,27 +64,35 @@ public static class StoryCueRepo
                 LeftId    = cols[2].Trim(),
                 CenterId  = cols[3].Trim(),
                 RightId   = cols[4].Trim(),
-                GrayBG    = Parse01(cols[5]),
-                GrayL     = Parse01(cols[6]),
-                GrayC     = Parse01(cols[7]),
-                GrayR     = Parse01(cols[8]),
-                BlackBG   = Parse01(cols[9]),
-                BlackL    = Parse01(cols[10]),
-                BlackC    = Parse01(cols[11]),
-                BlackR    = Parse01(cols[12]),
-                BGMId     = cols.Length > 13 ? cols[13].Trim() : string.Empty,
-                SEId      = cols.Length > 14 ? cols[14].Trim() : string.Empty,
-                Glow      = Parse01(cols[15]),
-                Fade      = ParseF(cols[16]),
 
+                BGMId     = cols[5].Trim(),
+                SEId      = cols[6].Trim(),
+
+                GrayBG    = To01(cols[7]),
+                GrayL     = To01(cols[8]),
+                GrayC     = To01(cols[9]),
+                GrayR     = To01(cols[10]),
+
+                BlackBG   = To01(cols[11]),
+                BlackL    = To01(cols[12]),
+                BlackC    = To01(cols[13]),
+                BlackR    = To01(cols[14]),
+
+                Glow      = To01(cols[15]),
+                Fade      = ToF (cols[16]),
             };
-            if (!_map.ContainsKey(r.CommentNo)) _map.Add(r.CommentNo, r);
+
+            if (!_map.ContainsKey(r.CommentNo))
+                _map.Add(r.CommentNo, r);
         }
 
-        static int Parse01(string s)
-            => int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out var v) ? (v != 0 ? 1 : 0) : 0;
+        static int   To01(string s)
+            => int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out var v) && v != 0 ? 1 : 0;
 
-        static float ParseF(string s)
+        static float ToF(string s)
             => float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ? Mathf.Max(0f, v) : 0f;
     }
+    // 引数なし版も欲しければこれも
+    public static UniTask EnsureLoaded()
+        => EnsureLoadedAsync(System.Threading.CancellationToken.None);
 }

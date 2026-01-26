@@ -25,6 +25,9 @@ MonoBehaviour:
   - key: BGM_Serious
     clip: {fileID: 8300000, guid: b1e8f50adf720f9428a6ec169010cd54, type: 3}
     type: 0
+  - key: BGM_Select
+    clip: {fileID: 8300000, guid: 32cd9fffe5482bb4bbffa338fa02d9e4, type: 3}
+    type: 0
   - key: BGM_Puzzie
     clip: {fileID: 8300000, guid: a8eccfe76900e5f46a36bfbd63da325f, type: 3}
     type: 0
