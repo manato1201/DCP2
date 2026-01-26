@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
+using Sound;
 
 // 戦闘パートのロジック担当
 public class BattleRule : MonoBehaviour, IPuzzleRule
@@ -15,6 +16,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
 
     [Header("Enemy Settings")]
     [SerializeField] private EnemyAnimation enemyAnimation;
+    [SerializeField] private SoundManager soundManager;
     // パズルからデータを受け取って初期化できるようにする
     public void SetBattleData(int damage)
     {
@@ -48,6 +50,7 @@ public class BattleRule : MonoBehaviour, IPuzzleRule
         // ★ここでアニメーション再生＆待機
         if (enemyAnimation != null)
         {
+            soundManager.PlaySE("SE_Jump");   
             await enemyAnimation.PlayAttackMotion();
         }
 

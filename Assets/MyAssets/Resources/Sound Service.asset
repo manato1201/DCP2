@@ -52,9 +52,18 @@ MonoBehaviour:
   - key: SE_Start
     clip: {fileID: 8300000, guid: fcb52e3899a300647a49ea32d0858c7b, type: 3}
     type: 1
-  - key: SE_TextClick
-    clip: {fileID: 8300000, guid: 89beba0f034959147aad8a40500a499f, type: 3}
+  - key: SE_Jump
+    clip: {fileID: 8300000, guid: 02993359bae41ae48a3e21e1a25ae977, type: 3}
     type: 1
   - key: SE_Transition
     clip: {fileID: 8300000, guid: 47d9a460964511a4a96195ce55e771c6, type: 3}
+    type: 1
+  - key: SE_FogSet
+    clip: {fileID: 8300000, guid: a33c2e722ba65c2489a46d4221685f9f, type: 3}
+    type: 1
+  - key: SE_FogBurst
+    clip: {fileID: 8300000, guid: 2afd4640fa4236341afb2dc86bffa1e8, type: 3}
+    type: 1
+  - key: SE_FogBurst
+    clip: {fileID: 8300000, guid: 2afd4640fa4236341afb2dc86bffa1e8, type: 3}
     type: 1

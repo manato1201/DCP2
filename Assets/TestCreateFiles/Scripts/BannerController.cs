@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using NUnit.Framework;
+using Sound;
 
 public class BannerController : MonoBehaviour
 {
@@ -27,9 +28,9 @@ public class BannerController : MonoBehaviour
     public TextMeshProUGUI nextButtonText;
 
     private int currentIndex = 0;
-
+    private bool isFirst = false;
     public bool IsClosed { get; private set; } = false;
-
+    [SerializeField] SoundManager soundManager;
     void Start()
     {
         // もしインスペクターでアタッチしていない場合、自動取得を試みる
@@ -49,6 +50,7 @@ public class BannerController : MonoBehaviour
 
     public void OnClickRight()
     {
+        soundManager.PlaySE("SE_Align");
         if (currentIndex < dots.Length - 1)
         {
             currentIndex++;
@@ -63,6 +65,7 @@ public class BannerController : MonoBehaviour
 
     public void OnClickLeft()
     {
+        soundManager.PlaySE("SE_Align");
         if (currentIndex > 0)
         {
             currentIndex--;
@@ -109,6 +112,11 @@ public class BannerController : MonoBehaviour
     // --- バナーを開く演出 ---
     public void OpenBanner()
     {
+        if (isFirst)
+        {
+            soundManager.PlaySE("SE_Align");
+        }
+        isFirst = true;
         IsClosed = false;
 
         // 1. 初期状態の設定
