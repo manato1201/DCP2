@@ -122,6 +122,7 @@ public sealed class CharacterManager : MonoBehaviour
         BeginGlow(row.Glow == 1, (row.Fade > 0f ? row.Fade : defaultFade), ref _fadeGlow);
         sound.PlaySE(row.SEId);
         if (BGMCash != row.BGMId)sound.PlayBGMAsync(row.BGMId, loop:true).Forget();
+        if ("" == row.BGMId)sound.StopBGMAsync(0).Forget();
         BGMCash = row.BGMId;
         Debug.Log($"[Sound] BGM try '{row.BGMId}' fade={row.Fade}");
         await UniTask.Yield(); // フレーム分割

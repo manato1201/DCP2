@@ -79,3 +79,9 @@ MonoBehaviour:
   - key: SE_Ready
     clip: {fileID: 8300000, guid: 422dd9d3f7916ed489e05fd348771b6a, type: 3}
     type: 1
+  - key: BMT_Kit_1_Snare_1
+    clip: {fileID: 8300000, guid: 25f84af81c2a821448bb073047ceb178, type: 3}
+    type: 1
+  - key: SE_Attack
+    clip: {fileID: 8300000, guid: 3b671d88366611644bd46f452e199852, type: 3}
+    type: 1
