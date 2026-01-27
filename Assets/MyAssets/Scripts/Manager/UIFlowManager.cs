@@ -43,6 +43,7 @@ public sealed class UIFlowManager : MonoBehaviour
     {
         _cts = new();
         RayCastTransition.SetActive(false);
+
     }
 
     void OnEnable()
@@ -134,12 +135,15 @@ public sealed class UIFlowManager : MonoBehaviour
     }
     async UniTaskVoid GameAsync()
     {
+
         if (transitionManager == null ) return;
+        var chapFromBus = SceneTransitBus.HasChap ? SceneTransitBus.Payload.chap : null;
         LoadAssetAsync().Forget();
         var payload = new SceneTransitData.Payload { key = "stage",  isFade = false };
         RayCastTransition.SetActive(true);
         sound.PlaySE("SE_Transition");
-        await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Puzzle), payload);
+        if(chapFromBus=="CHAP3")await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Title), payload);
+        else await transitionManager.LoadSceneAsync(catalog.Get(SceneId.Puzzle), payload);
         UnloadAsset();
     }
     async UniTaskVoid ResultAsync()
