@@ -4,8 +4,6 @@
 
 ### 記入日　2026年01月05日
 
-### 現在制作中
-
 ## 担当
 
 ### manato1201:framework層担当
@@ -13,3 +11,5 @@
 ### KomiyaJun:パズルゲームロジック層担当
 
 ### Morisawaa:UI層担当
+
+# [技術設計書](./ARCHITECTURE.md)
